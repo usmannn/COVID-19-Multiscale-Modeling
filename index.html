@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+  
+	  <script>
+		// global list to store selection IDs
+		var selected_ids = [];
+	  </script>
     
 	<meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -21,17 +26,16 @@
   <body>
   
     <div id="viewDiv"></div>
-	<button type="button" class="btn btn-primary" id="construct_button" onclick="return reconstruct();"> Re-Construct </button>
+	<button type="button" class="btn btn-primary" id="construct_button" onclick="return processReconstruct();"> Re-Construct </button>
 	
 	<div id="selected-features">
 		<table id="table_restricted_countries" class="table table-dark" style="color:white;" align="center">
 			<thead>
 				<tr>
-				  <th scope="col">Restricted Countries</th>
+				  <th scope="col" colspan="3">Restricted Countries</th>
 				</tr>
 			</thead>
 			<tbody>
-				
 			</tbody>
 		</table>
 	</div>	
@@ -44,3 +48,30 @@
 	
   </body>
 </html>
+
+<script>
+
+// callback to remove an entry from restricted countries list
+function clearCountrySelection(entry)
+{
+	var i = entry.parentNode.parentNode.rowIndex;	
+	var tmp = document.getElementById("table_restricted_countries").rows[i].cells[0].innerHTML;	
+	selected_ids.splice(i-1, 1);
+	document.getElementById("table_restricted_countries").deleteRow(i);	
+}
+
+function processReconstruct()
+{
+	var restricted_list = [];
+	var entries = document.getElementById("table_restricted_countries").rows;
+	
+	for(k=1; k < entries.length; k++)
+	{	
+		var name = entries[k].cells[1].innerHTML;
+		restricted_list.push(name);
+	}
+	
+	reconstruct(restricted_list);
+}
+
+</script>
