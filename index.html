@@ -19,6 +19,9 @@
     </style>
     
     <script>
+      
+      // Using web map from ArcGIS online
+      /*
       require([
         "esri/WebMap",
         "esri/views/MapView"
@@ -35,7 +38,27 @@
           map: webmap
         });
       });
-  </script>  
+      */
+      
+      // Using web scene from ArcGIS online
+      require([
+        "esri/WebScene",
+        "esri/views/SceneView"
+        ], function(WebScene, SceneView) {
+        
+        var webscene = new WebScene({
+          portalItem: {
+            id: "5bcef6016e2649be9254877ec3245734"
+          }
+        });
+        
+        var view = new SceneView({
+          container: "viewDiv",
+          map: webscene
+        });        
+      });
+      
+    </script>  
   
   </head>
   <body>
