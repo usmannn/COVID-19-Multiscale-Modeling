@@ -2,9 +2,9 @@
 // reruns the prediction model on updated network
 // updates the feature layer (data source) with new covid-19 spread prediction data
  
-function reconstruct()
+function reconstruct(restricted_list)
 {
-	alert("Reconstruct the Network: To be implemented...");
+	alert("Reconstruct the Network (not implemented)\nExcluded Countries: " + restricted_list);
 	
 	
 	// In this feature layer, the new prediction data needs to be updated
@@ -13,5 +13,5 @@ function reconstruct()
 	{
 		outFields: [ "*" ]
 	});
-  */
+    	*/
 }
