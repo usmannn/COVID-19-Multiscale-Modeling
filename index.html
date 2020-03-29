@@ -21,18 +21,19 @@
     <script>
       require([
           "esri/Map",
+          "esri/WebMap",
           "esri/views/MapView"
-        ], function(Map, MapView) {
+        ], function(WebMap, MapView) {
 
-        var map = new Map({
-          basemap: "topo-vector"
+        var webmap = new WebMap({
+          portalItem: {
+            id: "9abddb687df74894878b7cc1ef90a902"
+          }
         });
 
         var view = new MapView({
           container: "viewDiv",
-          map: map,
-          center: [-118.80500, 34.02700], // longitude, latitude
-          zoom: 13
+          map: webmap
         });
       });
   </script>  
