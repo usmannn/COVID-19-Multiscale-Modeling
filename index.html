@@ -1,126 +1,46 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    
+	<meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>COVID-19 Multiscale Modeling</title>
     
     <link rel="stylesheet" href="https://js.arcgis.com/4.14/esri/themes/light/main.css">
     <script src="https://js.arcgis.com/4.14/"></script>
-    <script src="JS/site.js"></script>
     
-    <style>
-      html, body, #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-      }
-	  #timeSlider {
-        position: absolute;
-        left: 100px;
-        right: 100px;
-        bottom: 20px;
-      }
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-      #titleDiv {
-        padding: 10px;
-        font-weight: 36;
-        text-align: center;
-      }
-    </style>
-    
-    <script>
-      
-      // Using web map from ArcGIS online
-      
-      require([
-        "esri/WebMap",
-        "esri/views/MapView",
-		"esri/widgets/LayerList",
-		"esri/widgets/TimeSlider",
-        "esri/widgets/Expand",
-        "esri/widgets/Legend",
-		"esri/core/Collection",
-		"esri/layers/FeatureLayer",
-		"esri/TimeExtent",
-		"esri/layers/support/TimeInfo",
-		"esri/widgets/Popup"
-      ], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup) {
-
-        //const layer = webmap.findLayerById('40b129da4bd84efa9993b768b8c6ead6');		
-		var layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
-			{
-				outFields: [ "*" ],
-				useViewTime: false,
-				popupEnabled: true
-			}
-		);
-		
-		var webmap = new WebMap({
-          portalItem: {
-            id: "9abddb687df74894878b7cc1ef90a902"
-          },
-		  layers: [layer]
-        });
-
-        var view = new MapView({
-          container: "viewDiv",
-          map: webmap
-        });
-		
-		view.popup.defaultPopupTemplateEnabled  = true;
-		
-		var layerList = new LayerList({
-		  view: view
-		});		
-		
-		const layersExpand = new Expand({
-          expandIconClass: "esri-icon-collection",
-          expandTooltip: "Layers",
-          view: view,
-          content: layerList,
-          expanded: false
-        });
-        view.ui.add(layersExpand, "top-left");
-		
-		// time slider widget initialization
-        const timeSlider = new TimeSlider({
-          container: "timeSlider",
-          mode: "time-window",
-          view: view
-        });
-        view.ui.add(timeSlider, "manual");
-		
-		// add the UI for titles, stats and chart.
-        view.ui.add("titleDiv", "top-right");
-		
-		// accessing layer with temporal data from the webmap
-				
-		view.whenLayerView(layer).then(function(lv) {
-          const fullTimeExtent = layer.timeInfo.fullTimeExtent;
-		  
-		  
-          // set up time slider properties
-          timeSlider.fullTimeExtent = fullTimeExtent;
-          timeSlider.stops = {
-            interval: layer.timeInfo.interval
-          };
-		  
-		  // why this is null ??
-		  console.log(layer.timeInfo.interval);
-        });
-				
-      });      
-      
-    </script>  
+	<script src="JS/site.js"></script>
+	<script src="JS/reconstruct.js"></script>
+	<link rel="stylesheet" href="CSS/site.css">
   
   </head>
   <body>
+  
     <div id="viewDiv"></div>
+	<button type="button" class="btn btn-primary" id="construct_button" onclick="return reconstruct();"> Re-Construct </button>
+	
+	<div id="selected-features">
+		<table id="table_restricted_countries" class="table table-dark" style="color:white;" align="center">
+			<thead>
+				<tr>
+				  <th scope="col">Restricted Countries</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+	</div>	
+	
 	<div id="timeSlider"></div>
-    <div id="titleDiv" class="esri-widget">
+    
+	<div id="titleDiv" class="esri-widget">
       <div id="titleText">COVID-19 Multiscale Modeling</div>
     </div>
+	
   </body>
 </html>
