@@ -1,0 +1,37 @@
+/* main css */
+
+html, body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+}
+
+#viewDiv {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 85%;
+	float: left;
+}
+
+#timeSlider {
+	position: absolute;
+	left: 100px;
+	right: 100px;
+	bottom: 20px;
+}
+
+#titleDiv {
+	padding: 10px;
+	font-weight: 36;
+	text-align: center;
+}
+
+#selected-features {        
+	width: 15%;
+	height: 100%;
+	background-color: #202020;
+	float: right;
+	text-align: center;
+}
