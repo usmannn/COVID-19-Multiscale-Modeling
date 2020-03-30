@@ -14,8 +14,9 @@ require([
 	"esri/TimeExtent",
 	"esri/layers/support/TimeInfo",
 	"esri/widgets/Popup",
-	"esri/widgets/Feature"
-], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup, Feature) {
+	"esri/widgets/Feature",
+	"esri/views/layers/support/FeatureFilter"
+], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup, Feature, FeatureFilter) {
 
 // popup configuration
 var popupTemplate = {
@@ -97,11 +98,10 @@ view.ui.add(timeSlider, "manual");
 view.ui.add("titleDiv", "top-right");
 
 // accessing layer with temporal data from the webmap
-		
+let timeLayerView;		
 view.whenLayerView(layer).then(function(lv) {
+  timeLayerView = lv;
   const fullTimeExtent = layer.timeInfo.fullTimeExtent;
-  
-  
   // set up time slider properties
   timeSlider.fullTimeExtent = fullTimeExtent;
   timeSlider.stops = {
@@ -110,9 +110,12 @@ view.whenLayerView(layer).then(function(lv) {
 		unit: "days"
 	}
   };
-  
-  // why this is null ?? Slider's buttons are disabled for some reason
-  console.log(layer.timeInfo.interval);
+});
+
+timeSlider.watch("timeExtent", function(value){
+  timeLayerView.filter = {
+    timeExtent: value
+  };
 });
 
 // Adding selected feature to restricted country list when removeFromPrediction is clicked 
