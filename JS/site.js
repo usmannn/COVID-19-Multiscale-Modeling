@@ -87,7 +87,8 @@ view.ui.add(layersExpand, "top-left");
 // time slider widget initialization
 const timeSlider = new TimeSlider({
   container: "timeSlider",
-  mode: "time-window",
+  //mode: "time-window",
+  mode: "instant",
   view: view
 });
 view.ui.add(timeSlider, "manual");
