@@ -51,7 +51,7 @@ var popupTemplate = {
 var layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
 	{
 		outFields: [ "*" ],
-		useViewTime: false,
+		useViewTime: true,
 		popupEnabled: true,
 		popupTemplate: popupTemplate
 	}
@@ -104,7 +104,10 @@ view.whenLayerView(layer).then(function(lv) {
   // set up time slider properties
   timeSlider.fullTimeExtent = fullTimeExtent;
   timeSlider.stops = {
-	interval: layer.timeInfo.interval
+	interval: {
+		value: 1,
+		unit: "days"
+	}
   };
   
   // why this is null ?? Slider's buttons are disabled for some reason
