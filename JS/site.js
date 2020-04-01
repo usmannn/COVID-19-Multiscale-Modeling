@@ -77,7 +77,7 @@ var popupTemplate = {
   view.map.layers.add(featureLayer);
 
   // time slider widget initialization
-  const timeSlider = new TimeSlider({
+  let timeSlider = new TimeSlider({
     container: "timeSliderDiv",
     //mode: "time-window",
     mode: "instant",
