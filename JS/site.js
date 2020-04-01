@@ -75,9 +75,7 @@ var view = new MapView({
 
 //view.popup.defaultPopupTemplateEnabled  = true;
 
-var layerList = new LayerList({
-  view: view
-});		
+	
 
 const layersExpand = new Expand({
   expandIconClass: "esri-icon-collection",
@@ -125,7 +123,8 @@ function handleCsvParsingComplete(results) {
 				longitude: datum.From_Longitude,
 				latitude: datum.From_Latitude
 			},
-			attributes: datum
+			attributes: datum,
+			enabled: true
 		});
 	});
 	
@@ -161,6 +160,10 @@ function handleCsvParsingComplete(results) {
 
 	view.map.layers.add(canvasFlowmapLayer);
 }
+	
+var layerList = new LayerList({
+	view: view
+});	
 /*
 // time slider widget initialization
 const timeSlider = new TimeSlider({
