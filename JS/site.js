@@ -78,7 +78,7 @@ var popupTemplate = {
 
   // time slider widget initialization
   const timeSlider = new TimeSlider({
-    container: "timeSlider",
+    container: "timeSliderDiv",
     //mode: "time-window",
     mode: "instant",
     view: view
