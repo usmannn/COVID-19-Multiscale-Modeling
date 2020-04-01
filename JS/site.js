@@ -17,8 +17,9 @@ require([
 	"esri/widgets/Feature",
 	"esri/views/layers/support/FeatureFilter",
 	"Canvas-Flowmap-Layer/CanvasFlowmapLayer",
+	"esri/Graphic",
 	"dojo/domReady!"
-], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup, Feature, FeatureFilter, CanvasFlowmapLayer) {
+], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup, Feature, FeatureFilter, CanvasFlowmapLayer,Graphic) {
 
 // popup configuration
 var popupTemplate = {
