@@ -64,8 +64,8 @@ var layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgi
 var webmap = new WebMap({
   portalItem: {
 	id: "9abddb687df74894878b7cc1ef90a902"
-  },
-  layers: [layer]
+  }//,
+  //layers: [layer]
 });
 
 var view = new MapView({
