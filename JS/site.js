@@ -79,7 +79,6 @@ require([
     //canvasFlowmapLayer.title = "Flowmap Connections";
     view.map.layers.add(canvasFlowmapLayer);
     
-    /*
     var layerList = new LayerList({
       view: view
     });		
@@ -92,7 +91,7 @@ require([
       expanded: false
     });
     view.ui.add(layersExpand, "top-left");
-    */
+    
     // get access to the CanvasFlowmapLayer's layerView to make modifications
     // of which O-D relationships are flagged for path display
     view.whenLayerView(canvasFlowmapLayer).then(function(canvasFlowmapLayerView) {
