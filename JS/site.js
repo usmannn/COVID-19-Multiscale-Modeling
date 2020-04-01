@@ -1,68 +1,16 @@
-// site.js
-// implements core functionality
-
-// Using web map from ArcGIS online      
 require([
-	"esri/WebMap",
-	"esri/views/MapView",
-	"esri/widgets/LayerList",
-	"esri/widgets/TimeSlider",
-	"esri/widgets/Expand",
-	"esri/widgets/Legend",
-	"esri/core/Collection",
-	"esri/layers/FeatureLayer",
-	"esri/TimeExtent",
-	"esri/layers/support/TimeInfo",
-	"esri/widgets/Popup",
-	"esri/widgets/Feature",
-	"esri/views/layers/support/FeatureFilter",
-	"Canvas-Flowmap-Layer/CanvasFlowmapLayer",
-	"esri/Graphic",
-	"esri/Map",
-	"dojo/domReady!"
-], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup, Feature, FeatureFilter, CanvasFlowmapLayer,Graphic,EsriMap) {
-
-// popup configuration
-var popupTemplate = {
-          title: "Country: {Country_name}",
-          actions: [
-			  {
-                title: "Remove from Predictions",
-				id: "removeFromPrediction"
-              }
-			],
-		  content: [
-              {
-                type: "fields",
-                fieldInfos: [                  
-                  {
-                    fieldName: "Active",
-                    label: "Active Cases"
-                  },
-                  {
-                    fieldName: "Death",
-                    label: "Total Deaths"
-                  },
-                  {
-                    fieldName: "Recover",
-                    label: "Total Recovered"
-                  }
-                ]
-			  }
-			]
-        };
-		
-//const layer = webmap.findLayerById('40b129da4bd84efa9993b768b8c6ead6');		
-var layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
-	{
-		outFields: [ "*" ],
-		useViewTime: true,
-		popupEnabled: true,
-		popupTemplate: popupTemplate
-	}
-);
-
-var view = new MapView({
+  'Canvas-Flowmap-Layer/CanvasFlowmapLayer',
+  'esri/Graphic',
+  'esri/Map',
+  'esri/views/MapView',
+  'dojo/domReady!'
+], function(
+  CanvasFlowmapLayer,
+  Graphic,
+  EsriMap,
+  MapView
+) {
+  var view = new MapView({
     container: 'viewDiv',
     map: new EsriMap({
       // use a standard Web Mercator map projection basemap
@@ -72,23 +20,8 @@ var view = new MapView({
       components: ['zoom', 'attribution', 'compass']
     }
   });
-/*	
-var webmap = new WebMap({
-  portalItem: {
-	id: "9abddb687df74894878b7cc1ef90a902"
-  }//,
-  //layers: [layer]
-});
 
-var view = new MapView({
-  container: "viewDiv",
-  map: webmap
-});
-*/
-	
-//view.popup.defaultPopupTemplateEnabled  = true;
-
-view.when(function() {
+  view.when(function() {
     // here we use Papa Parse to load and read the CSV data
     // we could have also used another library like D3js to do the same
     Papa.parse('Data/Flowmap_Cities_one_to_many.csv', {
@@ -105,10 +38,8 @@ view.when(function() {
       return new Graphic({
         geometry: {
           type: 'point',
-          //longitude: datum.From_Longitude,
-	  //latitude: datum.From_Latitude
-	  longitude: datum.s_lon,
-	  latitude: datum.s_lat
+          longitude: datum.s_lon,
+          latitude: datum.s_lat
         },
         attributes: datum
       });
@@ -120,28 +51,22 @@ view.when(function() {
 
       // information about the uniqe origin-destinatino fields and geometries
       originAndDestinationFieldIds: {
-        //originUniqueIdField: 'From_Airport_Code',
-      originUniqueIdField: 's_city_id',
-	originGeometry: {
-		//x: 'From_Longitude',
-		//y: 'From_Latitude',
-		x: 's_lon',
-		y: 's_lat',
-		spatialReference: {
-		wkid: 4326
-	}
-	},
-	//destinationUniqueIdField: 'To_Airport_Code',
-	destinationUniqueIdField: 'e_city_id',
-	destinationGeometry: {
-		//x: 'To_Longitude',
-		//y: 'To_Latitude',
-		x: 'e_lon',
-		y: 'e_lat',
-		spatialReference: {
-		wkid: 4326
-		}
-	}
+        originUniqueIdField: 's_city_id',
+        originGeometry: {
+          x: 's_lon',
+          y: 's_lat',
+          spatialReference: {
+            wkid: 4326
+          }
+        },
+        destinationUniqueIdField: 'e_city_id',
+        destinationGeometry: {
+          x: 'e_lon',
+          y: 'e_lat',
+          spatialReference: {
+            wkid: 4326
+          }
+        }
       }
     });
 
