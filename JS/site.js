@@ -76,7 +76,7 @@ require([
       }
     });
 
-    canvasFlowmapLayer.title = "Flowmap Connections";
+    //canvasFlowmapLayer.title = "Flowmap Connections";
     view.map.layers.add(canvasFlowmapLayer);
     
     var layerList = new LayerList({
