@@ -103,10 +103,10 @@ view.when(function() {
 		dynamicTyping: true,
 		skipEmptyLines: true,
 		//complete: handleCsvParsingComplete
-		//worker: true,
-		//step: function(row) {
-		//	console.log("Row: " + row.data);
-		//},
+		worker: true,
+		step: function(row) {
+			console.log("Row: " + row.data);
+		},
 		complete: dataLoaded
 	});
 	console.log("parsing data...");
