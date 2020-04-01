@@ -27,7 +27,10 @@ require([
     container: 'viewDiv',
     map: new WebMap({
       // use a standard Web Mercator map projection basemap
-      basemap: 'dark-gray-vector'
+      //basemap: 'dark-gray-vector'
+      portalItem: {
+	id: "9abddb687df74894878b7cc1ef90a902"
+      }
     }),
     ui: {
       components: ['zoom', 'attribution']
