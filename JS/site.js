@@ -6,6 +6,10 @@ require([
   'esri/widgets/LayerList',
   'esri/widgets/Expand',
   'esri/widgets/Legend',
+  'esri/layers/FeatureLayer',
+	'esri/TimeExtent',
+	'esri/layers/support/TimeInfo',
+	'esri/widgets/Popup',
   'dojo/domReady!'
 ], function(
   CanvasFlowmapLayer,
@@ -26,6 +30,48 @@ require([
       components: ['zoom', 'attribution']
     }
   });
+  
+  // popup configuration
+var popupTemplate = {
+    title: "Country: {Country_name}",
+      actions: [
+      {
+        title: "Remove from Predictions",
+        id: "removeFromPrediction"
+      }
+      ],
+    content: [
+    {
+      type: "fields",
+      fieldInfos: [                  
+      {
+        fieldName: "Active",
+        label: "Active Cases"
+      },
+      {
+        fieldName: "Death",
+        label: "Total Deaths"
+      },
+      {
+        fieldName: "Recover",
+        label: "Total Recovered"
+      }
+      ]
+    }
+    ]
+};
+		
+  //const layer = webmap.findLayerById('40b129da4bd84efa9993b768b8c6ead6');		
+  var featureLayer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
+    {
+      outFields: [ "*" ],
+      useViewTime: true,
+      popupEnabled: true,
+      popupTemplate: popupTemplate
+    }
+  );
+  
+  view.map.layers.add(featureLayer);
 
   view.when(function() {
     // here we use Papa Parse to load and read the CSV data
