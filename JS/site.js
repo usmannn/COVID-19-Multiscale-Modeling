@@ -90,7 +90,11 @@ require([
       content: layerList,
       expanded: false
     });
+    
     view.ui.add(layersExpand, "top-left");
+    view.ui.add("titleDiv", "top-right");
+    var button_reconstruct = document.getElementById("construct_button");
+    view.ui.add(button_reconstruct, "top-right");
     
     // get access to the CanvasFlowmapLayer's layerView to make modifications
     // of which O-D relationships are flagged for path display
