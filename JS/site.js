@@ -148,7 +148,7 @@ function handleCsvParsingComplete(results) {
 			}
 		}
 	});
-}
+
 view.map.layers.add(canvasFlowmapLayer);
 
 var layerList = new LayerList({
@@ -237,5 +237,5 @@ view.when(function() {
 
 var button_reconstruct = document.getElementById("construct_button");
 view.ui.add(button_reconstruct, "top-right");
-
+}
 });
