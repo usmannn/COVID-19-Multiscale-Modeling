@@ -2,10 +2,10 @@ require([
   'Canvas-Flowmap-Layer/CanvasFlowmapLayer',
   'esri/Graphic',
   'esri/Map',
-  'esri/views/MapView',,
-  "esri/widgets/LayerList",
-	"esri/widgets/Expand",
-	"esri/widgets/Legend",
+  'esri/views/MapView',
+  'esri/widgets/LayerList',
+  'esri/widgets/Expand',
+  'esri/widgets/Legend',
   'dojo/domReady!'
 ], function(
   CanvasFlowmapLayer,
