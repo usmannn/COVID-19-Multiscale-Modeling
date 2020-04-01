@@ -149,20 +149,29 @@ function handleCsvParsingComplete(results) {
 		}
 	});
 
-view.map.layers.add(canvasFlowmapLayer);
+	view.map.layers.add(canvasFlowmapLayer);
 
-var layerList = new LayerList({
-	view: view
-});
+	var layerList = new LayerList({
+		view: view
+	});
 
-const layersExpand = new Expand({
-	expandIconClass: "esri-icon-collection",
-	expandTooltip: "Layers",
-	view: view,
-	content: layerList,
-	expanded: false
-});
-view.ui.add(layersExpand, "top-left");
+	const layersExpand = new Expand({
+		expandIconClass: "esri-icon-collection",
+		expandTooltip: "Layers",
+		view: view,
+		content: layerList,
+		expanded: false
+	});
+	view.ui.add(layersExpand, "top-left");
+	
+	view.whenLayerView(canvasFlowmapLayer).then(function(canvasFlowmapLayerView) {
+	      // automatically select a few ORIGIN locations for path display
+	      // in order to demonstrate the flowmap functionality,
+	      // without being overwhelming and showing all O-D relationships
+
+	      // Hamid Karzai International Airport,Kabul,Afghanistan
+	      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 7500, true, 'SELECTION_NEW');		
+	});
 }	
 /*
 // time slider widget initialization
