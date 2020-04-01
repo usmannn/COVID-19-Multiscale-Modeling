@@ -23,7 +23,7 @@ require([
       basemap: 'dark-gray-vector'
     }),
     ui: {
-      components: ['zoom', 'attribution', 'compass']
+      components: ['zoom', 'attribution']
     }
   });
 
@@ -78,24 +78,7 @@ require([
 
     canvasFlowmapLayer.title = "Flowmap Connections";
     view.map.layers.add(canvasFlowmapLayer);
-    
-    var layerList = new LayerList({
-      view: view
-    });		
-
-    const layersExpand = new Expand({
-      expandIconClass: "esri-icon-collection",
-      expandTooltip: "Layers",
-      view: view,
-      content: layerList,
-      expanded: false
-    });
-    
-    view.ui.add(layersExpand, "top-left");
-    view.ui.add("titleDiv", "top-right");
-    var button_reconstruct = document.getElementById("construct_button");
-    view.ui.add(button_reconstruct, "top-right");
-    
+        
     // get access to the CanvasFlowmapLayer's layerView to make modifications
     // of which O-D relationships are flagged for path display
     view.whenLayerView(canvasFlowmapLayer).then(function(canvasFlowmapLayerView) {
@@ -103,10 +86,10 @@ require([
       // in order to demonstrate the flowmap functionality,
       // without being overwhelming and showing all O-D relationships
 
-      // Reykjavík
+      // Herat Airport
       canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 5539, true, 'SELECTION_NEW');
 
-      // Tokyo
+      // Tirana International Airport Mother Teresa
       canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 13755, true, 'SELECTION_ADD');
 
       // establish a hitTest to try to select new O/D relationships
@@ -148,4 +131,21 @@ require([
       });
     });
   }
+  
+  var layerList = new LayerList({
+    view: view
+  });		
+
+  const layersExpand = new Expand({
+    expandIconClass: "esri-icon-collection",
+    expandTooltip: "Layers",
+    view: view,
+    content: layerList,
+    expanded: false
+  });
+
+  view.ui.add(layersExpand, "top-left");
+  view.ui.add("titleDiv", "top-right");
+  var button_reconstruct = document.getElementById("construct_button");
+  view.ui.add(button_reconstruct, "top-right");
 });
