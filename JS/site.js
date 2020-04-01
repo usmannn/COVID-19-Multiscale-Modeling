@@ -15,8 +15,10 @@ require([
 	"esri/layers/support/TimeInfo",
 	"esri/widgets/Popup",
 	"esri/widgets/Feature",
-	"esri/views/layers/support/FeatureFilter"
-], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup, Feature, FeatureFilter) {
+	"esri/views/layers/support/FeatureFilter",
+	"Canvas-Flowmap-Layer/CanvasFlowmapLayer",
+	"dojo/domReady!"
+], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup, Feature, FeatureFilter, CanvasFlowmapLayer) {
 
 // popup configuration
 var popupTemplate = {
@@ -85,6 +87,32 @@ const layersExpand = new Expand({
 });
 view.ui.add(layersExpand, "top-left");
 
+function dataLoaded(results)
+{
+	console.log("All done!");
+	console.log("Total rows: " + results.data.length);
+}
+
+view.when(function() {
+	console.log("map loaded...");
+	// here we use Papa Parse to load and read the CSV data
+	// we could have also used another library like D3js to do the same
+	Papa.parse('Data/flight_routes_processed_v2_flowmap_reduced.csv', {
+		download: true,
+		header: true,
+		dynamicTyping: true,
+		skipEmptyLines: true,
+		//complete: handleCsvParsingComplete
+		//worker: true,
+		//step: function(row) {
+		//	console.log("Row: " + row.data);
+		//},
+		complete: dataLoaded
+	});
+	console.log("parsing data...");
+});
+
+/*
 // time slider widget initialization
 const timeSlider = new TimeSlider({
   container: "timeSlider",
@@ -93,10 +121,12 @@ const timeSlider = new TimeSlider({
   view: view
 });
 view.ui.add(timeSlider, "manual");
+*/
 
 // add the UI for titles, stats and chart.
 view.ui.add("titleDiv", "top-right");
 
+/*
 // accessing layer with temporal data from the webmap
 let timeLayerView;		
 view.whenLayerView(layer).then(function(lv) {
@@ -117,6 +147,7 @@ timeSlider.watch("timeExtent", function(value){
     timeExtent: value
   };
 });
+/*
 
 // Adding selected feature to restricted country list when removeFromPrediction is clicked 
 view.when(function() {
