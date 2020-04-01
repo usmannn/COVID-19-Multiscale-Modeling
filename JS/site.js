@@ -80,16 +80,15 @@ var popupTemplate = {
   view.map.layers.add(featureLayer);
 
   // time slider widget initialization
-  let timeSlider = new TimeSlider({
-    container: "timeSliderDiv",
+  const timeSlider = new TimeSlider({
+    container: 'timeSliderDiv',
     //mode: "time-window",
     mode: "instant",
     view: view
   });
 
   console.log(timeSlider);
-  var tDiv = document.getElementById("timeSliderDiv");
-  view.ui.add(tDiv, "bottom-right");
+  view.ui.add(timeSlider, "manual");
   
   // accessing layer with temporal data from the webmap
   let timeLayerView;		
