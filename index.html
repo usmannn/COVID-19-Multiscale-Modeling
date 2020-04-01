@@ -12,13 +12,28 @@
     <title>COVID-19 Multiscale Modeling</title>
     
     <link rel="stylesheet" href="https://js.arcgis.com/4.14/esri/themes/light/main.css">
-    <script src="https://js.arcgis.com/4.14/"></script>
+    <script defer src="https://js.arcgis.com/4.14/"></script>
+	
+	<script>
+	<!-- set Dojo configuration options -->
+	var dojoConfig = {
+		async: true,
+		packages: [{
+			name: 'Canvas-Flowmap-Layer',
+			location: location.pathname.replace(/[^\/]+$/, '') + 'JS/External/Canvas-Flowmap-Layer'
+		}]
+	};
+	</script>
     
+	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-	<script src="JS/site.js"></script>
+	<!-- load 3rd-party CSV parsing libary  -->
+	<script src="JS/External/PapaParse-5.0.2/papaparse.min.js"></script>
+	
+	<script defer src="JS/site.js"></script>
 	<script src="JS/reconstruct.js"></script>
 	<link rel="stylesheet" href="CSS/site.css">
   
@@ -50,28 +65,28 @@
 </html>
 
 <script>
-
-// callback to remove an entry from restricted countries list
-function clearCountrySelection(entry)
-{
-	var i = entry.parentNode.parentNode.rowIndex;	
-	var tmp = document.getElementById("table_restricted_countries").rows[i].cells[0].innerHTML;	
-	selected_ids.splice(i-1, 1);
-	document.getElementById("table_restricted_countries").deleteRow(i);	
-}
-
-function processReconstruct()
-{
-	var restricted_list = [];
-	var entries = document.getElementById("table_restricted_countries").rows;
 	
-	for(k=1; k < entries.length; k++)
-	{	
-		var name = entries[k].cells[1].innerHTML;
-		restricted_list.push(name);
+	// callback to remove an entry from restricted countries list
+	function clearCountrySelection(entry)
+	{
+		var i = entry.parentNode.parentNode.rowIndex;	
+		var tmp = document.getElementById("table_restricted_countries").rows[i].cells[0].innerHTML;	
+		selected_ids.splice(i-1, 1);
+		document.getElementById("table_restricted_countries").deleteRow(i);	
 	}
-	
-	reconstruct(restricted_list);
-}
+
+	function processReconstruct()
+	{
+		var restricted_list = [];
+		var entries = document.getElementById("table_restricted_countries").rows;
+		
+		for(k=1; k < entries.length; k++)
+		{	
+			var name = entries[k].cells[1].innerHTML;
+			restricted_list.push(name);
+		}
+		
+		reconstruct(restricted_list);
+	}
 
 </script>
