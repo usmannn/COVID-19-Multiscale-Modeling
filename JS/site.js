@@ -74,6 +74,30 @@ var popupTemplate = {
   
   view.map.layers.add(featureLayer);
 
+  // time slider widget initialization
+  const timeSlider = new TimeSlider({
+    container: "timeSlider",
+    //mode: "time-window",
+    mode: "instant",
+    view: view
+  });
+  view.ui.add(timeSlider, "manual");
+
+  // accessing layer with temporal data from the webmap
+  let timeLayerView;		
+  view.whenLayerView(featureLayer).then(function(lv) {
+    timeLayerView = lv;
+    const fullTimeExtent = featureLayer.timeInfo.fullTimeExtent;
+    // set up time slider properties
+    timeSlider.fullTimeExtent = fullTimeExtent;
+    timeSlider.stops = {
+      interval: {
+	value: 1,
+	unit: "days"
+      }
+    };
+  });
+
   view.when(function() {
     // here we use Papa Parse to load and read the CSV data
     // we could have also used another library like D3js to do the same
