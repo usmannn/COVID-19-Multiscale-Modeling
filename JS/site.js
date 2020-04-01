@@ -24,7 +24,7 @@ require([
   view.when(function() {
     // here we use Papa Parse to load and read the CSV data
     // we could have also used another library like D3js to do the same
-    Papa.parse('Data/flight_routes_processed_v2_flowmap_v3.csv', {
+    Papa.parse('Data/flight_routes_processed_v2_flowmap_reduced.csv', {
       download: true,
       header: true,
       dynamicTyping: true,
