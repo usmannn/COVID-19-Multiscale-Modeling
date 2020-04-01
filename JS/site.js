@@ -7,9 +7,9 @@ require([
   'esri/widgets/Expand',
   'esri/widgets/Legend',
   'esri/layers/FeatureLayer',
-	'esri/TimeExtent',
-	'esri/layers/support/TimeInfo',
-	'esri/widgets/Popup',
+  'esri/TimeExtent',
+  'esri/layers/support/TimeInfo',
+  'esri/widgets/Popup',
   'dojo/domReady!'
 ], function(
   CanvasFlowmapLayer,
@@ -18,7 +18,8 @@ require([
   MapView,
   LayerList,
   Expand,
-  Legend
+  Legend,
+  FeatureLayer
 ) {
   var view = new MapView({
     container: 'viewDiv',
