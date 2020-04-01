@@ -362,8 +362,8 @@ define([
         shadowBlur: 0
       },
       flowline: {
-        strokeStyle: 'rgba(255, 0, 51, 0.8)',
-        lineWidth: 0.75,
+        strokeStyle: 'rgba(255, 0, 51, 0.4)',
+        lineWidth: 0.5,
         lineCap: 'round',
         shadowColor: 'rgb(255, 0, 51)',
         shadowBlur: 1.5
