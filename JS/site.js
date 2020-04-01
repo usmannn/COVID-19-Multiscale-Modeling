@@ -83,8 +83,7 @@ var popupTemplate = {
     mode: "instant",
     view: view
   });
-  view.ui.add(timeSlider, "manual");
-
+  
   // accessing layer with temporal data from the webmap
   let timeLayerView;		
   view.whenLayerView(featureLayer).then(function(lv) {
@@ -221,4 +220,5 @@ var popupTemplate = {
   view.ui.add("titleDiv", "top-right");
   var button_reconstruct = document.getElementById("construct_button");
   view.ui.add(button_reconstruct, "top-right");
+  view.ui.add(timeSlider, "manual");
 });
