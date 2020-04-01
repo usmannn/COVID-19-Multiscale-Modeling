@@ -220,5 +220,6 @@ var popupTemplate = {
   view.ui.add("titleDiv", "top-right");
   var button_reconstruct = document.getElementById("construct_button");
   view.ui.add(button_reconstruct, "top-right");
+  console.log(timeSlider);
   view.ui.add(timeSlider, "manual");
 });
