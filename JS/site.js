@@ -86,7 +86,7 @@ var popupTemplate = {
 
   console.log(timeSlider);
   var tDiv = document.getElementById("timeSliderDiv");
-  view.ui.add(tDiv, "manual");
+  view.ui.add(tDiv, "bottom-right");
   
   // accessing layer with temporal data from the webmap
   let timeLayerView;		
