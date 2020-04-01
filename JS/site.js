@@ -78,7 +78,7 @@ var view = new MapView({
 view.when(function() {
     // here we use Papa Parse to load and read the CSV data
     // we could have also used another library like D3js to do the same
-    Papa.parse('Data/flight_routes_processed_v2_flowmap_reduced.csv', {
+    Papa.parse('Data/Flowmap_Cities_one_to_many.csv', {
       download: true,
       header: true,
       dynamicTyping: true,
@@ -92,8 +92,10 @@ view.when(function() {
       return new Graphic({
         geometry: {
           type: 'point',
-          longitude: datum.From_Longitude,
-	  latitude: datum.From_Latitude
+          //longitude: datum.From_Longitude,
+	  //latitude: datum.From_Latitude
+	  longitude: datum.s_lon,
+	  latitude: datum.s_lat
         },
         attributes: datum
       });
@@ -105,18 +107,24 @@ view.when(function() {
 
       // information about the uniqe origin-destinatino fields and geometries
       originAndDestinationFieldIds: {
-        originUniqueIdField: 'From_Airport_Code',
+        //originUniqueIdField: 'From_Airport_Code',
+      originUniqueIdField: 's_city_id',
 	originGeometry: {
-		x: 'From_Longitude',
-		y: 'From_Latitude',
+		//x: 'From_Longitude',
+		//y: 'From_Latitude',
+		x: 's_lon',
+		y: 's_lat',
 		spatialReference: {
 		wkid: 4326
 	}
 	},
-	destinationUniqueIdField: 'To_Airport_Code',
+	//destinationUniqueIdField: 'To_Airport_Code',
+	destinationUniqueIdField: 'e_city_id',
 	destinationGeometry: {
-		x: 'To_Longitude',
-		y: 'To_Latitude',
+		//x: 'To_Longitude',
+		//y: 'To_Latitude',
+		x: 'e_lon',
+		y: 'e_lat',
 		spatialReference: {
 		wkid: 4326
 		}
@@ -134,13 +142,13 @@ view.when(function() {
       // without being overwhelming and showing all O-D relationships
 
       // Reykjavík
-      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 5539, true, 'SELECTION_NEW');
+      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('s_city_id', 562, true, 'SELECTION_NEW');
 
       // Alexandria
-      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 7500, true, 'SELECTION_ADD');
+      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('s_city_id', 1, true, 'SELECTION_ADD');
 
       // Tokyo
-      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 13755, true, 'SELECTION_ADD');
+      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('s_city_id', 642, true, 'SELECTION_ADD');
 
       // establish a hitTest to try to select new O/D relationships
       // for path display from user interaction;
@@ -162,15 +170,15 @@ view.when(function() {
             if (result.graphic.layer === canvasFlowmapLayer) {
               if (result.graphic.isOrigin) {
                 canvasFlowmapLayerView.selectGraphicsForPathDisplayById(
-                  'From_Airport_Code',
-                  result.graphic.attributes.From_Airport_Code,
+                  's_city_id',
+                  result.graphic.attributes.s_city_id,
                   result.graphic.attributes.isOrigin,
                   'SELECTION_NEW'
                 );
               } else {
                 canvasFlowmapLayerView.selectGraphicsForPathDisplayById(
-                  'To_Airport_Code',
-                  result.graphic.attributes.To_Airport_Code,
+                  'e_city_id',
+                  result.graphic.attributes.e_city_id,
                   result.graphic.attributes.isOrigin,
                   'SELECTION_NEW'
                 );
