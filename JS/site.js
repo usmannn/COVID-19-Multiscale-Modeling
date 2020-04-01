@@ -20,7 +20,7 @@ require([
 	"esri/Graphic",
 	"esri/Map",
 	"dojo/domReady!"
-], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup, Feature, FeatureFilter, CanvasFlowmapLayer,Graphic) {
+], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup, Feature, FeatureFilter, CanvasFlowmapLayer,Graphic,EsriMap) {
 
 // popup configuration
 var popupTemplate = {
