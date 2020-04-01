@@ -80,10 +80,10 @@ require([
       // without being overwhelming and showing all O-D relationships
 
       // Reykjavík
-      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 1601, true, 'SELECTION_NEW');
+      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 5539, true, 'SELECTION_NEW');
 
       // Tokyo
-      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 8338, true, 'SELECTION_ADD');
+      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 13755, true, 'SELECTION_ADD');
 
       // establish a hitTest to try to select new O/D relationships
       // for path display from user interaction;
