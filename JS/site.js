@@ -18,6 +18,7 @@ require([
 	"esri/views/layers/support/FeatureFilter",
 	"Canvas-Flowmap-Layer/CanvasFlowmapLayer",
 	"esri/Graphic",
+	"esri/Map",
 	"dojo/domReady!"
 ], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup, Feature, FeatureFilter, CanvasFlowmapLayer,Graphic) {
 
@@ -61,6 +62,17 @@ var layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgi
 	}
 );
 
+var view = new MapView({
+    container: 'viewDiv',
+    map: new EsriMap({
+      // use a standard Web Mercator map projection basemap
+      basemap: 'dark-gray-vector'
+    }),
+    ui: {
+      components: ['zoom', 'attribution', 'compass']
+    }
+  });
+/*	
 var webmap = new WebMap({
   portalItem: {
 	id: "9abddb687df74894878b7cc1ef90a902"
@@ -72,7 +84,8 @@ var view = new MapView({
   container: "viewDiv",
   map: webmap
 });
-
+*/
+	
 //view.popup.defaultPopupTemplateEnabled  = true;
 
 view.when(function() {
