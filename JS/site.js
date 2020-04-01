@@ -1,7 +1,7 @@
 require([
   'Canvas-Flowmap-Layer/CanvasFlowmapLayer',
   'esri/Graphic',
-  'esri/Map',
+  'esri/WebMap',
   'esri/views/MapView',
   'esri/widgets/LayerList',
   'esri/widgets/Expand',
@@ -25,7 +25,7 @@ require([
 ) {
   var view = new MapView({
     container: 'viewDiv',
-    map: new EsriMap({
+    map: new WebMap({
       // use a standard Web Mercator map projection basemap
       basemap: 'dark-gray-vector'
     }),
