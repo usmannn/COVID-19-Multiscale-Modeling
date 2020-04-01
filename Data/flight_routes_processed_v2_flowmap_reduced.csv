@@ -1,0 +1,101 @@
+Airline_ID,From_Airport_Code,From_Airport,From_Name,From_City,From_Country,From_Latitude,From_Longitude,To_Airport_Code,To_Airport,To_Name,To_City,To_Country,To_Latitude,To_Longitude
+4Q,5539,HEA,Herat Airport,Herat,Afghanistan,34.20999908,62.22829819,2846,DEL,Indira Gandhi International Airport,Delhi,India,28.5665,77.103104
+4Q,5539,HEA,Herat Airport,Herat,Afghanistan,34.20999908,62.22829819,6580,ISB,New Islamabad International Airport,Islamabad,Pakistan,33.560713,72.851613
+4Q,5539,HEA,Herat Airport,Herat,Afghanistan,34.20999908,62.22829819,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303
+EP,5539,HEA,Herat Airport,Herat,Afghanistan,34.20999908,62.22829819,9000,MHD,Mashhad International Airport,Mashhad,Iran,36.23519897,59.64099884
+FG,5539,HEA,Herat Airport,Herat,Afghanistan,34.20999908,62.22829819,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303
+HN,5539,HEA,Herat Airport,Herat,Afghanistan,34.20999908,62.22829819,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303
+4Q,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,2846,DEL,Indira Gandhi International Airport,Delhi,India,28.5665,77.103104
+4Q,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,3330,DXB,Dubai International Airport,Dubai,United Arab Emirates,25.25279999,55.36439896
+4Q,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,5539,HEA,Herat Airport,Herat,Afghanistan,34.20999908,62.22829819
+4Q,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,6580,ISB,New Islamabad International Airport,Islamabad,Pakistan,33.560713,72.851613
+4Q,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,9482,MZR,Mazar I Sharif Airport,Mazar-i-sharif,Afghanistan,36.70690155,67.20970154
+AI,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,2846,DEL,Indira Gandhi International Airport,Delhi,India,28.5665,77.103104
+EK,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,3330,DXB,Dubai International Airport,Dubai,United Arab Emirates,25.25279999,55.36439896
+EP,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,6371,IKA,Imam Khomeini International Airport,Tehran,Iran,35.41609955,51.15219879
+EP,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,9000,MHD,Mashhad International Airport,Mashhad,Iran,36.23519897,59.64099884
+FG,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,2846,DEL,Indira Gandhi International Airport,Delhi,India,28.5665,77.103104
+FG,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,3330,DXB,Dubai International Airport,Dubai,United Arab Emirates,25.25279999,55.36439896
+FG,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,3876,ESB,Esenboğa International Airport,Ankara,Turkey,40.12810135,32.99509811
+FG,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,5386,GYD,Heydar Aliyev International Airport,Baku,Azerbaijan,40.46749878,50.04669952
+FG,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,5539,HEA,Herat Airport,Herat,Afghanistan,34.20999908,62.22829819
+FG,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,7548,KDH,Kandahar Airport,Kandahar,Afghanistan,31.50580025,65.84780121
+FG,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,8043,KWI,Kuwait International Airport,Kuwait,Kuwait,29.22660065,47.96889877
+FZ,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,3305,DWC,Al Maktoum International Airport,Dubai,United Arab Emirates,24.896356,55.161389
+FZ,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,3330,DXB,Dubai International Airport,Dubai,United Arab Emirates,25.25279999,55.36439896
+HN,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,5539,HEA,Herat Airport,Herat,Afghanistan,34.20999908,62.22829819
+HN,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,7548,KDH,Kandahar Airport,Kandahar,Afghanistan,31.50580025,65.84780121
+HN,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,9482,MZR,Mazar I Sharif Airport,Mazar-i-sharif,Afghanistan,36.70690155,67.20970154
+PK,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,6580,ISB,New Islamabad International Airport,Islamabad,Pakistan,33.560713,72.851613
+PK,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,10969,PEW,Peshawar International Airport,Peshawar,Pakistan,33.9939003,71.51460266
+RQ,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,2846,DEL,Indira Gandhi International Airport,Delhi,India,28.5665,77.103104
+RQ,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,3330,DXB,Dubai International Airport,Dubai,United Arab Emirates,25.25279999,55.36439896
+RQ,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,3375,DYU,Dushanbe Airport,Dushanbe,Tajikistan,38.54330063,68.82499695
+SG,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,2846,DEL,Indira Gandhi International Airport,Delhi,India,28.5665,77.103104
+TK,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303,6598,IST,Istanbul Airport,Istanbul,Turkey,41.275278,28.751944
+EP,7548,KDH,Kandahar Airport,Kandahar,Afghanistan,31.50580025,65.84780121,9000,MHD,Mashhad International Airport,Mashhad,Iran,36.23519897,59.64099884
+FG,7548,KDH,Kandahar Airport,Kandahar,Afghanistan,31.50580025,65.84780121,2846,DEL,Indira Gandhi International Airport,Delhi,India,28.5665,77.103104
+FG,7548,KDH,Kandahar Airport,Kandahar,Afghanistan,31.50580025,65.84780121,3330,DXB,Dubai International Airport,Dubai,United Arab Emirates,25.25279999,55.36439896
+FG,7548,KDH,Kandahar Airport,Kandahar,Afghanistan,31.50580025,65.84780121,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303
+HN,7548,KDH,Kandahar Airport,Kandahar,Afghanistan,31.50580025,65.84780121,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303
+4Q,9482,MZR,Mazar I Sharif Airport,Mazar-i-sharif,Afghanistan,36.70690155,67.20970154,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303
+EP,9482,MZR,Mazar I Sharif Airport,Mazar-i-sharif,Afghanistan,36.70690155,67.20970154,6371,IKA,Imam Khomeini International Airport,Tehran,Iran,35.41609955,51.15219879
+HN,9482,MZR,Mazar I Sharif Airport,Mazar-i-sharif,Afghanistan,36.70690155,67.20970154,7500,KBL,Hamid Karzai International Airport,Kabul,Afghanistan,34.565899,69.212303
+TK,9482,MZR,Mazar I Sharif Airport,Mazar-i-sharif,Afghanistan,36.70690155,67.20970154,6598,IST,Istanbul Airport,Istanbul,Turkey,41.275278,28.751944
+A3,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,1204,ATH,Eleftherios Venizelos International Airport,Athens,Greece,37.93640137,23.94449997
+AP,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,1681,BLQ,Bologna Guglielmo Marconi Airport,Bologna,Italy,44.5354,11.2887
+AP,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,5123,GOA,Genoa Cristoforo Colombo Airport,Genoa,Italy,44.4133,8.8375
+AP,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,9428,MXP,Malpensa International Airport,Milano,Italy,45.6306,8.72811
+AP,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,11311,PSA,Pisa International Airport,Pisa,Italy,43.683899,10.3927
+AP,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,14955,VCE,Venice Marco Polo Airport,Venice,Italy,45.505299,12.3519
+AP,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,15354,VRN,Verona Villafranca Airport,Villafranca,Italy,45.395699,10.8885
+AZ,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,1681,BLQ,Bologna Guglielmo Marconi Airport,Bologna,Italy,44.5354,11.2887
+AZ,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,1829,BRI,Bari Karol Wojtyła Airport,Bari,Italy,41.138901,16.760599
+AZ,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,4149,FCO,Leonardo da Vinci–Fiumicino Airport,Rome,Italy,41.8002778,12.2388889
+AZ,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,5123,GOA,Genoa Cristoforo Colombo Airport,Genoa,Italy,44.4133,8.8375
+AZ,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,9428,MXP,Malpensa International Airport,Milano,Italy,45.6306,8.72811
+AZ,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,11311,PSA,Pisa International Airport,Pisa,Italy,43.683899,10.3927
+AZ,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,14002,TRN,Turin Airport,Torino,Italy,45.200802,7.64963
+AZ,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,14955,VCE,Venice Marco Polo Airport,Venice,Italy,45.505299,12.3519
+AZ,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,15354,VRN,Verona Villafranca Airport,Villafranca,Italy,45.395699,10.8885
+BA,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,8317,LGW,London Gatwick Airport,London,United Kingdom,51.148102,-0.190278
+BV,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,1559,BGY,Il Caravaggio International Airport,Bergamo,Italy,45.673901,9.70417
+BV,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,1681,BLQ,Bologna Guglielmo Marconi Airport,Bologna,Italy,44.5354,11.2887
+BV,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,4149,FCO,Leonardo da Vinci–Fiumicino Airport,Rome,Italy,41.8002778,12.2388889
+BV,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,9428,MXP,Malpensa International Airport,Milano,Italy,45.6306,8.72811
+BV,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,11311,PSA,Pisa International Airport,Pisa,Italy,43.683899,10.3927
+BV,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,14955,VCE,Venice Marco Polo Airport,Venice,Italy,45.505299,12.3519
+BV,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,15354,VRN,Verona Villafranca Airport,Villafranca,Italy,45.395699,10.8885
+IG,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,9428,MXP,Malpensa International Airport,Milano,Italy,45.6306,8.72811
+IG,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,15354,VRN,Verona Villafranca Airport,Villafranca,Italy,45.395699,10.8885
+JN,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,1681,BLQ,Bologna Guglielmo Marconi Airport,Bologna,Italy,44.5354,11.2887
+JN,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,9428,MXP,Malpensa International Airport,Milano,Italy,45.6306,8.72811
+JN,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,15354,VRN,Verona Villafranca Airport,Villafranca,Italy,45.395699,10.8885
+JP,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,4525,FRA,Frankfurt am Main Airport,Frankfurt,Germany,50.033333,8.570556
+JP,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,8393,LJU,Ljubljana Jože Pučnik Airport,Ljubljana,Slovenia,46.223701,14.4576
+LH,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,9337,MUC,Munich Airport,Munich,Germany,48.353802,11.7861
+OA,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,1204,ATH,Eleftherios Venizelos International Airport,Athens,Greece,37.93640137,23.94449997
+OS,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,15111,VIE,Vienna International Airport,Vienna,Austria,48.11029816,16.56970024
+PC,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,12893,SAW,Sabiha Gökçen International Airport,Istanbul,Turkey,40.89860153,29.30920029
+TK,13755,TIA,Tirana International Airport Mother Teresa,Tirana,Albania,41.41469955,19.72060013,6598,IST,Istanbul Airport,Istanbul,Turkey,41.275278,28.751944
+AH,1370,AZR,Touat Cheikh Sidi Mohamed Belkebir Airport,Adrar,Algeria,27.83760071,-0.186414003,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994
+AH,1370,AZR,Touat Cheikh Sidi Mohamed Belkebir Airport,Adrar,Algeria,27.83760071,-0.186414003,1713,BMW,Bordj Badji Mokhtar Airport,Bordj Badji Mokhtar,Algeria,21.375,0.923888981
+AH,1370,AZR,Touat Cheikh Sidi Mohamed Belkebir Airport,Adrar,Algeria,27.83760071,-0.186414003,2716,CZL,Mohamed Boudiaf International Airport,Constantine,Algeria,36.27600098,6.620389938
+AH,1370,AZR,Touat Cheikh Sidi Mohamed Belkebir Airport,Adrar,Algeria,27.83760071,-0.186414003,6474,INZ,In Salah Airport,In Salah,Algeria,27.25099945,2.512020111
+AH,1370,AZR,Touat Cheikh Sidi Mohamed Belkebir Airport,Adrar,Algeria,27.83760071,-0.186414003,10346,OGX,Ain el Beida Airport,Ouargla,Algeria,31.91720009,5.412779808
+AH,1370,AZR,Touat Cheikh Sidi Mohamed Belkebir Airport,Adrar,Algeria,27.83760071,-0.186414003,10622,ORN,Es Senia Airport,Oran,Algeria,35.62390137,-0.621182978
+4U,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,2224,CGN,Cologne Bonn Airport,Cologne,Germany,50.86589813,7.142739773
+AF,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,2139,CDG,Charles de Gaulle International Airport,Paris,France,49.012798,2.55
+AF,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,9275,MRS,Marseille Provence Airport,Marseille,France,43.43927192,5.221424103
+AH,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,707,AAE,Rabah Bitat Airport,Annaba,Algeria,36.822201,7.809174
+AH,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,738,ABJ,Port Bouet Airport,Abidjan,Cote d'Ivoire,5.261390209,-3.926290035
+AH,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,991,ALC,Alicante International Airport,Alicante,Spain,38.28219986,-0.558156013
+AH,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,1027,AMM,Queen Alia International Airport,Amman,Jordan,31.72260094,35.99319839
+AH,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,1370,AZR,Touat Cheikh Sidi Mohamed Belkebir Airport,Adrar,Algeria,27.83760071,-0.186414003
+AH,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,1444,BCN,Barcelona International Airport,Barcelona,Spain,41.2971,2.07846
+AH,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,1507,BEY,Beirut Rafic Hariri International Airport,Beirut,Lebanon,33.82089996,35.48839951
+AH,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,1613,BJA,Soummam Airport,Bejaja,Algeria,36.7120018,5.069920063
+AH,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,1653,BKO,Modibo Keita International Airport,Bamako,Mali,12.5335,-7.94994
+AH,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,1674,BLJ,Batna Airport,Batna,Algeria,35.7521019,6.308589935
+AH,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,1746,BOD,Bordeaux-Mérignac Airport,Bordeaux,France,44.82830048,-0.715556026
+AH,995,ALG,Houari Boumediene Airport,Algier,Algeria,36.69100189,3.215409994,1841,BRU,Brussels Airport,Brussels,Belgium,50.90140152,4.48443985
