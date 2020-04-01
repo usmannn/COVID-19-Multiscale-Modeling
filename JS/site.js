@@ -124,7 +124,15 @@ function handleCsvParsingComplete(results) {
 				latitude: datum.From_Latitude
 			},
 			attributes: datum,
-			enabled: true
+			symbol: {
+				type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+				color: [226, 119, 40],
+				outline: {
+					// autocasts as new SimpleLineSymbol()
+					color: [255, 255, 255],
+					width: 2
+				}
+			}
 		});
 	});
 	
