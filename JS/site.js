@@ -15,7 +15,7 @@ require([
 ], function(
   CanvasFlowmapLayer,
   Graphic,
-  EsriMap,
+  WebMap,
   MapView,
   LayerList,
   Expand,
