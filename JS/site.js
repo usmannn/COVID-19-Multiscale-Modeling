@@ -2,13 +2,19 @@ require([
   'Canvas-Flowmap-Layer/CanvasFlowmapLayer',
   'esri/Graphic',
   'esri/Map',
-  'esri/views/MapView',
+  'esri/views/MapView',,
+  "esri/widgets/LayerList",
+	"esri/widgets/Expand",
+	"esri/widgets/Legend",
   'dojo/domReady!'
 ], function(
   CanvasFlowmapLayer,
   Graphic,
   EsriMap,
-  MapView
+  MapView,
+  LayerList,
+  Expand,
+  Legend
 ) {
   var view = new MapView({
     container: 'viewDiv',
@@ -70,7 +76,21 @@ require([
       }
     });
 
+    canvasFlowmapLayer.title = "Flowmap Connections";
     view.map.layers.add(canvasFlowmapLayer);
+    
+    var layerList = new LayerList({
+      view: view
+    });		
+
+    const layersExpand = new Expand({
+      expandIconClass: "esri-icon-collection",
+      expandTooltip: "Layers",
+      view: view,
+      content: layerList,
+      expanded: false
+    });
+    view.ui.add(layersExpand, "top-left");
 
     // get access to the CanvasFlowmapLayer's layerView to make modifications
     // of which O-D relationships are flagged for path display
