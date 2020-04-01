@@ -10,6 +10,7 @@ require([
   'esri/TimeExtent',
   'esri/layers/support/TimeInfo',
   'esri/widgets/Popup',
+  'esri/widgets/TimeSlider',
   'dojo/domReady!'
 ], function(
   CanvasFlowmapLayer,
@@ -19,7 +20,8 @@ require([
   LayerList,
   Expand,
   Legend,
-  FeatureLayer
+  FeatureLayer,
+  TimeSlider
 ) {
   var view = new MapView({
     container: 'viewDiv',
