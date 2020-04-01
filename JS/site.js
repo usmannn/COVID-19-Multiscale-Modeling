@@ -75,23 +75,6 @@ var view = new MapView({
 
 //view.popup.defaultPopupTemplateEnabled  = true;
 
-	
-
-const layersExpand = new Expand({
-  expandIconClass: "esri-icon-collection",
-  expandTooltip: "Layers",
-  view: view,
-  content: layerList,
-  expanded: false
-});
-view.ui.add(layersExpand, "top-left");
-
-function dataLoaded(results)
-{
-	console.log("All done!");
-	console.log("Total rows: " + results.data.length);
-}
-
 view.when(function() {
 	console.log("map loaded...");
 	// here we use Papa Parse to load and read the CSV data
@@ -113,7 +96,7 @@ view.when(function() {
 	console.log("parsing data...");
 });
 
-var canvasFlowmapLayer;
+let canvasFlowmapLayer;
 function handleCsvParsingComplete(results) {
 	console.log("inside handleCsvParsingComplete...");
 	var graphicsFromCsvRows = results.data.map(function(datum) {
@@ -165,13 +148,22 @@ function handleCsvParsingComplete(results) {
 			}
 		}
 	});
-
-	view.map.layers.add(canvasFlowmapLayer);
 }
-	
+view.map.layers.add(canvasFlowmapLayer);
+
 var layerList = new LayerList({
 	view: view
-});	
+});
+
+const layersExpand = new Expand({
+	expandIconClass: "esri-icon-collection",
+	expandTooltip: "Layers",
+	view: view,
+	content: layerList,
+	expanded: false
+});
+view.ui.add(layersExpand, "top-left");
+	
 /*
 // time slider widget initialization
 const timeSlider = new TimeSlider({
