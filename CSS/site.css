@@ -15,7 +15,7 @@ html, body {
 	float: left;
 }
 
-#timeSlider {
+#timeSliderDiv {
 	position: absolute;
 	left: 100px;
 	right: 100px;
