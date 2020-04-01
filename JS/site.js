@@ -147,7 +147,7 @@ timeSlider.watch("timeExtent", function(value){
     timeExtent: value
   };
 });
-/*
+*/
 
 // Adding selected feature to restricted country list when removeFromPrediction is clicked 
 view.when(function() {
