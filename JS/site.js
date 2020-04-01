@@ -102,16 +102,64 @@ view.when(function() {
 		header: true,
 		dynamicTyping: true,
 		skipEmptyLines: true,
-		//complete: handleCsvParsingComplete
+		complete: handleCsvParsingComplete
+		/*
 		worker: true,
 		step: function(row) {
 			console.log("Row: " + row.data);
 		},
 		complete: dataLoaded
+		*/
 	});
 	console.log("parsing data...");
 });
 
+var canvasFlowmapLayer;
+function handleCsvParsingComplete(results) {
+	console.log("inside handleCsvParsingComplete...");
+	var graphicsFromCsvRows = results.data.map(function(datum) {
+		return new Graphic({
+			geometry: {
+				type: 'point',
+				longitude: datum.From_Longitude,
+				latitude: datum.From_Latitude
+			},
+			attributes: datum
+		});
+	});
+	
+	console.log("done creating graphics for csv rows...");
+
+	console.log(graphicsFromCsvRows.length);
+	console.log(graphicsFromCsvRows);
+
+	canvasFlowmapLayer = new CanvasFlowmapLayer({
+		// array of Graphics
+		graphics: graphicsFromCsvRows,
+
+		// information about the uniqe origin-destinatino fields and geometries
+		originAndDestinationFieldIds: {
+			originUniqueIdField: 'From_Airport_Code',
+			originGeometry: {
+				x: 'From_Longitude',
+				y: 'From_Latitude',
+				spatialReference: {
+				wkid: 4326
+			}
+			},
+			destinationUniqueIdField: 'To_Airport_Code',
+			destinationGeometry: {
+				x: 'To_Longitude',
+				y: 'To_Latitude',
+				spatialReference: {
+				wkid: 4326
+				}
+			}
+		}
+	});
+
+	view.map.layers.add(canvasFlowmapLayer);
+}
 /*
 // time slider widget initialization
 const timeSlider = new TimeSlider({
