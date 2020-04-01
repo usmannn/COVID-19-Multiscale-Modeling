@@ -163,7 +163,7 @@ const layersExpand = new Expand({
 	expanded: false
 });
 view.ui.add(layersExpand, "top-left");
-	
+}	
 /*
 // time slider widget initialization
 const timeSlider = new TimeSlider({
@@ -237,5 +237,5 @@ view.when(function() {
 
 var button_reconstruct = document.getElementById("construct_button");
 view.ui.add(button_reconstruct, "top-right");
-}
+
 });
