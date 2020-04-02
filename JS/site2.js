@@ -3,7 +3,7 @@ function removeEdge(entry)
 	var i = entry.parentNode.parentNode.rowIndex;
 	var entry_row = document.getElementById("edge_list_table").rows[i];
 	var entry_uid = entry_row.cells[0].innerHTML;
-	alert("Selected UID: " + entry_uid);
+	//alert("Selected UID: " + entry_uid);
 		
 	// if not already exist, add the id to selected_ids list
 	if(!selected_edge_ids .includes(entry_uid))
@@ -114,7 +114,7 @@ const timeSlider = new TimeSlider({
   view: view
 });
 
-console.log(timeSlider);
+//console.log(timeSlider);
 view.ui.add(timeSlider, "manual");
 
 // add the UI for titles, stats and chart.
