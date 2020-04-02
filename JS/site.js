@@ -1,15 +1,18 @@
 require([
   'Canvas-Flowmap-Layer/CanvasFlowmapLayer',
-  'esri/Graphic',
-  'esri/WebMap',
-  'esri/views/MapView',
-  'esri/widgets/LayerList',
-  'esri/widgets/Expand',
-  'esri/widgets/Legend',
-  'esri/layers/FeatureLayer',
-  'esri/widgets/Popup',
-  'esri/widgets/TimeSlider'//,
-  //'dojo/domReady!'
+  "esri/WebMap",
+  "esri/views/MapView",
+  "esri/widgets/LayerList",
+  "esri/widgets/TimeSlider",
+  "esri/widgets/Expand",
+  "esri/widgets/Legend",
+  "esri/core/Collection",
+  "esri/layers/FeatureLayer",
+  "esri/TimeExtent",
+  "esri/layers/support/TimeInfo",
+  "esri/widgets/Popup",
+  "esri/widgets/Feature",
+  "esri/views/layers/support/FeatureFilter"
 ], function(
   CanvasFlowmapLayer,
   Graphic,
