@@ -288,29 +288,23 @@ view.when(function() {
                   'SELECTION_NEW'
                 );
               }
-		    console.log(canvasFlowmapLayer);
-		    /*
-		 var popup_content = "";
-	    	 console.log(canvasFlowmapLayer.graphics.lenght);
-		 for(k=0; k < canvasFlowmapLayer.graphics.lenght; k++)
+	    
+	        console.log(canvasFlowmapLayer);
+		var edgesDiv = document.getElementById("edgesDiv");
+		edgesDiv.innerHTML = "<table><tr><th>From</th><th>To</th></tr>";
+		
+	    	 console.log(canvasFlowmapLayer.graphics.items.length);
+		 for(k=0; k < canvasFlowmapLayer.graphics.items.length; k++)
 		 {
-			 if(canvasFlowmapLayer.graphics[k].attributes.From_Airport_Code == result.graphic.attributes.From_Airport_Code)
+			 if(canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code == result.graphic.attributes.From_Airport_Code)
 			 {
-				popup_content +=  "From: " + canvasFlowmapLayer.graphics[k].attributes.From_Airport_Code + " To: " + canvasFlowmapLayer.graphics[k].attributes.To_Airport_Code + "\n";
+				edgesDiv.innerHTML +=  "<tr><td>" + canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport_Code + "</td></tr>";
 			 }
 		 }
-		 
-		view.popup.autoOpenEnabled = false;
-		view.popup.autoCloseEnabled = true;
-		view.popup.open({
-		    title: "Edges Info",
-		    location: event.mapPoint, // Set the location of the popup to the clicked location
-		    content: popup_content
-		  });
-		view.popup.visible = true;
 		    
-	      console.log(edges);
-	      */
+		 edgesDiv.innerHTML += "</table>
+		    
+	         view.ui.add(edgesDiv, "top-right");
             }
           });
         });
