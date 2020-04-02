@@ -288,10 +288,15 @@ view.when(function() {
                   'SELECTION_NEW'
                 );
               }
+		 var edges = canvasFlowmapLayer.graphics.find(function(graphic) {
+			return graphic.attributes.From_Airport_Code === result.graphic.attributes.From_Airport_Code;
+		      });
 		    
-	      var edges = canvasFlowmapLayer.graphics.find(function(graphic) {
-		return graphic.attributes.From_Airport_Code === result.graphic.attributes.From_Airport_Code;
-	      });
+		view.popup.open({
+		    title: "Edges Info",
+		    location: screenPoint, // Set the location of the popup to the clicked location
+		    content: edges.attributes
+		  }); 
 		    
 	      console.log(edges);
             }
