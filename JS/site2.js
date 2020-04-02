@@ -1,8 +1,29 @@
 function removeEdge(entry)
 {
-	var i = entry.parentNode.parentNode.rowIndex;	
-	var tmp = document.getElementById("edge_list_table").rows[i].cells[0].innerHTML;
-	alert("Selected UID: " + tmp);
+	var i = entry.parentNode.parentNode.rowIndex;
+	var entry_row = document.getElementById("edge_list_table").rows[i];
+	var entry_uid = entry_row.cells[0].innerHTML;
+	alert("Selected UID: " + entry_uid);
+		
+	// if not already exist, add the id to selected_ids list
+	if(!selected_edge_ids .includes(entry_uid))
+	{
+		selected_edge_ids.push(entry_uid);
+
+		// make an entry for the selected edge in restricted edges panel
+		var table = document.getElementById("edge_list_table");
+		var row = table.insertRow(-1);
+
+		var cell_id = row.insertCell(-1);
+		cell_id.innerHTML = entry_uid;
+		cell_id.style.visibility = 'hidden';
+
+		var cell_name = row.insertCell(-1);
+		cell_name.innerHTML = "From: <b>" + entry_row.cells[1].innerHTML + "</b> To: <b>" + entry_row.cells[2].innerHTML + "</b>";
+
+		var cell_action = row.insertCell(-1);
+		cell_action.innerHTML = "<button type=\"button\" class=\"btn btn-primary\" onclick=\"clearEdgeSelection(this)\"> Clear </button>";
+	}
 }
 
 require([
