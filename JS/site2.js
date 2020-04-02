@@ -288,6 +288,7 @@ view.when(function() {
                   'SELECTION_NEW'
                 );
               }
+		    console.log(canvasFlowmapLayer);
 		    /*
 		 var popup_content = "";
 	    	 console.log(canvasFlowmapLayer.graphics.lenght);
