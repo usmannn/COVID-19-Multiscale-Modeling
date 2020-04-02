@@ -287,8 +287,7 @@ view.when(function() {
                   result.graphic.attributes.isOrigin,
                   'SELECTION_NEW'
                 );
-              }
-	    
+		      
 	        console.log(canvasFlowmapLayer);
 		var edgesDiv = document.getElementById("edgesDiv");
 		var _html = "<table class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th>From</th><th>To</th><th>Connection</th></tr>";
@@ -306,6 +305,11 @@ view.when(function() {
 		 _html += "</table>";
 	    	  edgesDiv.innerHTML = _html;
 	         view.ui.add(edgesDiv, "top-right");
+	      }
+	      else{
+		     var edgesDiv = document.getElementById("edgesDiv");
+		     edgesDiv.innerHTML = "";
+	      }
             }
           });
         });
