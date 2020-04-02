@@ -100,16 +100,25 @@
 	
 	function processReconstruct()
 	{
-		var restricted_list = [];
+		var restricted_countries = [];
 		var entries = document.getElementById("table_restricted_countries").rows;
 		
 		for(k=1; k < entries.length; k++)
 		{	
 			var name = entries[k].cells[1].innerHTML;
-			restricted_list.push(name);
+			restricted_countries.push(name);
 		}
 		
-		reconstruct(restricted_list);
+		var restricted_connections = [];
+		var entries_c = document.getElementById("table_restricted_connections").rows;
+		
+		for(k=1; k < entries_c.length; k++)
+		{	
+			var name = entries_c[k].cells[0].innerHTML;
+			restricted_connections.push(name);
+		}
+		
+		reconstruct([restricted_countries, restricted_connections]);
 	}
 
 </script>
