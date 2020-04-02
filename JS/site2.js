@@ -288,15 +288,21 @@ view.when(function() {
                   'SELECTION_NEW'
                 );
               }
-		 var edges = canvasFlowmapLayer.graphics.find(function(graphic) {
-			return graphic.attributes.From_Airport_Code === result.graphic.attributes.From_Airport_Code;
-		      });
+		 var popup_content = "";
+		 for(k=0; k < canvasFlowmapLayer.graphics.lenght; k++)
+		 {
+			 if(canvasFlowmapLayer.graphics[k].attributes.From_Airport_Code === result.graphic.attributes.From_Airport_Code)
+			 {
+				popup_content +=  "From: " + canvasFlowmapLayer.graphics[k].attributes.From_Airport_Code + " To: " +canvasFlowmapLayer.graphics[k].attributes.To_Airport_Code + "\n";
+			 }
+		 }
+		 
 		view.popup.autoOpenEnabled = false;
 		view.popup.autoCloseEnabled = true;
 		view.popup.open({
 		    title: "Edges Info",
 		    location: event.mapPoint, // Set the location of the popup to the clicked location
-		    content: "From: " + result.graphic.attributes.From_Airport_Code + " To: " + result.graphic.attributes.To_Airport_Code
+		    content: popup_content
 		  });
 		view.popup.visible = true;
 		    
