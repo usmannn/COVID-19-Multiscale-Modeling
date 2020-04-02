@@ -112,7 +112,6 @@ timeSlider.watch("timeExtent", function(value){
   };
 });
 
-	/*
   view.when(function() {
     // here we use Papa Parse to load and read the CSV data
     // we could have also used another library like D3js to do the same
@@ -217,7 +216,7 @@ timeSlider.watch("timeExtent", function(value){
       });
     });
   }
-*/
+
   var layerList = new LayerList({
     view: view
   });		
