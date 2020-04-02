@@ -197,6 +197,14 @@ function getValues(response)
 	console.log("Results found: " + results.features.length);
     	console.log(results.features);
 }
+	
+function removeEdge(entry)
+{
+	var i = entry.parentNode.parentNode.rowIndex;	
+	var tmp = document.getElementById("edge_list_table").rows[i].cells[0].innerHTML;
+	alert("Selected UID: " + tmp);
+}
+
  
 view.when(function() {
     // here we use Papa Parse to load and read the CSV data
