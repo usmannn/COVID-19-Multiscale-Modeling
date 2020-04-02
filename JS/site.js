@@ -21,21 +21,8 @@ require([
   FeatureLayer,
   TimeSlider
 ) {
-  var view = new MapView({
-    container: 'viewDiv',
-    map: new WebMap({
-      // use a standard Web Mercator map projection basemap
-      //basemap: 'dark-gray-vector'
-      portalItem: {
-	id: "9abddb687df74894878b7cc1ef90a902"
-      }
-    }),
-    ui: {
-      components: ['zoom', 'attribution']
-    }
-  });
-  
-  // popup configuration
+    
+// popup configuration
 var popupTemplate = {
     title: "Country: {Country_name}",
       actions: [
@@ -75,7 +62,20 @@ var popupTemplate = {
     }
   );
   
-  view.map.layers.add(layer);
+ var view = new MapView({
+    container: 'viewDiv',
+    map: new WebMap({
+      // use a standard Web Mercator map projection basemap
+      //basemap: 'dark-gray-vector'
+      portalItem: {
+	id: "9abddb687df74894878b7cc1ef90a902"
+      },
+      layers: [layer]
+    }),
+    ui: {
+      components: ['zoom', 'attribution']
+    }
+  });
 
   // time slider widget initialization
 const timeSlider = new TimeSlider({
