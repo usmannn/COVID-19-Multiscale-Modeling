@@ -51,16 +51,12 @@ var popupTemplate = {
       type: "fields",
       fieldInfos: [                  
       {
-        fieldName: "Active",
+        fieldName: "infected_count",
         label: "Active Cases"
       },
       {
-        fieldName: "Death",
-        label: "Total Deaths"
-      },
-      {
-        fieldName: "Recover",
-        label: "Total Recovered"
+        fieldName: "healthy_count",
+        label: "Remaining Population"
       }
       ]
     }
