@@ -291,7 +291,7 @@ view.when(function() {
 	    
 	        console.log(canvasFlowmapLayer);
 		var edgesDiv = document.getElementById("edgesDiv");
-		var _html = "<table class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th>From</th><th>To</th><th></th></tr>";
+		var _html = "<table class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th>From</th><th>To</th><th>Connection</th></tr>";
 		
 	    	 console.log(canvasFlowmapLayer.graphics.items.length);
 		 for(k=0; k < canvasFlowmapLayer.graphics.items.length; k++)
