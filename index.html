@@ -44,6 +44,7 @@
 	<button type="button" class="btn btn-primary" id="construct_button" onclick="return processReconstruct();"> Re-Construct </button>
 	
 	<div id="sidebar" class="esri-widget">
+	    <div id="nodes" style="height:250px; overflow:auto;">
 		<table id="table_restricted_countries" class="table table-dark" style="color:white;" align="center">
 			<thead>
 				<tr>
@@ -53,6 +54,18 @@
 			<tbody>
 			</tbody>
 		</table>
+	    </div>
+	    <div id="edges" style="height:250px; overflow:auto;">
+	    	<table id="table_restricted_connections" class="table table-dark" style="color:white;" align="center">
+			<thead>
+				<tr>
+				  <td scope="col" colspan="3" style="text-align:center; font-weight: bold;">Restricted Connections</td>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+            </div>
 	</div>	
 	
 	<div id="timeSlider"></div>
