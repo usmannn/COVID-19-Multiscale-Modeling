@@ -291,10 +291,10 @@ view.when(function() {
 		 var edges = canvasFlowmapLayer.graphics.find(function(graphic) {
 			return graphic.attributes.From_Airport_Code === result.graphic.attributes.From_Airport_Code;
 		      });
-		    
+		view.popup.autoOpenEnabled = false;    
 		view.popup.open({
 		    title: "Edges Info",
-		    location: screenPoint, // Set the location of the popup to the clicked location
+		    location: event.mapPoint, // Set the location of the popup to the clicked location
 		    content: "From: " + result.graphic.attributes.From_Airport_Code + " To: " + result.graphic.attributes.To_Airport_Code
 		  });
 		view.popup.visible = true;
