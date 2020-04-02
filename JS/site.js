@@ -25,8 +25,8 @@ require([
   Legend,
   FeatureLayer,
   Popup,
-  Feature, 
-  FeatureFilter,
+  //Feature, 
+  //FeatureFilter,
   Graphic
 ) {
     
