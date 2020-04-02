@@ -25,8 +25,8 @@ require([
   Legend,
   FeatureLayer,
   Popup,
-  //Feature, 
-  //FeatureFilter,
+  Feature, 
+  FeatureFilter,
   Graphic
 ) {
     
@@ -66,7 +66,10 @@ var popupTemplate = {
       outFields: [ "*" ],
       useViewTime: true,
       popupEnabled: true,
-      popupTemplate: popupTemplate
+      popupTemplate: popupTemplate,
+      spatialReference: {
+	wkid: 4326
+      }
     }
   );
   
