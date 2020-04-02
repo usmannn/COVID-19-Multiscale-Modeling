@@ -267,7 +267,9 @@ view.when(function() {
         };
         view.hitTest(screenPoint).then(function(response) {
           if (!response.results.length) {
-            return;
+		  var edgesDiv = document.getElementById("edgesDiv");
+	     	  edgesDiv.innerHTML = "";
+            	  return;
           }
           // check if the graphic(s) belongs to the layer of interest
           // and mark them as selected for Bezier path display
