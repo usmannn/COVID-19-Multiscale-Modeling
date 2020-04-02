@@ -5,6 +5,7 @@
 	  <script>
 		// global list to store selection IDs
 		var selected_ids = [];
+	        var selected_edge_ids = [];
 	  </script>
     
 	<meta charset="utf-8">
@@ -89,13 +90,14 @@
 		document.getElementById("table_restricted_countries").deleteRow(i);	
 	}
 	
-	function removeEdge(entry)
+	function clearEdgeSelection(entry)
 	{
 		var i = entry.parentNode.parentNode.rowIndex;	
 		var tmp = document.getElementById("edge_list_table").rows[i].cells[0].innerHTML;
-		alert("Selected UID: " + tmp);
+		selected_edge_ids.splice(i-1, 1);
+		document.getElementById("edge_list_table").deleteRow(i);
 	}
-
+	
 	function processReconstruct()
 	{
 		var restricted_list = [];
