@@ -287,8 +287,9 @@ view.when(function() {
                   result.graphic.attributes.isOrigin,
                   'SELECTION_NEW'
                 );
+	      }
 		      
-	        console.log(canvasFlowmapLayer);
+	        //console.log(canvasFlowmapLayer);
 		var edgesDiv = document.getElementById("edgesDiv");
 		var _html = "<table class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th>From</th><th>To</th><th>Connection</th></tr>";
 		
