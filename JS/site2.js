@@ -293,7 +293,7 @@ view.when(function() {
 		      
 	        //console.log(canvasFlowmapLayer);
 		var edgesDiv = document.getElementById("edgesDiv");
-		var _html = "<table class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th class=\"edge-list-uid\">UID</th><th>From</th><th>To</th><th>Connection</th></tr>";
+		var _html = "<table id=\"edgeListTable\" class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th class=\"edge-list-uid\">UID</th><th>From</th><th>To</th><th>Connection</th></tr>";
 		
 	    	 console.log(canvasFlowmapLayer.graphics.items);
 		 console.log(canvasFlowmapLayer.graphics);
