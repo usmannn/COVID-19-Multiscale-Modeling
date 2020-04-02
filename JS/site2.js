@@ -179,20 +179,23 @@ view.on("click", function(event) {
 	response.results.forEach(function(result) {
 		if (result.graphic.layer === layer) {
 			alert("FeatureLayer object selected...");
-			
-			var query = layer.createQuery();
-			console.log(result.graphic.attributes.Country_name);
-  			query.where = "Country_name != " + result.graphic.attributes.Country_name;
-			
-			layer.queryFeatures(query)
-			    .then(function(response){
-			    console.log("Results found: " + results.features.length);
-			    console.log(results.features);
-			});
+						
+			layer.when(function() {
+				var query = layer.createQuery();
+				console.log(result.graphic.attributes.Country_name);
+				query.where = "Country_name != " + result.graphic.attributes.Country_name;
+				return layer.queryFeatures(query);
+			}).then(getValues);
 		}
    	});
     });
 });
+	
+function getValues(response)
+{
+	console.log("Results found: " + results.features.length);
+    	console.log(results.features);
+}
  
 view.when(function() {
     // here we use Papa Parse to load and read the CSV data
