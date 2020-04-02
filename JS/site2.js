@@ -181,9 +181,11 @@ view.on("click", function(event) {
 			alert("FeatureLayer object selected...");
 			
 			var query = layer.createQuery();
+			console.log(result.graphic.attributes.Country_name);
   			query.where = "Country_name != " + result.graphic.attributes.Country_name;
 			
-			layer.queryFeatures(query).then(function(results){
+			layer.queryFeatures(query)
+			    .then(function(response){
 			    console.log("Results found: " + results.features.length);
 			    console.log(results.features);
 			});
