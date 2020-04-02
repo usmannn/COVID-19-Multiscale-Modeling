@@ -16,13 +16,7 @@ require([
 ], function(
   CanvasFlowmapLayer,
   Graphic,
-  WebMap,
-  MapView,
-  LayerList,
-  Expand,
-  Legend,
-  FeatureLayer,
-  TimeSlider
+  WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup, Feature, FeatureFilter
 ) {
     
 // popup configuration
