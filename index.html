@@ -93,7 +93,7 @@
 	function clearEdgeSelection(entry)
 	{
 		var i = entry.parentNode.parentNode.rowIndex;	
-		var tmp = document.getElementById("edge_list_table").rows[i].cells[0].innerHTML;
+		var tmp = document.getElementById("table_restricted_connections").rows[i].cells[0].innerHTML;
 		selected_edge_ids.splice(i-1, 1);
 		document.getElementById("edge_list_table").deleteRow(i);
 	}
