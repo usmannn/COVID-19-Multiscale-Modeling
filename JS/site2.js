@@ -291,14 +291,15 @@ view.when(function() {
 	    
 	        console.log(canvasFlowmapLayer);
 		var edgesDiv = document.getElementById("edgesDiv");
-		var _html = "<table class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th>From</th><th>To</th></tr>";
+		var _html = "<table class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th>From</th><th>To</th><th></th></tr>";
 		
 	    	 console.log(canvasFlowmapLayer.graphics.items.length);
 		 for(k=0; k < canvasFlowmapLayer.graphics.items.length; k++)
 		 {
 			 if(canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code == result.graphic.attributes.From_Airport_Code)
 			 {
-				_html +=  "<tr><td>" + canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport_Code + "</td></tr>";
+				_html +=  "<tr><td>" + canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport_Code + "</td>";
+				_html += "<td><button type=\"button\" class=\"btn btn-primary\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
 			 }
 		 }
 		    
