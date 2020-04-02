@@ -163,6 +163,26 @@ view.ui.add(layersExpand, "top-left");
 view.ui.add("titleDiv", "top-right");
 var button_reconstruct = document.getElementById("construct_button");
 view.ui.add(button_reconstruct, "top-right");
+	
+// Listen to the click event on the map view.
+view.on("click", function(event) {
+   var screenPoint = {
+	x: event.x,
+	y: event.y
+   };
+   view.hitTest(screenPoint).then(function(response) {
+	if (!response.results.length) {
+		return;
+	}
+	// check if the graphic(s) belongs to the layer of interest
+	// and mark them as selected for Bezier path display
+	response.results.forEach(function(result) {
+		if (result.graphic.layer === layer) {
+			alert("FeatureLayer object selected...");
+		}
+   	}
+    });
+});
  
 view.when(function() {
     // here we use Papa Parse to load and read the CSV data
