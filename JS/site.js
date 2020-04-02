@@ -15,14 +15,17 @@ require([
   "esri/views/layers/support/FeatureFilter"
 ], function(
   CanvasFlowmapLayer,
-  Graphic,
   WebMap,
   MapView,
   LayerList,
+  TimeSlider,
   Expand,
+  Collection,
   Legend,
   FeatureLayer,
-  TimeSlider
+  Popup,
+  Feature, 
+  FeatureFilter
 ) {
     
 // popup configuration
