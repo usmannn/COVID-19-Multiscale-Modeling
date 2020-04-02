@@ -11,7 +11,7 @@ function removeEdge(entry)
 		selected_edge_ids.push(entry_uid);
 
 		// make an entry for the selected edge in restricted edges panel
-		var table = document.getElementById("edge_list_table");
+		var table = document.getElementById("table_restricted_connections");
 		var row = table.insertRow(-1);
 
 		var cell_id = row.insertCell(-1);
