@@ -293,7 +293,7 @@ view.when(function() {
 		      
 	        //console.log(canvasFlowmapLayer);
 		var edgesDiv = document.getElementById("edgesDiv");
-		var _html = "<table class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th>From</th><th>To</th><th>Connection</th></tr>";
+		var _html = "<table class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th class=\"edge-list-uid\">UID</th><th>From</th><th>To</th><th>Connection</th></tr>";
 		
 	    	 console.log(canvasFlowmapLayer.graphics.items);
 		 console.log(canvasFlowmapLayer.graphics);
@@ -301,13 +301,14 @@ view.when(function() {
 		 {
 			 if(canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code == result.graphic.attributes.From_Airport_Code)
 			 {
-				_html +=  "<tr><td>" + canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport_Code + "</td>";
+				_html +=  "<tr><td>" + canvasFlowmapLayer.graphics.items[k].uid + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport_Code + "</td>";
 				_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(canvasFlowmapLayer.graphics.items[k].attributes)\"> Remove </button></td></tr>";
 			 }
 		 }
 		    
 		 _html += "</table>";
 	    	  edgesDiv.innerHTML = _html;
+		 document.getElementByID("edge-list-uid").style.visibility = "hidden";
 	         view.ui.add(edgesDiv, "top-right");
 	      }
 	      else{
