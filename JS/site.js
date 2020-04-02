@@ -77,8 +77,8 @@ var popupTemplate = {
       //basemap: 'dark-gray-vector'
       portalItem: {
 	id: "9abddb687df74894878b7cc1ef90a902"
-      },
-      layers: [layer]
+      }//,
+      //layers: [layer]
     }),
     ui: {
       components: ['zoom', 'attribution']
@@ -171,6 +171,7 @@ timeSlider.watch("timeExtent", function(value){
 
     canvasFlowmapLayer.title = "Flowmap Connections";
     view.map.layers.add(canvasFlowmapLayer);
+    view.map.layers.add(layer);
         
     // get access to the CanvasFlowmapLayer's layerView to make modifications
     // of which O-D relationships are flagged for path display
