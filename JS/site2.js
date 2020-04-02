@@ -295,8 +295,9 @@ view.when(function() {
 		view.popup.open({
 		    title: "Edges Info",
 		    location: screenPoint, // Set the location of the popup to the clicked location
-		    content: edges.attributes
-		  }); 
+		    content: "From: " + result.graphic.attributes.From_Airport_Code + " To: " + result.graphic.attributes.To_Airport_Code
+		  });
+		view.popup.visible = true;
 		    
 	      console.log(edges);
             }
