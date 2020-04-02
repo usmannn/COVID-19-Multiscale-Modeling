@@ -311,7 +311,6 @@ view.when(function() {
 		     var edgesDiv = document.getElementById("edgesDiv");
 		     edgesDiv.innerHTML = "";
 	      }
-            }
           });
         });
       });
