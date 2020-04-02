@@ -8,8 +8,8 @@ require([
   'esri/widgets/Legend',
   'esri/layers/FeatureLayer',
   'esri/widgets/Popup',
-  'esri/widgets/TimeSlider',
-  'dojo/domReady!'
+  'esri/widgets/TimeSlider'//,
+  //'dojo/domReady!'
 ], function(
   CanvasFlowmapLayer,
   Graphic,
