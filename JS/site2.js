@@ -301,7 +301,7 @@ view.when(function() {
 			 if(canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code == result.graphic.attributes.From_Airport_Code)
 			 {
 				_html +=  "<tr><td>" + canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport_Code + "</td>";
-				_html += "<td><button type=\"button\" class=\"btn btn-secondary\" onclick=\"removeEdge(canvasFlowmapLayer.graphics.items[k].attributes)\"> Remove </button></td></tr>";
+				_html += "<td><button type=\"button\" class=\"btn btn-dark\" onclick=\"removeEdge(canvasFlowmapLayer.graphics.items[k].attributes)\"> Remove </button></td></tr>";
 			 }
 		 }
 		    
