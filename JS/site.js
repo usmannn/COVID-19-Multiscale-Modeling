@@ -12,7 +12,8 @@ require([
   "esri/layers/support/TimeInfo",
   "esri/widgets/Popup",
   "esri/widgets/Feature",
-  "esri/views/layers/support/FeatureFilter"
+  "esri/views/layers/support/FeatureFilter",
+  "esri/Graphic"
 ], function(
   CanvasFlowmapLayer,
   WebMap,
@@ -25,7 +26,8 @@ require([
   FeatureLayer,
   Popup,
   Feature, 
-  FeatureFilter
+  FeatureFilter,
+  Graphic
 ) {
     
 // popup configuration
