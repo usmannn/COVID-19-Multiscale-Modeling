@@ -178,7 +178,7 @@ view.on("click", function(event) {
 	// and mark them as selected for Bezier path display
 	response.results.forEach(function(result) {
 		if (result.graphic.layer === layer) {
-			alert("FeatureLayer object selected...");
+			//alert("FeatureLayer object selected...");
 						
 			layer.when(function() {
 				var query = layer.createQuery();
@@ -288,6 +288,12 @@ view.when(function() {
                   'SELECTION_NEW'
                 );
               }
+		    
+	      var edges = canvasFlowmapLayer.graphics.find(function(graphic) {
+		return graphic.attributes.From_Airport_Code === result.graphic.attributes.From_Airport_Code;
+	      });
+		    
+	      console.log(edges);
             }
           });
         });
