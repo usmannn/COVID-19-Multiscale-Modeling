@@ -3,24 +3,24 @@ require([
   'esri/Graphic',
   'esri/WebMap',
   'esri/views/MapView',
+  'esri/widgets/TimeSlider',
   'esri/widgets/LayerList',
   'esri/widgets/Expand',
   'esri/widgets/Legend',
   'esri/layers/FeatureLayer',
   'esri/widgets/Popup',
-  'esri/widgets/TimeSlider',
   'dojo/domReady!'
 ], function(
   CanvasFlowmapLayer,
   Graphic,
   WebMap,
   MapView,
+  TimeSlider,
   LayerList,
   Expand,
   Legend,
   FeatureLayer,
-  Popup,
-  TimeSlider
+  Popup
 ) {
     
 // popup configuration
