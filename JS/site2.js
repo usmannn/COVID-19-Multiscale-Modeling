@@ -302,7 +302,7 @@ view.when(function() {
 			 }
 		 }
 		    
-		 edgesDiv.innerHTML += "</table>
+		 edgesDiv.innerHTML += "</table>";
 		    
 	         view.ui.add(edgesDiv, "top-right");
             }
