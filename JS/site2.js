@@ -259,7 +259,7 @@ view.when(function() {
       // establish a hitTest to try to select new O/D relationships
       // for path display from user interaction;
       // try either 'pointer-move' or 'click' to see the effects
-      view.on('pointer-move', function(event) {
+      view.on('click', function(event) {
       // view.on('click', function(event) {
         var screenPoint = {
           x: event.x,
