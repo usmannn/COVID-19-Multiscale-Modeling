@@ -317,10 +317,5 @@ view.when(function() {
         });
       });
     });
-  }
-	
-	 function removeEdge(item)
-	{
-		alert(item);
-	}
+  } 
 });
