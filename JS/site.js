@@ -7,8 +7,6 @@ require([
   'esri/widgets/Expand',
   'esri/widgets/Legend',
   'esri/layers/FeatureLayer',
-  'esri/TimeExtent',
-  'esri/layers/support/TimeInfo',
   'esri/widgets/Popup',
   'esri/widgets/TimeSlider',
   'dojo/domReady!'
