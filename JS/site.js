@@ -1,22 +1,25 @@
 require([
   'Canvas-Flowmap-Layer/CanvasFlowmapLayer',
-  "esri/WebMap",
-  "esri/views/MapView",
-  "esri/widgets/LayerList",
-  "esri/widgets/TimeSlider",
-  "esri/widgets/Expand",
-  "esri/widgets/Legend",
-  "esri/core/Collection",
-  "esri/layers/FeatureLayer",
-  "esri/TimeExtent",
-  "esri/layers/support/TimeInfo",
-  "esri/widgets/Popup",
-  "esri/widgets/Feature",
-  "esri/views/layers/support/FeatureFilter"
+  'esri/Graphic',
+  'esri/WebMap',
+  'esri/views/MapView',
+  'esri/widgets/LayerList',
+  'esri/widgets/Expand',
+  'esri/widgets/Legend',
+  'esri/layers/FeatureLayer',
+  'esri/widgets/Popup',
+  'esri/widgets/TimeSlider',
+  'dojo/domReady!'
 ], function(
   CanvasFlowmapLayer,
   Graphic,
-  WebMap, MapView, LayerList, TimeSlider, Expand, Collection, Legend, FeatureLayer, Popup, Feature, FeatureFilter
+  WebMap,
+  MapView,
+  LayerList,
+  Expand,
+  Legend,
+  FeatureLayer,
+  TimeSlider
 ) {
     
 // popup configuration
@@ -109,6 +112,7 @@ timeSlider.watch("timeExtent", function(value){
   };
 });
 
+	/*
   view.when(function() {
     // here we use Papa Parse to load and read the CSV data
     // we could have also used another library like D3js to do the same
@@ -120,7 +124,6 @@ timeSlider.watch("timeExtent", function(value){
       complete: handleCsvParsingComplete
     });
   });
-
   function handleCsvParsingComplete(results) {
     var graphicsFromCsvRows = results.data.map(function(datum) {
       return new Graphic({
@@ -132,11 +135,9 @@ timeSlider.watch("timeExtent", function(value){
         attributes: datum
       });
     });
-
     var canvasFlowmapLayer = new CanvasFlowmapLayer({
       // array of Graphics
       graphics: graphicsFromCsvRows,
-
       // information about the uniqe origin-destinatino fields and geometries
       originAndDestinationFieldIds: {
         originUniqueIdField: 'From_Airport_Code',
@@ -157,7 +158,6 @@ timeSlider.watch("timeExtent", function(value){
         }
       }
     });
-
     canvasFlowmapLayer.title = "Flowmap Connections";
     view.map.layers.add(canvasFlowmapLayer);
         
@@ -167,13 +167,10 @@ timeSlider.watch("timeExtent", function(value){
       // automatically select a few ORIGIN locations for path display
       // in order to demonstrate the flowmap functionality,
       // without being overwhelming and showing all O-D relationships
-
       // Herat Airport
       canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 5539, true, 'SELECTION_NEW');
-
       // Tirana International Airport Mother Teresa
       canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 13755, true, 'SELECTION_ADD');
-
       // establish a hitTest to try to select new O/D relationships
       // for path display from user interaction;
       // try either 'pointer-move' or 'click' to see the effects
@@ -187,7 +184,6 @@ timeSlider.watch("timeExtent", function(value){
           if (!response.results.length) {
             return;
           }
-
           // check if the graphic(s) belongs to the layer of interest
           // and mark them as selected for Bezier path display
           response.results.forEach(function(result) {
@@ -213,7 +209,7 @@ timeSlider.watch("timeExtent", function(value){
       });
     });
   }
-
+*/
   var layerList = new LayerList({
     view: view
   });		
