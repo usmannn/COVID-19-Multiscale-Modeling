@@ -77,8 +77,9 @@
 	
 	function removeEdge(item)
 	{
-		console.log(item);
-		alert(item);
+		var i = entry.parentNode.parentNode.rowIndex;	
+		var tmp = document.getElementById("edge_list_table").rows[i].cells[0].innerHTML;
+		alert("Selected UID: " + tmp);
 	}
 
 	function processReconstruct()
