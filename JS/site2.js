@@ -291,19 +291,19 @@ view.when(function() {
 	    
 	        console.log(canvasFlowmapLayer);
 		var edgesDiv = document.getElementById("edgesDiv");
-		edgesDiv.innerHTML = "<table><tr><th>From</th><th>To</th></tr>";
+		var _html = "<table><tr><th>From</th><th>To</th></tr>";
 		
 	    	 console.log(canvasFlowmapLayer.graphics.items.length);
 		 for(k=0; k < canvasFlowmapLayer.graphics.items.length; k++)
 		 {
 			 if(canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code == result.graphic.attributes.From_Airport_Code)
 			 {
-				edgesDiv.innerHTML +=  "<tr><td>" + canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport_Code + "</td></tr>";
+				_html +=  "<tr><td>" + canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport_Code + "</td></tr>";
 			 }
 		 }
 		    
-		 edgesDiv.innerHTML += "</table>";
-		    
+		 _html += "</table>";
+	    	  edgesDiv.innerHTML = _html;
 	         view.ui.add(edgesDiv, "top-right");
             }
           });
