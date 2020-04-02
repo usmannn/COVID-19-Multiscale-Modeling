@@ -288,6 +288,7 @@ view.when(function() {
                   'SELECTION_NEW'
                 );
               }
+		    /*
 		 var popup_content = "";
 	    	 console.log(canvasFlowmapLayer.graphics.lenght);
 		 for(k=0; k < canvasFlowmapLayer.graphics.lenght; k++)
@@ -308,6 +309,7 @@ view.when(function() {
 		view.popup.visible = true;
 		    
 	      console.log(edges);
+	      */
             }
           });
         });
