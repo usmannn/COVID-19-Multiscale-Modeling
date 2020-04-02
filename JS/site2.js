@@ -183,7 +183,7 @@ view.on("click", function(event) {
 			layer.when(function() {
 				var query = layer.createQuery();
 				console.log(result.graphic.attributes.Country_name);
-				query.where = "Country_name != " + result.graphic.attributes.Country_name;
+				query.where = "Country_name <> " + result.graphic.attributes.Country_name;
 				return layer.queryFeatures(query);
 			}).then(getValues);
 		}
