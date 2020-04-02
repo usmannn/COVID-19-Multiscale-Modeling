@@ -180,7 +180,7 @@ view.on("click", function(event) {
 		if (result.graphic.layer === layer) {
 			alert("FeatureLayer object selected...");
 		}
-   	}
+   	});
     });
 });
  
