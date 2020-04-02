@@ -327,7 +327,9 @@ view.when(function() {
 		 console.log(canvasFlowmapLayer.graphics);
 		 for(k=0; k < canvasFlowmapLayer.graphics.items.length; k++)
 		 {
-			 if(!canvasFlowmapLayer.graphics.items[k].attributes.isOrigin && (canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code == result.graphic.attributes.From_Airport_Code))
+			 if(!canvasFlowmapLayer.graphics.items[k].attributes.isOrigin && 
+			    result.graphic.attributes.isOrigin && 
+			    (canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code == result.graphic.attributes.From_Airport_Code))
 			 {
 				_html +=  "<tr><td style=\"visibility:hidden;\">" + canvasFlowmapLayer.graphics.items[k].uid + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport_Code + "</td>";
 				_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
