@@ -28,7 +28,7 @@ html, body {
 	text-align: center;
 }
 #edgesDiv {
-	height: 50%;
+	height: 250px;
 	overflow:auto;
 }
 
