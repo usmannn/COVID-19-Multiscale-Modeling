@@ -219,9 +219,9 @@ view.when(function() {
       // in order to demonstrate the flowmap functionality,
       // without being overwhelming and showing all O-D relationships
       // Herat Airport
-      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 5539, true, 'SELECTION_NEW');
+      //canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 5539, true, 'SELECTION_NEW');
       // Tirana International Airport Mother Teresa
-      canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 13755, true, 'SELECTION_ADD');
+      //canvasFlowmapLayerView.selectGraphicsForPathDisplayById('From_Airport_Code', 13755, true, 'SELECTION_ADD');
       // establish a hitTest to try to select new O/D relationships
       // for path display from user interaction;
       // try either 'pointer-move' or 'click' to see the effects
