@@ -289,11 +289,12 @@ view.when(function() {
                 );
               }
 		 var popup_content = "";
+	    	 console.log(canvasFlowmapLayer.graphics.lenght);
 		 for(k=0; k < canvasFlowmapLayer.graphics.lenght; k++)
 		 {
-			 if(canvasFlowmapLayer.graphics[k].attributes.From_Airport_Code === result.graphic.attributes.From_Airport_Code)
+			 if(canvasFlowmapLayer.graphics[k].attributes.From_Airport_Code == result.graphic.attributes.From_Airport_Code)
 			 {
-				popup_content +=  "From: " + canvasFlowmapLayer.graphics[k].attributes.From_Airport_Code + " To: " +canvasFlowmapLayer.graphics[k].attributes.To_Airport_Code + "\n";
+				popup_content +=  "From: " + canvasFlowmapLayer.graphics[k].attributes.From_Airport_Code + " To: " + canvasFlowmapLayer.graphics[k].attributes.To_Airport_Code + "\n";
 			 }
 		 }
 		 
