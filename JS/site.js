@@ -68,7 +68,7 @@ var popupTemplate = {
 };
 		
   //const layer = webmap.findLayerById('40b129da4bd84efa9993b768b8c6ead6');		
-  var featureLayer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
+  var layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
     {
       outFields: [ "*" ],
       useViewTime: true,
@@ -77,30 +77,42 @@ var popupTemplate = {
     }
   );
   
-  view.map.layers.add(featureLayer);
+  view.map.layers.add(layer);
 
   // time slider widget initialization
-  const timeSlider = new TimeSlider({
-    container: 'timeSliderDiv',
-    //mode: "time-window",
-    mode: "instant",
-    view: view
-  });
-  
-  // accessing layer with temporal data from the webmap
-  let timeLayerView;		
-  view.whenLayerView(featureLayer).then(function(lv) {
-    timeLayerView = lv;
-    const fullTimeExtent = featureLayer.timeInfo.fullTimeExtent;
-    // set up time slider properties
-    timeSlider.fullTimeExtent = fullTimeExtent;
-    timeSlider.stops = {
-      interval: {
-	value: 1,
-	unit: "days"
-      }
-    };
-  });
+const timeSlider = new TimeSlider({
+  container: "timeSlider",
+  //mode: "time-window",
+  mode: "instant",
+  view: view
+});
+
+console.log(timeSlider);
+view.ui.add(timeSlider, "manual");
+
+// add the UI for titles, stats and chart.
+view.ui.add("titleDiv", "top-right");
+
+// accessing layer with temporal data from the webmap
+let timeLayerView;		
+view.whenLayerView(layer).then(function(lv) {
+  timeLayerView = lv;
+  const fullTimeExtent = layer.timeInfo.fullTimeExtent;
+  // set up time slider properties
+  timeSlider.fullTimeExtent = fullTimeExtent;
+  timeSlider.stops = {
+	interval: {
+		value: 1,
+		unit: "days"
+	}
+  };
+});
+
+timeSlider.watch("timeExtent", function(value){
+  timeLayerView.filter = {
+    timeExtent: value
+  };
+});
 
   view.when(function() {
     // here we use Papa Parse to load and read the CSV data
