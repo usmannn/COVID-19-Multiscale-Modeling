@@ -19,6 +19,7 @@ require([
   Expand,
   Legend,
   FeatureLayer,
+  Popup,
   TimeSlider
 ) {
     
