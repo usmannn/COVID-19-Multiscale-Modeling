@@ -278,14 +278,14 @@ view.when(function() {
                   'From_Airport_Code',
                   result.graphic.attributes.From_Airport_Code,
                   result.graphic.attributes.isOrigin,
-                  'SELECTION_NEW'
+                  'SELECTION_ADD'
                 );
               } else {
                 canvasFlowmapLayerView.selectGraphicsForPathDisplayById(
                   'To_Airport_Code',
                   result.graphic.attributes.To_Airport_Code,
                   result.graphic.attributes.isOrigin,
-                  'SELECTION_NEW'
+                  'SELECTION_ADD'
                 );
               }
 	    
