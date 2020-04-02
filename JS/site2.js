@@ -179,6 +179,14 @@ view.on("click", function(event) {
 	response.results.forEach(function(result) {
 		if (result.graphic.layer === layer) {
 			alert("FeatureLayer object selected...");
+			
+			var query = layer.createQuery();
+  			query.where = "Country_name != " + result.graphic.attributes.Country_name;
+			
+			layer.queryFeatures(query).then(function(results){
+			    console.log("Results found: " + results.features.length);
+			    console.log(results.features);
+			});
 		}
    	});
     });
