@@ -310,14 +310,14 @@ view.when(function() {
                   result.graphic.attributes.isOrigin,
                   'SELECTION_NEW'
                 );
-              } else {
+              } /*else {
                 canvasFlowmapLayerView.selectGraphicsForPathDisplayById(
                   'To_Airport_Code',
                   result.graphic.attributes.To_Airport_Code,
                   result.graphic.attributes.isOrigin,
                   'SELECTION_NEW'
                 );
-	      }
+	      }*/
 		      
 	        //console.log(canvasFlowmapLayer);
 		var edgesDiv = document.getElementById("edgesDiv");
