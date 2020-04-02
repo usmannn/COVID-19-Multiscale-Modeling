@@ -12,22 +12,17 @@ require([
   "esri/layers/support/TimeInfo",
   "esri/widgets/Popup",
   "esri/widgets/Feature",
-  "esri/views/layers/support/FeatureFilter",
-  "esri/Graphic"
+  "esri/views/layers/support/FeatureFilter"
 ], function(
   CanvasFlowmapLayer,
+  Graphic,
   WebMap,
   MapView,
   LayerList,
-  TimeSlider,
   Expand,
-  Collection,
   Legend,
   FeatureLayer,
-  Popup,
-  Feature, 
-  FeatureFilter,
-  Graphic
+  TimeSlider
 ) {
     
 // popup configuration
@@ -66,10 +61,7 @@ var popupTemplate = {
       outFields: [ "*" ],
       useViewTime: true,
       popupEnabled: true,
-      popupTemplate: popupTemplate,
-      spatialReference: {
-	wkid: 4326
-      }
+      popupTemplate: popupTemplate
     }
   );
   
@@ -80,8 +72,8 @@ var popupTemplate = {
       //basemap: 'dark-gray-vector'
       portalItem: {
 	id: "9abddb687df74894878b7cc1ef90a902"
-      }//,
-      //layers: [layer]
+      },
+      layers: [layer]
     }),
     ui: {
       components: ['zoom', 'attribution']
@@ -174,7 +166,6 @@ timeSlider.watch("timeExtent", function(value){
 
     canvasFlowmapLayer.title = "Flowmap Connections";
     view.map.layers.add(canvasFlowmapLayer);
-    view.map.layers.add(layer);
         
     // get access to the CanvasFlowmapLayer's layerView to make modifications
     // of which O-D relationships are flagged for path display
