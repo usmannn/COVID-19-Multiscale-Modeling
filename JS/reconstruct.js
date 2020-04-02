@@ -4,7 +4,7 @@
  
 function reconstruct(restricted_list)
 {
-	alert("Reconstruct the Network (not implemented)\nExcluded Countries: " + restricted_list);
+	alert("Reconstruct the Network (not implemented)\nExcluded Countries: " + restricted_list[0] + "\nExcluded Connections: " + restricted_list[1]);
 	
 	
 	// In this feature layer, the new prediction data needs to be updated
