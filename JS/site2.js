@@ -308,8 +308,9 @@ view.when(function() {
 		    
 		 _html += "</table>";
 	    	  edgesDiv.innerHTML = _html;
-		 document.getElementByID("edge-list-uid").style.visibility = "hidden";
-	         view.ui.add(edgesDiv, "top-right");
+		  view.ui.add(edgesDiv, "top-right");
+	    	  //document.getElementByID("edge-list-uid").style.visibility = "hidden";
+	        
 	      }
 	      else{
 		     var edgesDiv = document.getElementById("edgesDiv");
