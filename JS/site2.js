@@ -363,11 +363,11 @@ view.when(function() {
 			         geographicLine.addPath([[result.graphic.attributes.From_Latitude,result.graphic.attributes.From_Longitude],
 							 [canvasFlowmapLayer.graphics.items[k].attributes.To_Latitude, canvasFlowmapLayer.graphics.items[k].attributes.To_Longitude]]);
 			         var line = geometryEngine.geodesicDensify(geographicLine, 5000);
-			         view.map.getLayer("connections").add(new Graphic(
+			         view.map.getLayer("connections").add(new Graphic({
 				   geometry: line,
 				   symbol: new SimpleLineSymbol(),
 				   attributes: {id: z}
-			         ));
+				 }));
 				 z++;
 			 }
 		 }
