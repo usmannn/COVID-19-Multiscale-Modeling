@@ -361,13 +361,14 @@ view.when(function() {
 				_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
 				 
 				 // draw lines
-				 var geographicLine = new Polyline(new esri.SpatialReference(4326));
-			         geographicLine.addPath([[result.graphic.attributes.From_Latitude,result.graphic.attributes.From_Longitude],
-							 [canvasFlowmapLayer.graphics.items[k].attributes.To_Latitude, canvasFlowmapLayer.graphics.items[k].attributes.To_Longitude]]);
+				 var geographicLine = new Polyline();
+			         geographicLine.addPath([new Point(result.graphic.attributes.From_Longitude,result.graphic.attributes.From_Latitude),
+							 new Point(canvasFlowmapLayer.graphics.items[k].attributes.To_Longitude,canvasFlowmapLayer.graphics.items[k].attributes.To_Latitude)]);
 			         var line = geometryEngine.geodesicDensify(geographicLine, 5000);
+				 var lineSymbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new dojo.Color([0,0,255,0.5]),3);
 			         view.map.getLayer("connections").add(new Graphic({
 				   geometry: line,
-				   symbol: new SimpleLineSymbol(),
+				   symbol: lineSymbol,
 				   attributes: {id: z}
 				 }));
 				 z++;
