@@ -367,7 +367,7 @@ view.when(function() {
 							 new Point(canvasFlowmapLayer.graphics.items[k].attributes.To_Longitude,canvasFlowmapLayer.graphics.items[k].attributes.To_Latitude)]);
 			         var line = geometryEngine.geodesicDensify(geographicLine, 5000);
 				 var lineSymbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new dojo.Color([0,0,255,0.5]),3);
-			         view.map.getLayer("connections").add(new Graphic({
+			         view.map.findLayerById("connections").add(new Graphic({
 				   geometry: line,
 				   symbol: lineSymbol,
 				   attributes: {id: z}
