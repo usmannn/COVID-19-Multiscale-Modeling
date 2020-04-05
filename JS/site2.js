@@ -37,6 +37,10 @@ require([
   'esri/widgets/Legend',
   'esri/layers/FeatureLayer',
   'esri/widgets/Popup',
+  'esri/geometry/Polyline',
+  'esri/views/draw/Draw',
+  'esri/geometry/geometryEngine',
+  'esri/symbols/SimpleLineSymbol',
   'dojo/domReady!'
 ], function(
   CanvasFlowmapLayer,
@@ -48,7 +52,11 @@ require([
   Expand,
   Legend,
   FeatureLayer,
-  Popup
+  Popup,
+  Polyline,
+  Draw,
+  geometryEngine,
+  SimpleLineSymbol
 ) {
     
 // popup configuration
@@ -191,6 +199,12 @@ view.ui.add(layersExpand, "top-left");
 view.ui.add("titleDiv", "top-right");
 var button_reconstruct = document.getElementById("construct_button");
 view.ui.add(button_reconstruct, "top-right");
+
+// test: to render edges (polylines) between nodes	
+view.map.addLayer(new GraphicsLayer({ id: "connections" }));
+const draw = new Draw({
+          view: view
+        });
 	
 // Listen to the click event on the map view.
 view.on("click", function(event) {
@@ -318,13 +332,23 @@ view.when(function() {
                   'SELECTION_NEW'
                 );
 	      }
-		      
+		
+	      /*var flowCurves: {
+			strokeStyle: 'rgba(255, 0, 51, 0.8)',
+			lineWidth: 0.75,
+			lineCap: 'round',
+			shadowColor: 'rgb(255, 0, 51)',
+			shadowBlur: 1.5
+		      };
+	       */
+		    
 	        //console.log(canvasFlowmapLayer);
 		var edgesDiv = document.getElementById("edgesDiv");
 		var _html = "<table id=\"edge_list_table\" class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th style=\"visibility:hidden;\">UID</th><th>From</th><th>To</th><th>Connection</th></tr>";
 		
 	    	 console.log(canvasFlowmapLayer.graphics.items);
 		 console.log(canvasFlowmapLayer.graphics);
+		 var z=1;
 		 for(k=0; k < canvasFlowmapLayer.graphics.items.length; k++)
 		 {
 			 if(!canvasFlowmapLayer.graphics.items[k].attributes.isOrigin && 
@@ -333,6 +357,18 @@ view.when(function() {
 			 {
 				_html +=  "<tr><td style=\"visibility:hidden;\">" + canvasFlowmapLayer.graphics.items[k].uid + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport_Code + "</td>";
 				_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
+				 
+				 // draw lines
+				 var geographicLine = new Polyline(new esri.SpatialReference(4326));
+			         geographicLine.addPath([[result.graphic.attributes.From_Latitude,result.graphic.attributes.From_Longitude],
+							 [canvasFlowmapLayer.graphics.items[k].attributes.To_Latitude, canvasFlowmapLayer.graphics.items[k].attributes.To_Longitude]]);
+			         var line = geometryEngine.geodesicDensify(geographicLine, 5000);
+			         view.map.getLayer("connections").add(new Graphic(
+				   geometry: line,
+				   symbol: new SimpleLineSymbol(),
+				   attributes: {id: z}
+			         ));
+				 z++;
 			 }
 		 }
 		    
