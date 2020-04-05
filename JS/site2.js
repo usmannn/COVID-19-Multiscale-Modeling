@@ -380,7 +380,7 @@ view.when(function() {
 				  id: z
 				};
 
-				 var line = geometryEngine.geodesicDensify(geographicLine, 5000);
+				 var line = geometryEngine.geodesicDensify(geographicLine, 10000);
 				 view.map.findLayerById("connections").add(new Graphic({
 				   geometry: line,
 				   symbol: lineSymbol,
