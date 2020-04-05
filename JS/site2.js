@@ -363,35 +363,33 @@ view.when(function() {
 				 
 				var geographicLine = new Polyline();
 				geographicLine.addPath([
-				    [-111.3, 52.68],
-				    [-93.94, 29.89]
+				    [result.graphic.attributes.From_Longitude, result.graphic.attributes.From_Latitude],
+				    [canvasFlowmapLayer.graphics.items[k].attributes.To_Longitude, canvasFlowmapLayer.graphics.items[k].attributes.To_Latitude]
 				  ]);
 
 				// Create a symbol for drawing the line
 				var lineSymbol = {
 				  type: "simple-line", // autocasts as SimpleLineSymbol()
 				  color: [255,0,0,0.5],
-				  width: 4
+				  width: 1,
+				  cap : "round"
 				};
 
 				// Create an object for storing attributes related to the line
 				var lineAtt = {
-				  Name: "Keystone Pipeline",
-				  Owner: "TransCanada",
-				  Length: "3,456 km"
+				  id: z
 				};
 
 				 var line = geometryEngine.geodesicDensify(geographicLine, 5000);
-				   view.map.findLayerById("connections").add(new Graphic({
-					   geometry: line,
-					   symbol: lineSymbol,
-					   attributes: lineAtt
-					 }));
+				 view.map.findLayerById("connections").add(new Graphic({
+				   geometry: line,
+				   symbol: lineSymbol,
+				   attributes: lineAtt
+				 }));
+				 
+				 z++;
 			 }
-		 }
-		  
-		 console.log("New layer...");
-		 console.log(view.map.findLayerById("connections"));
+		 }		  
 		 _html += "</table>";
 	    	  edgesDiv.innerHTML = _html;
 		  view.ui.add(edgesDiv, "top-right");
