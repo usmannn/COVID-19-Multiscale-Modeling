@@ -313,6 +313,12 @@ view.when(function() {
           if (!response.results.length) {
 		  var edgesDiv = document.getElementById("edgesDiv");
 	     	  edgesDiv.innerHTML = "";
+		  
+		  // remove previous selection
+		  if(view.map.findLayerById("connections").graphics.length > 0)
+		  {
+		        view.map.findLayerById("connections").graphics.removeAll();
+		  }
             	  return;
           }
           // check if the graphic(s) belongs to the layer of interest
@@ -418,7 +424,9 @@ view.when(function() {
 		      
 		      // remove previous selection
 		      if(view.map.findLayerById("connections").graphics.length > 0)
-			    view.map.findLayerById("connections").graphics.removeAll();
+		      {
+			      view.map.findLayerById("connections").graphics.removeAll();
+		      }
 	      }
           });
         });
