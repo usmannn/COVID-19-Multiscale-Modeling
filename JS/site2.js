@@ -311,6 +311,7 @@ view.when(function() {
         };
         view.hitTest(screenPoint).then(function(response) {
           if (!response.results.length) {
+		  console.log("no results...");
 		  var edgesDiv = document.getElementById("edgesDiv");
 	     	  edgesDiv.innerHTML = "";
 		  
