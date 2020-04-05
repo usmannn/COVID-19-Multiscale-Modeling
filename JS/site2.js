@@ -387,13 +387,12 @@ view.when(function() {
 				   attributes: lineAtt,
 				   popupTemplate: {
 				   	title: "Connection Information",
-   					content: [{
+   					content: "" +
 						"<p>From = " + result.graphic.attributes.From_Airport + "</p>" +
 						"<p>" + result.graphic.attributes.From_Name + ", " + result.graphic.attributes.From_Country + "</p>" +
 						"<p>To = " + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport + "</p>" +
-						"<p>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Name + ", " + canvasFlowmapLayer.graphics.items[k].attributes.To_Country + "</p>";
-					}]
-				   }
+						"<p>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Name + ", " + canvasFlowmapLayer.graphics.items[k].attributes.To_Country + "</p>"
+				   	}
 				 }));
 				 
 				 z++;
