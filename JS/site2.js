@@ -415,6 +415,10 @@ view.when(function() {
 	      else{
 		     var edgesDiv = document.getElementById("edgesDiv");
 		     edgesDiv.innerHTML = "";
+		      
+		      // remove previous selection
+		      if(view.map.findLayerById("connections").graphics.length > 0)
+			    view.map.findLayerById("connections").graphics.removeAll();
 	      }
           });
         });
