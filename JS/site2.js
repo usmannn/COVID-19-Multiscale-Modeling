@@ -352,6 +352,11 @@ view.when(function() {
 		 console.log(canvasFlowmapLayer.graphics);
 		 var z=1;
 		 var _tmpUIDs = [];
+		 
+		 // remove previous selection
+		 if(view.map.findLayerById("connections").graphics.length > 0)
+			 view.map.findLayerById("connections").graphics.removeAll();
+		    
 		 for(k=0; k < canvasFlowmapLayer.graphics.items.length; k++)
 		 {
 			 if(!canvasFlowmapLayer.graphics.items[k].attributes.isOrigin && 
