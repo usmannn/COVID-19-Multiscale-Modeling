@@ -371,7 +371,7 @@ view.when(function() {
 				var lineSymbol = {
 				  type: "simple-line", // autocasts as SimpleLineSymbol()
 				  color: [255,0,0,0.5],
-				  width: 1,
+				  width: 0.75,
 				  cap : "round"
 				};
 
@@ -384,7 +384,16 @@ view.when(function() {
 				 view.map.findLayerById("connections").add(new Graphic({
 				   geometry: line,
 				   symbol: lineSymbol,
-				   attributes: lineAtt
+				   attributes: lineAtt,
+				   popupTemplate: {
+				   	title: "Connection Information",
+   					content: [{
+						"<p>From = " + result.graphic.attributes.From_Airport + "</p>" +
+						"<p>" + result.graphic.attributes.From_Name + ", " + result.graphic.attributes.From_Country + "</p>" +
+						"<p>To = " + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport + "</p>" +
+						"<p>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Name + ", " + canvasFlowmapLayer.graphics.items[k].attributes.To_Country + "</p>";
+					}]
+				   }
 				 }));
 				 
 				 z++;
