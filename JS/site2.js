@@ -361,23 +361,37 @@ view.when(function() {
 				_html +=  "<tr><td style=\"visibility:hidden;\">" + canvasFlowmapLayer.graphics.items[k].uid + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport_Code + "</td>";
 				_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
 				 
-				 // draw lines
-				 var geographicLine = new Polyline();
-			         geographicLine.addPath([new Point(result.graphic.attributes.From_Longitude,result.graphic.attributes.From_Latitude),
-							 new Point(canvasFlowmapLayer.graphics.items[k].attributes.To_Longitude,canvasFlowmapLayer.graphics.items[k].attributes.To_Latitude)]);
-			         var line = geometryEngine.geodesicDensify(geographicLine, 5000);
-				 var lineSymbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new dojo.Color([0,0,255,0.5]),3);
-			         view.map.findLayerById("connections").add(new Graphic({
-				   geometry: line,
-				   symbol: lineSymbol,
-				   attributes: {id: z}
-				 }));
-				 z++;
+				var geographicLine = new Polyline();
+				geographicLine.addPath([
+				    [-111.3, 52.68],
+				    [-93.94, 29.89]
+				  ]);
+
+				// Create a symbol for drawing the line
+				var lineSymbol = {
+				  type: "simple-line", // autocasts as SimpleLineSymbol()
+				  color: [255,0,0,0.5],
+				  width: 4
+				};
+
+				// Create an object for storing attributes related to the line
+				var lineAtt = {
+				  Name: "Keystone Pipeline",
+				  Owner: "TransCanada",
+				  Length: "3,456 km"
+				};
+
+				 var line = geometryEngine.geodesicDensify(geographicLine, 5000);
+				   view.map.findLayerById("connections").add(new Graphic({
+					   geometry: line,
+					   symbol: lineSymbol,
+					   attributes: lineAtt
+					 }));
 			 }
 		 }
 		  
 		 console.log("New layer...");
-		 console.log(view.map.getLayer("connections"));
+		 console.log(view.map.findLayerById("connections"));
 		 _html += "</table>";
 	    	  edgesDiv.innerHTML = _html;
 		  view.ui.add(edgesDiv, "top-right");
