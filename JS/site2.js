@@ -311,7 +311,6 @@ view.when(function() {
         };
         view.hitTest(screenPoint).then(function(response) {
           if (!response.results.length) {
-		  console.log("no results...");
 		  var edgesDiv = document.getElementById("edgesDiv");
 	     	  edgesDiv.innerHTML = "";
 		  
@@ -424,9 +423,11 @@ view.when(function() {
 		     edgesDiv.innerHTML = "";
 		      
 		      // remove previous selection
-		      if(view.map.findLayerById("connections").graphics.length > 0)
-		      {
-			      view.map.findLayerById("connections").graphics.removeAll();
+		      if (result.graphic.layer !== view.map.findLayerById("connections")) {
+			      if(view.map.findLayerById("connections").graphics.length > 0)
+			      {
+				      view.map.findLayerById("connections").graphics.removeAll();
+			      }
 		      }
 	      }
           });
