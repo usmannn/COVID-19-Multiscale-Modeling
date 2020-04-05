@@ -357,6 +357,7 @@ view.when(function() {
 			    result.graphic.attributes.isOrigin && 
 			    (canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code == result.graphic.attributes.From_Airport_Code))
 			 {
+				 console.log("inside loop... " + k);
 				_html +=  "<tr><td style=\"visibility:hidden;\">" + canvasFlowmapLayer.graphics.items[k].uid + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.From_Airport_Code + "</td><td>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport_Code + "</td>";
 				_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
 				 
@@ -374,7 +375,9 @@ view.when(function() {
 				 z++;
 			 }
 		 }
-		    
+		  
+		 console.log("New layer...");
+		 console.log(view.map.getLayer("connections"));
 		 _html += "</table>";
 	    	  edgesDiv.innerHTML = _html;
 		  view.ui.add(edgesDiv, "top-right");
