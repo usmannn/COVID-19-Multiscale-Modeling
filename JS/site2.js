@@ -41,6 +41,7 @@ require([
   'esri/views/draw/Draw',
   'esri/geometry/geometryEngine',
   'esri/symbols/SimpleLineSymbol',
+  'esri/layers/GraphicsLayer',
   'dojo/domReady!'
 ], function(
   CanvasFlowmapLayer,
@@ -56,7 +57,8 @@ require([
   Polyline,
   Draw,
   geometryEngine,
-  SimpleLineSymbol
+  SimpleLineSymbol,
+  GraphicsLayer
 ) {
     
 // popup configuration
