@@ -208,32 +208,36 @@ const draw = new Draw({
           view: view
         });
 	
-// Listen to the click event on the map view.
-view.on("click", function(event) {
-   var screenPoint = {
-	x: event.x,
-	y: event.y
-   };
-   view.hitTest(screenPoint).then(function(response) {
-	if (!response.results.length) {
-		return;
-	}
-	// check if the graphic(s) belongs to the layer of interest
-	// and mark them as selected for Bezier path display
-	response.results.forEach(function(result) {
-		if (result.graphic.layer === layer) {
-			//alert("FeatureLayer object selected...");
-						
-			layer.when(function() {
-				var query = layer.createQuery();
-				console.log(result.graphic.attributes.Country_name);
+
+view.whenLayerView(layer).then(function(layerView) {	
+	// Listen to the click event on the map view.
+	view.on("click", function(event) {
+	   var screenPoint = {
+		x: event.x,
+		y: event.y
+	   };
+	   view.hitTest(screenPoint).then(function(response) {
+		if (!response.results.length) {
+			return;
+		}
+		// check if the graphic(s) belongs to the layer of interest
+		// and mark them as selected for Bezier path display
+		response.results.forEach(function(result) {
+			if (result.graphic.layer === layer) {
+				//alert("FeatureLayer object selected...");
+				
+				const query = layerView.layer.createQuery();
 				query.where = "Country_name <> '" + result.graphic.attributes.Country_name + "'";
 				console.log(query);
-				return layer.queryFeatures(query);
-			}).then(getValues);
-		}
-   	});
-    });
+				layerView.queryFeatures(query)
+			        .then(function(response){
+			          console.log(response);
+			        });
+			}
+			break;
+		});
+	    });
+	});
 });
 	
 function getValues(response)
