@@ -253,7 +253,7 @@ view.whenLayerView(layer).then(function(layerView) {
 							console.log(response.features[q].attributes.Country_name);
 							var geographicLine = new Polyline();
 							geographicLine.addPath([
-							    res.graphic.attributes.Longitude, res.graphic.attributes.Latitude],
+							    [res.graphic.attributes.Longitude, res.graphic.attributes.Latitude],
 							    [response.features[q].attributes.Longitude, response.features[q].attributes.Latitude]
 							  ]);
 							// Create an object for storing attributes related to the line
