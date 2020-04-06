@@ -222,6 +222,7 @@ view.whenLayerView(layer).then(function(layerView) {
 			return;
 		}
 	   console.log("hittest clicked");
+	   console.log(response.results);
 		// check if the graphic(s) belongs to the layer of interest
 		// and mark them as selected for Bezier path display
 		response.results.forEach(function(result) {
