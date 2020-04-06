@@ -15,7 +15,7 @@ function addMarkerOnSlider()
 	
 	var markerDiv = document.createElement("div");
 	markerDiv.style.color = "red";
-	markerDiv.style.fontSize = "24px";
+	markerDiv.style.fontSize = "32px";
 	markerDiv.style.transform = scale;
 	markerDiv.innerHTML = marker;
 	
