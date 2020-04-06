@@ -7,26 +7,19 @@ function addMarkerOnSlider()
 	var marker = "|";
 	var sliderTrack = document.getElementsByClassName("esri-slider__track");
 	var childs = sliderTrack[0].childNodes;
-	console.log(childs.length);
-	var sLastChild = childs[childs.length-1];
 	
-	var sLastChildScale = sLastChild.style.transform.split(" ");
+	var scaleElement = document.getElementsByClassName("esri-slider__segment esri-slider__segment-1");		
+	var eleTransform = scaleElement[0].style.transform;
+	var scaleList = eleTransform.split(" ");
+	var scale = scaleList[2]+scaleList[3];
 	
 	var markerDiv = document.createElement("div");
 	markerDiv.style.color = "red";
 	markerDiv.style.fontSize = "24px";
-	markerDiv.style.transform = sLastChildScale[2]+sLastChildScale[3];
+	markerDiv.style.transform = scale;
 	markerDiv.innerHTML = marker;
-	console.log(markerDiv.style.transform);
 	
-	sliderTrack[0].insertBefore(markerDiv, childs[childs.length]);
-	
-	var scaleElement = document.getElementsByClassName("esri-slider__segment esri-slider__segment-1");
-	console.log(scaleElement[0]);
-	console.log(scaleElement[0].style.transform);
-	
-	var eleTransform = scaleElement[0][0].style.transform;
-	
+	scaleElement[0].parentNode.insertBefore(markerDiv, scaleElement[0].nextSibling);
 }
 
 function reconstruct(restricted_list)
