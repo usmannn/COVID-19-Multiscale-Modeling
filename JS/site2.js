@@ -150,6 +150,7 @@ view.whenLayerView(layer).then(function(lv) {
 
 timeSlider.watch("timeExtent", function(timeExtent){
 	console.log(timeExtent.start);
+	console.log(timeExtent.start.getMonth());
 	currentTimeExtent = timeExtent.start;
 });
 	
