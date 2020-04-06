@@ -18,7 +18,7 @@ function addMarkerOnSlider()
 	markerDiv.style.transform = lastChildScale[2]+lastChildScale[3];
 	markerDiv.innerHTML = marker;
 	
-	sliderTrack.appendChild(markerDiv);
+	sliderTrack[0].appendChild(markerDiv);
 	
 }
 
