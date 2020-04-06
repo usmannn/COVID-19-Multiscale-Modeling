@@ -22,8 +22,8 @@ function addMarkerOnSlider()
 	sliderTrack[0].insertBefore(markerDiv, childs[childs.length]);
 	
 	var scaleElement = document.getElementsByClassName("esri-slider__segment esri-slider__segment-1");
-	console.log(scaleElement[0][0]);
-	console.log(scaleElement[0][0].style.transform);
+	console.log(scaleElement[0]);
+	console.log(scaleElement[0].style.transform);
 	
 	var eleTransform = scaleElement[0][0].style.transform;
 	
