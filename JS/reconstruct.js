@@ -23,6 +23,7 @@ function addMarkerOnSlider()
 
 function reconstruct(restricted_list)
 {
+	addMarkerOnSlider();
 
 // step 0 
 
