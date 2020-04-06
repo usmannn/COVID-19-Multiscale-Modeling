@@ -62,7 +62,7 @@ require([
 ) {
     
 // popup configuration
-var popupTemplate = {
+popupTemplate = {
     title: "Country: {Country_name}",
       actions: [
       {
@@ -92,7 +92,7 @@ var popupTemplate = {
 };
 		
   //const layer = webmap.findLayerById('40b129da4bd84efa9993b768b8c6ead6');		
-  var layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
+  layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
     {
       outFields: [ "*" ],
       useViewTime: true,
@@ -100,24 +100,25 @@ var popupTemplate = {
       popupTemplate: popupTemplate
     }
   );
-  
- var view = new MapView({
-    container: 'viewDiv',
-    map: new WebMap({
+ webmap = new WebMap({
       // use a standard Web Mercator map projection basemap
       //basemap: 'dark-gray-vector'
       portalItem: {
 	id: "9abddb687df74894878b7cc1ef90a902"
       },
-      layers: [layer]
-    }),
+	 layers: [layer]
+    }); 
+ view = new MapView({
+    container: 'viewDiv',
+    map: webmap, 
+      
     ui: {
       components: ['zoom', 'attribution']
     }
   });
 
   // time slider widget initialization
-const timeSlider = new TimeSlider({
+timeSlider = new TimeSlider({
   container: "timeSlider",
   //mode: "time-window",
   mode: "instant",
