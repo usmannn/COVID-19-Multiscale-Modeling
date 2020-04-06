@@ -134,7 +134,7 @@ view.ui.add(timeSlider, "manual");
 view.ui.add("titleDiv", "top-right");
 
 // accessing layer with temporal data from the webmap
-let timeLayerView;		
+let timeLayerView, currentTimeExtent;		
 view.whenLayerView(layer).then(function(lv) {
   timeLayerView = lv;
   const fullTimeExtent = layer.timeInfo.fullTimeExtent;
@@ -148,12 +148,11 @@ view.whenLayerView(layer).then(function(lv) {
   };
 });
 
-timeSlider.watch("timeExtent", function(value){
-  timeLayerView.filter = {
-    timeExtent: value
-  };
+timeSlider.watch("timeExtent", function(timeExtent){
+	console.log(timeExtent.start);
+	currentTimeExtent = timeExtent.start;
 });
-
+	
 var layerList = new LayerList({
     view: view
   });		
@@ -230,7 +229,7 @@ view.whenLayerView(layer).then(function(layerView) {
 			if (res.graphic.layer === layer)
 			{
 				var query = layer.createQuery();
-				query.where = "Date = date'2020/03/21'";
+				query.where = "Date = date'"+currentTimeExtent+"'";
 				layer.queryFeatures(query)
 				  .then(function(response){
 				     console.log(response);			     
