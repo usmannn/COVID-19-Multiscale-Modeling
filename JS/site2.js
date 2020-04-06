@@ -216,10 +216,12 @@ view.whenLayerView(layer).then(function(layerView) {
 		x: event.x,
 		y: event.y
 	   };
+	   console.log("clicked");
 	   view.hitTest(screenPoint).then(function(response) {
 		if (!response.results.length) {
 			return;
 		}
+	   console.log("hittest clicked");
 		// check if the graphic(s) belongs to the layer of interest
 		// and mark them as selected for Bezier path display
 		response.results.forEach(function(result) {
@@ -228,6 +230,7 @@ view.whenLayerView(layer).then(function(layerView) {
 				
 				const query = layerView.layer.createQuery();
 				query.where = "Country_name <> '" + result.graphic.attributes.Country_name + "'";
+				query.outFields = ["*"];
 				console.log(query);
 				layerView.queryFeatures(query)
 			        .then(function(response){
