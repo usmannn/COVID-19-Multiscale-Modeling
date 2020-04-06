@@ -241,7 +241,7 @@ view.whenLayerView(layer).then(function(layerView) {
 			          console.log(response);
 			        });
 			}
-			break;
+			//break;
 		});
 	    });
 	});
