@@ -5,20 +5,36 @@
 	  <script>
 		// global list to store selection IDs
 		var selected_ids = [];
+	        var selected_edge_ids = [];
 	  </script>
     
 	<meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>COVID-19 Multiscale Modeling</title>
     
+  <!-- load 3rd-party CSV parsing libary  -->
+ <script src="https://unpkg.com/papaparse@5.1/papaparse.min.js"></script>
+	  
     <link rel="stylesheet" href="https://js.arcgis.com/4.14/esri/themes/light/main.css">
-    <script src="https://js.arcgis.com/4.14/"></script>
+    <script defer src="https://js.arcgis.com/4.14/"></script>
+	
+	<script>
+	<!-- set Dojo configuration options -->
+	var dojoConfig = {
+		async: true,
+		packages: [{
+			name: 'Canvas-Flowmap-Layer',
+			location: location.pathname.replace(/[^\/]+$/, '') + 'JS/External/Canvas-Flowmap-Layer'
+		}]
+	};
+	</script>
     
+	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-	<script src="JS/site.js"></script>
+	
+	<script defer src="JS/site2.js"></script>
 	<script src="JS/reconstruct.js"></script>
 	<link rel="stylesheet" href="CSS/site.css">
   
@@ -29,6 +45,7 @@
 	<button type="button" class="btn btn-primary" id="construct_button" onclick="return processReconstruct();"> Re-Construct </button>
 	
 	<div id="sidebar" class="esri-widget">
+	    <div id="nodes">
 		<table id="table_restricted_countries" class="table table-dark" style="color:white;" align="center">
 			<thead>
 				<tr>
@@ -38,40 +55,70 @@
 			<tbody>
 			</tbody>
 		</table>
+	    </div>
+	    <div id="view_buffer"></div>
+	    <div id="edges">
+	    	<table id="table_restricted_connections" class="table table-dark" style="color:white;" align="center">
+			<thead>
+				<tr>
+				  <td scope="col" colspan="3" style="text-align:center; font-weight: bold;">Restricted Connections</td>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+            </div>
 	</div>	
 	
 	<div id="timeSlider"></div>
     
 	<div id="titleDiv" class="esri-widget">
-      <div id="titleText">COVID-19 Multiscale Modeling</div>
-    </div>
-	
+        	<div id="titleText">COVID-19 Multiscale Modeling</div>
+  	</div>
+	<div id="edgesDiv"></div>	
   </body>
 </html>
 
 <script>
-
-// callback to remove an entry from restricted countries list
-function clearCountrySelection(entry)
-{
-	var i = entry.parentNode.parentNode.rowIndex;	
-	var tmp = document.getElementById("table_restricted_countries").rows[i].cells[0].innerHTML;	
-	selected_ids.splice(i-1, 1);
-	document.getElementById("table_restricted_countries").deleteRow(i);	
-}
-
-function processReconstruct()
-{
-	var restricted_list = [];
-	var entries = document.getElementById("table_restricted_countries").rows;
 	
-	for(k=1; k < entries.length; k++)
-	{	
-		var name = entries[k].cells[1].innerHTML;
-		restricted_list.push(name);
+	// callback to remove an entry from restricted countries list
+	function clearCountrySelection(entry)
+	{
+		var i = entry.parentNode.parentNode.rowIndex;	
+		var tmp = document.getElementById("table_restricted_countries").rows[i].cells[0].innerHTML;	
+		selected_ids.splice(i-1, 1);
+		document.getElementById("table_restricted_countries").deleteRow(i);	
 	}
 	
-	reconstruct(restricted_list);
-}
+	function clearEdgeSelection(entry)
+	{
+		var i = entry.parentNode.parentNode.rowIndex;	
+		var tmp = document.getElementById("table_restricted_connections").rows[i].cells[0].innerHTML;
+		selected_edge_ids.splice(i-1, 1);
+		document.getElementById("table_restricted_connections").deleteRow(i);
+	}
+	
+	function processReconstruct()
+	{
+		var restricted_countries = [];
+		var entries = document.getElementById("table_restricted_countries").rows;
+		
+		for(k=1; k < entries.length; k++)
+		{	
+			var name = entries[k].cells[1].innerHTML;
+			restricted_countries.push(name);
+		}
+		
+		var restricted_connections = [];
+		var entries_c = document.getElementById("table_restricted_connections").rows;
+		
+		for(k=1; k < entries_c.length; k++)
+		{	
+			var name = entries_c[k].cells[0].innerHTML;
+			restricted_connections.push(name);
+		}
+		
+		reconstruct([restricted_countries, restricted_connections]);
+	}
 
 </script>
