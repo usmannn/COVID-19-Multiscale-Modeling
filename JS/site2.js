@@ -399,21 +399,21 @@ view.when(function() {
 				   geometry: line,
 				   symbol: lineSymbol,
 				   attributes: lineAtt,
-				   popupTemplate: {
+				   /*popupTemplate: {
 				   	title: "Connection Info",
-					/*actions: [
+					actions: [
 					      {
 						title: "Remove from Predictions",
 						id: "removeFromPredictionEdge"
 					      }
-				        ],*/
+				        ],
    					content: "" +
 						"<p>From = " + result.graphic.attributes.From_Airport + "</p>" +
 						"<p>" + result.graphic.attributes.From_Name + ", " + result.graphic.attributes.From_Country + "</p>" +
 						"<p>To = " + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport + "</p>" +
 						"<p>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Name + ", " + canvasFlowmapLayer.graphics.items[k].attributes.To_Country + "</p>"
-				   	}
-				   }));
+				    }*/
+				  }));
 				 
 				 z++;
 			 }
