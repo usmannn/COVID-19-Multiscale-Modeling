@@ -228,7 +228,11 @@ view.whenLayerView(layer).then(function(layerView) {
 		{
 			var res = response.results[p];
 			console.log(res);
-			if (res.graphic.layer === layer) {
+			if (res.graphic.layer === layer)
+			{
+				console.log("inside layer check");
+				console.log(layer.graphics);
+				console.log("# graphics in layer: " + layer.graphics.items.length);
 				for(q=0; q<layer.graphics.items.length; q++)
 				{
 					if(layer.graphics.items[q].attributes.Country_name != res.graphic.attributes.Country_name)
