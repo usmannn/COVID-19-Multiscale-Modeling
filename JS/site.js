@@ -146,6 +146,8 @@ view.ui.add("titleDiv", "top-right");
 
 // accessing layer with temporal data from the webmap
 let timeLayerView, currentTimeExtent;
+const dateFormatIntlOptions = intl.convertDateFormatToIntlOptions("short-date");
+
 view.whenLayerView(layer).then(function(lv) {
   timeLayerView = lv;
   const fullTimeExtent = layer.timeInfo.fullTimeExtent;
