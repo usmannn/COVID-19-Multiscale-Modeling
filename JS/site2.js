@@ -42,6 +42,7 @@ require([
   'esri/geometry/geometryEngine',
   'esri/symbols/SimpleLineSymbol',
   'esri/layers/GraphicsLayer',
+  'esri/core/sql/WhereClause',
   'dojo/domReady!'
 ], function(
   CanvasFlowmapLayer,
@@ -58,7 +59,8 @@ require([
   Draw,
   geometryEngine,
   SimpleLineSymbol,
-  GraphicsLayer
+  GraphicsLayer,
+  WhereClause
 ) {
     
 // popup configuration
@@ -226,15 +228,13 @@ view.whenLayerView(layer).then(function(layerView) {
 			var res = response.results[p];
 			console.log(res);
 			if (res.graphic.layer === layer) {
-				console.log(res);				
-				const query = layerView.layer.createQuery();
-				query.where = "Country_name <> '" + res.graphic.attributes.Country_name + "'";
-				query.outFields = ["*"];
-				console.log(query);
-				layerView.queryFeatures(query)
-			        .then(function(response){
-			          console.log(response);
-			        });
+				for(q=0; q<layer.graphics.length; q++)
+				{
+					if(layer.graphics[q].attributes.Country_name != res.graphic.attributes.Country_name)
+					{
+						console.log(layer.graphics[q].attributes.Country_name);
+					}
+				}
 			}
 			break;
 		}		
