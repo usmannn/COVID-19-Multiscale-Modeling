@@ -17,7 +17,7 @@ function addMarkerOnSlider()
 	markerDiv.style.fontSize = "24px";
 	markerDiv.style.transform = lastChildScale[2]+lastChildScale[3];
 	markerDiv.innerHTML = marker;
-	
+	console.log(markerDiv.style.transform);
 	sliderTrack[0].appendChild(markerDiv);
 	
 }
