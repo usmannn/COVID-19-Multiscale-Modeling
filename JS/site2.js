@@ -232,12 +232,12 @@ view.whenLayerView(layer).then(function(layerView) {
 			{
 				console.log("inside layer check");
 				console.log(layer);
-				console.log("# graphics in layer: " + layer.source.length);
-				for(q=0; q<layer.source.length; q++)
+				console.log("# graphics in layer: " + view.map.graphics.length);
+				for(q=0; q<view.map.graphics.length; q++)
 				{
-					if(layer.source[q].attributes.Country_name != res.graphic.attributes.Country_name)
+					if(view.map.graphics[q].attributes.Country_name != res.graphic.attributes.Country_name)
 					{
-						console.log(layer.source[q].attributes.Country_name);
+						console.log(view.map.graphics[q].attributes.Country_name);
 					}
 				}
 			}
