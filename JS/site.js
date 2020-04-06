@@ -226,7 +226,7 @@ var button_reconstruct = document.getElementById("construct_button");
 view.ui.add(button_reconstruct, "top-right");
 
 // test: to render edges (polylines) between nodes	
-view.map.layers.add(new GraphicsLayer({ id: "connections" }));
+view.map.layers.add(new GraphicsLayer({ id: "connections", title: "Connections" }));
 const draw = new Draw({
           view: view
         });
