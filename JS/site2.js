@@ -251,11 +251,19 @@ view.whenLayerView(layer).then(function(layerView) {
 					  width: 0.75,
 					  cap : "round"
 					};
-					
+				
+					var edgesDiv = document.getElementById("edgesDiv");
+					var _html = "<table id=\"edge_list_table\" class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th style=\"visibility:hidden;\">UID</th><th>From</th><th>To</th><th>Connection</th></tr>";		
+					var _tmpUIDs = [];
 					for(q=0; q < response.features.length; q++)
 					{
-						if(response.features[q].attributes.Country_name != res.graphic.attributes.Country_name)
-						{							
+						if(response.features[q].attributes.Country_name != res.graphic.attributes.Country_name &&
+						  !_tmpUIDs.includes(response.features[q].attributes.Country_name)
+						{
+							_html +=  "<tr><td style=\"visibility:hidden;\">" + response.features[q].attributes.Country_name + "</td><td>" + res.graphic.attributes.Country_name + "</td><td>" + response.features[q].attributes.Country_name + "</td>";
+							_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
+							 _tmpUIDs.push(response.features[q].attributes.Country_name);
+							
 							var geographicLine = new Polyline();
 							geographicLine.addPath([
 							    [res.graphic.attributes.Longitude, res.graphic.attributes.Latitude],
@@ -288,7 +296,10 @@ view.whenLayerView(layer).then(function(layerView) {
 							    }*/
 							  }));
 						}
-					}				     
+					}
+					_html += "</table>";
+					edgesDiv.innerHTML = _html;
+					view.ui.add(edgesDiv, "top-right");
 				  });				
 			}
 			break;
