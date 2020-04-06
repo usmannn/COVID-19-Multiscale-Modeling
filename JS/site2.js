@@ -230,6 +230,7 @@ view.whenLayerView(layer).then(function(layerView) {
 			console.log(res);
 			if (res.graphic.layer === layer)
 			{
+				/*
 				console.log("inside layer check");
 				console.log(layer);
 				console.log("# graphics in layer: " + view.map.graphics.length);
@@ -240,6 +241,7 @@ view.whenLayerView(layer).then(function(layerView) {
 						console.log(view.map.graphics[q].attributes.Country_name);
 					}
 				}
+				*/
 			}
 			break;
 		}		
