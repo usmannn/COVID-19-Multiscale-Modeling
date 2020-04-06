@@ -227,11 +227,20 @@ view.whenLayerView(layer).then(function(layerView) {
 		for (p=0; p < response.results.length; p++)
 		{
 			var res = response.results[p];
-			console.log(res);
-			console.log(layerView);
-			console.log(layerView.graphics);
+			//console.log(res);
+			//console.log(layerView);
+			//console.log(layerView.graphics);
 			if (res.graphic.layer === layer)
 			{
+				var query = layer.createQuery();
+				query.where = "Country_name = 'Canada'";				
+				console.log(query);
+				layer.queryFeatures(query)
+				  .then(function(response){
+				     console.log(response);
+				     var stats = response.features[0].attributes;
+				     console.log(stats);
+				  });
 				/*
 				console.log("inside layer check");
 				console.log(layer);
