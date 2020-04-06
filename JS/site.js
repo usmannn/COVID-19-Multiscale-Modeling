@@ -63,7 +63,7 @@ require([
     
 // popup configuration
 popupTemplate = {
-    title: "Country: {Country_name}",
+    title: "Country: {ID}",
       actions: [
       {
         title: "Remove from Predictions",
@@ -75,16 +75,28 @@ popupTemplate = {
       type: "fields",
       fieldInfos: [                  
 	  {
-	    fieldName: "Active",
-	    label: "Active Cases"
+	    fieldName: "susceptible",
+	    label: "Susceptible"
 	  },
 	  {
 	    fieldName: "Death",
 	    label: "Total Deaths"
 	  },
 	  {
-	    fieldName: "Recover",
-	    label: "Total Recovered"
+	    fieldName: "infectious",
+	    label: "Infectious"
+	  },
+	  {
+	    fieldName: "recovered",
+	    label: "Recovered"
+	  },
+	  {
+	    fieldName: "dead",
+	    label: "Deaths"
+	  },
+	  {
+	    fieldName: "population",
+	    label: "Total Population"
 	  }
 	]
     }
@@ -189,7 +201,7 @@ view.when(function() {
 				cell_id.style.visibility = 'hidden';
 				
 				var cell_name = row.insertCell(-1);
-				cell_name.innerHTML = attributes.Country_name;
+				cell_name.innerHTML = attributes.ID;
 				cell_name.style.fontWeight = "bold";
 				
 				var cell_action = row.insertCell(-1);
@@ -235,7 +247,7 @@ view.whenLayerView(layer).then(function(layerView) {
 				//alert("FeatureLayer object selected...");
 				
 				const query = layerView.layer.createQuery();
-				query.where = "Country_name <> '" + result.graphic.attributes.Country_name + "'";
+				query.where = "ID <> '" + result.graphic.attributes.ID + "'";
 				query.outFields = ["*"];
 				console.log(query);
 				layerView.queryFeatures(query)
