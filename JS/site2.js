@@ -231,13 +231,13 @@ view.whenLayerView(layer).then(function(layerView) {
 			if (res.graphic.layer === layer)
 			{
 				console.log("inside layer check");
-				console.log(layer.graphics);
-				console.log("# graphics in layer: " + layer.graphics.items.length);
-				for(q=0; q<layer.graphics.items.length; q++)
+				console.log(layer);
+				console.log("# graphics in layer: " + layer.source.length);
+				for(q=0; q<layer.source.length; q++)
 				{
-					if(layer.graphics.items[q].attributes.Country_name != res.graphic.attributes.Country_name)
+					if(layer.source[q].attributes.Country_name != res.graphic.attributes.Country_name)
 					{
-						console.log(layer.graphics.items[q].attributes.Country_name);
+						console.log(layer.source[q].attributes.Country_name);
 					}
 				}
 			}
