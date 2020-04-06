@@ -226,6 +226,7 @@ view.whenLayerView(layer).then(function(layerView) {
 		// check if the graphic(s) belongs to the layer of interest
 		// and mark them as selected for Bezier path display
 		response.results.forEach(function(result) {
+			console.log("for each executed");
 			console.log(result);
 			console.log(result.graphic.layer);
 			console.log(layer);
