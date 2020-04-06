@@ -193,33 +193,7 @@ view.when(function() {
 				var cell_action = row.insertCell(-1);
 				cell_action.innerHTML = "<button type=\"button\" class=\"btn btn-primary\" onclick=\"clearCountrySelection(this)\"> Clear </button>";
 			}
-		}
-		else if (event.action.id === "removeFromPredictionEdge") {
-						
-			var entry_uid = event.title;
-			//console.log(attributes);
-			//alert("Action called: removeFromPrediction() | object id: " + attributes.ObjectId);
-			
-			// if not already exist, add the id to selected_ids list
-			if(!selected_edge_ids .includes(entry_uid))
-			{
-				selected_edge_ids.push(entry_uid);
-
-				// make an entry for the selected edge in restricted edges panel
-				var table = document.getElementById("table_restricted_connections");
-				var row = table.insertRow(-1);
-
-				var cell_id = row.insertCell(-1);
-				cell_id.innerHTML = entry_uid;
-				cell_id.style.visibility = 'hidden';
-
-				var cell_name = row.insertCell(-1);
-				cell_name.innerHTML = "Connection ID: <b>" + entry_uid + "</b>";
-
-				var cell_action = row.insertCell(-1);
-				cell_action.innerHTML = "<button type=\"button\" class=\"btn btn-primary\" onclick=\"clearEdgeSelection(this)\"> Clear </button>";
-			}
-		}
+		}		
 	});
 });
 	
@@ -417,7 +391,7 @@ view.when(function() {
 
 				// Create an object for storing attributes related to the line
 				var lineAtt = {
-				  id: z
+				  id: canvasFlowmapLayer.graphics.items[k].uid
 				};
 
 				 var line = geometryEngine.geodesicDensify(geographicLine, 10000);
@@ -426,20 +400,20 @@ view.when(function() {
 				   symbol: lineSymbol,
 				   attributes: lineAtt,
 				   popupTemplate: {
-				   	title: canvasFlowmapLayer.graphics.items[k].uid,
-					actions: [
+				   	title: "Connection Info",
+					/*actions: [
 					      {
 						title: "Remove from Predictions",
 						id: "removeFromPredictionEdge"
 					      }
-				        ],
+				        ],*/
    					content: "" +
 						"<p>From = " + result.graphic.attributes.From_Airport + "</p>" +
 						"<p>" + result.graphic.attributes.From_Name + ", " + result.graphic.attributes.From_Country + "</p>" +
 						"<p>To = " + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport + "</p>" +
 						"<p>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Name + ", " + canvasFlowmapLayer.graphics.items[k].attributes.To_Country + "</p>"
 				   	}
-				 }));
+				   }));
 				 
 				 z++;
 			 }
