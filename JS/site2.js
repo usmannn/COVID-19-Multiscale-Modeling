@@ -228,6 +228,8 @@ view.whenLayerView(layer).then(function(layerView) {
 		{
 			var res = response.results[p];
 			console.log(res);
+			console.log(layerView);
+			console.log(layerView.graphics);
 			if (res.graphic.layer === layer)
 			{
 				/*
