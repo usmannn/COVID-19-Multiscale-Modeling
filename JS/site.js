@@ -92,7 +92,8 @@ popupTemplate = {
 };
 		
   //const layer = webmap.findLayerById('40b129da4bd84efa9993b768b8c6ead6');		
-  layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
+  layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/COVID_19_Spread/FeatureServer/0",
+  //layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
     {
       outFields: [ "*" ],
       useViewTime: true,
