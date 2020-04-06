@@ -238,11 +238,50 @@ view.whenLayerView(layer).then(function(layerView) {
 				  .then(function(response){
 				     console.log(response);			     
 				     
+					// Create a symbol for drawing the line
+					var lineSymbol = {
+					  type: "simple-line", // autocasts as SimpleLineSymbol()
+					  color: [255,0,0,0.5],
+					  width: 0.75,
+					  cap : "round"
+					};
+					
 					for(q=0; q < response.features.length; q++)
 					{
 						if(response.features[q].attributes.Country_name != res.graphic.attributes.Country_name)
 						{
 							console.log(response.features[q].attributes.Country_name);
+							var geographicLine = new Polyline();
+							geographicLine.addPath([
+							    res.graphic.attributes.Longitude, res.graphic.attributes.Latitude],
+							    [response.features[q].attributes.Longitude, response.features[q].attributes.Latitude]
+							  ]);
+							// Create an object for storing attributes related to the line
+							var lineAtt = {
+							  From: res.graphic.attributes.Country_name,
+							  To: response.features[q].attributes.Country_name
+							};
+
+							 var line = geometryEngine.geodesicDensify(geographicLine, 10000);
+							 view.map.findLayerById("connections").add(new Graphic({
+							   geometry: line,
+							   symbol: lineSymbol,
+							   attributes: lineAtt
+							   /*popupTemplate: {
+								title: "Connection Info",
+								actions: [
+								      {
+									title: "Remove from Predictions",
+									id: "removeFromPredictionEdge"
+								      }
+								],
+								content: "" +
+									"<p>From = " + result.graphic.attributes.From_Airport + "</p>" +
+									"<p>" + result.graphic.attributes.From_Name + ", " + result.graphic.attributes.From_Country + "</p>" +
+									"<p>To = " + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport + "</p>" +
+									"<p>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Name + ", " + canvasFlowmapLayer.graphics.items[k].attributes.To_Country + "</p>"
+							    }*/
+							  }));
 						}
 					}				     
 				  });				
