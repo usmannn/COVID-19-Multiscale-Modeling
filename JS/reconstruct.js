@@ -6,9 +6,8 @@ function addMarkerOnSlider()
 {
 	var marker = "|";
 	var sliderTrack = document.getElementsByClassName("esri-slider__track");
-	var childs = sliderTrack.childNodes[0];
+	var childs = sliderTrack[0].childNodes;
 	console.log(childs.length);
-	console.log(sliderTrack);
 	var lastChild = childs[childs.length];
 	
 	var lastChildScale = lastChild.style.transform.split(" ");
