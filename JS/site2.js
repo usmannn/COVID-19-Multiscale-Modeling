@@ -214,7 +214,7 @@ view.when(function() {
 				cell_id.style.visibility = 'hidden';
 
 				var cell_name = row.insertCell(-1);
-				cell_name.innerHTML = "From: <b>" + entry_row.cells[1].innerHTML + "</b> To: <b>" + entry_row.cells[2].innerHTML + "</b>";
+				cell_name.innerHTML = "Connection ID: <b>" + entry_uid + "</b>";
 
 				var cell_action = row.insertCell(-1);
 				cell_action.innerHTML = "<button type=\"button\" class=\"btn btn-primary\" onclick=\"clearEdgeSelection(this)\"> Clear </button>";
