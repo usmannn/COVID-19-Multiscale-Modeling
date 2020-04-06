@@ -8,10 +8,10 @@ function addMarkerOnSlider()
 	var sliderTrack = document.getElementsByClassName("esri-slider__track");
 	var childs = sliderTrack[0].childNodes;
 	
-	var scaleElement = document.getElementsByClassName("esri-slider__segment esri-slider__segment-0");		
+	var scaleElement = document.getElementsByClassName("esri-slider__segment esri-slider__segment-1");		
 	var eleTransform = scaleElement[0].style.transform;
 	var scaleList = eleTransform.split(" ");
-	var scale = scaleList[2]+scaleList[3];
+	var scale = scaleList[1]+scaleList[2];
 	
 	var markerDiv = document.createElement("div");
 	markerDiv.style.color = "red";
