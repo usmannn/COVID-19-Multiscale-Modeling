@@ -49,7 +49,7 @@ require([
 var query_index = 0;
 
 $.ajax({
-  url: "http://128.6.23.29:1919/?mode=get&node=world",
+  url: "http://128.6.23.29:1919/?mode=init",
   async: false,
   
   success: function(response) {
@@ -94,11 +94,12 @@ valueUnit: "unknown",
 //step 1
 
 
-    for(i=1; i < 10000; i++) //set to 100 for time saving
+    for(i=1; i < data.length; i++) //set to 100 for time saving
     {
-	if(data[i][0] == "KOREA")continue;
+	if(data[i][0] == "-----")break;
+        if(data[i][6] == "None")continue;
 	var d = new Date(data[i][8]);
-	console.log(d);
+	//console.log(d);
 	graphicsList.push(
         {  geometry: {
           type: "point",
@@ -160,10 +161,10 @@ valueUnit: "unknown",
             type: "integer"
       },{
             name: "longitude",
-            type: "float"
+            type: "double"
       },{
             name: "latitude",
-            type: "float"
+            type: "double"
       },{
             name: "date",
             type: "date"
@@ -190,8 +191,8 @@ valueUnit: "unknown",
 
 
 
-
-
+layer.visible = false;
+console.log(query);
     
     
 webmap.add(query);
