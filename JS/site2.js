@@ -229,11 +229,11 @@ view.whenLayerView(layer).then(function(layerView) {
 			var res = response.results[p];
 			console.log(res);
 			if (res.graphic.layer === layer) {
-				for(q=0; q<layer.graphics.length; q++)
+				for(q=0; q<layer.graphics.items.length; q++)
 				{
-					if(layer.graphics[q].attributes.Country_name != res.graphic.attributes.Country_name)
+					if(layer.graphics.items[q].attributes.Country_name != res.graphic.attributes.Country_name)
 					{
-						console.log(layer.graphics[q].attributes.Country_name);
+						console.log(layer.graphics.items[q].attributes.Country_name);
 					}
 				}
 			}
