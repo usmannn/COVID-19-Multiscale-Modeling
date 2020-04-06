@@ -230,7 +230,7 @@ view.whenLayerView(layer).then(function(layerView) {
 			if (res.graphic.layer === layer)
 			{
 				var query = layer.createQuery();
-				query.where = "Date = '3/21/2020'";
+				query.where = "Date = '3/21/2020, 8:00 PM'";
 				layer.queryFeatures(query)
 				  .then(function(response){
 				     console.log(response);			     
