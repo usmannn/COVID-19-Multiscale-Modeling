@@ -258,7 +258,7 @@ view.whenLayerView(layer).then(function(layerView) {
 					for(q=0; q < response.features.length; q++)
 					{
 						if(response.features[q].attributes.Country_name != res.graphic.attributes.Country_name &&
-						  !_tmpUIDs.includes(response.features[q].attributes.Country_name)
+						  !_tmpUIDs.includes(response.features[q].attributes.Country_name))
 						{
 							_html +=  "<tr><td style=\"visibility:hidden;\">" + response.features[q].attributes.Country_name + "</td><td>" + res.graphic.attributes.Country_name + "</td><td>" + response.features[q].attributes.Country_name + "</td>";
 							_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
