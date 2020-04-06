@@ -272,22 +272,22 @@ view.whenLayerView(layer).then(function(layerView) {
 					var _tmpUIDs = [];
 					for(q=0; q < response.features.length; q++)
 					{
-						if(response.features[q].attributes.Country_name != res.graphic.attributes.Country_name &&
-						  !_tmpUIDs.includes(response.features[q].attributes.Country_name))
+						if(response.features[q].attributes.id != res.graphic.attributes.id &&
+						  !_tmpUIDs.includes(response.features[q].attributes.id))
 						{
-							_html +=  "<tr><td style=\"visibility:hidden;\">" + response.features[q].attributes.Country_name + "</td><td>" + res.graphic.attributes.Country_name + "</td><td>" + response.features[q].attributes.Country_name + "</td>";
+							_html +=  "<tr><td style=\"visibility:hidden;\">" + response.features[q].attributes.id + "</td><td>" + res.graphic.attributes.id + "</td><td>" + response.features[q].attributes.id + "</td>";
 							_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
-							 _tmpUIDs.push(response.features[q].attributes.Country_name);
+							 _tmpUIDs.push(response.features[q].attributes.id);
 							
 							var geographicLine = new Polyline();
 							geographicLine.addPath([
-							    [res.graphic.attributes.Longitude, res.graphic.attributes.Latitude],
-							    [response.features[q].attributes.Longitude, response.features[q].attributes.Latitude]
+							    [res.graphic.attributes.long, res.graphic.attributes.lat],
+							    [response.features[q].attributes.long, response.features[q].attributes.lat]
 							  ]);
 							// Create an object for storing attributes related to the line
 							var lineAtt = {
-							  From: res.graphic.attributes.Country_name,
-							  To: response.features[q].attributes.Country_name
+							  From: res.graphic.attributes.id,
+							  To: response.features[q].attributes.id
 							};
 
 							 var line = geometryEngine.geodesicDensify(geographicLine, 10000);
