@@ -247,11 +247,8 @@ view.whenLayerView(layer).then(function(layerView) {
 					
 					for(q=0; q < response.features.length; q++)
 					{
-						console.log(response.features[q].attributes.Date);
-						console.log(response.features[q].attributes.Country_name);
 						if(response.features[q].attributes.Country_name != res.graphic.attributes.Country_name)
-						{
-							console.log(response.features[q].attributes.Country_name);
+						{							
 							var geographicLine = new Polyline();
 							geographicLine.addPath([
 							    [res.graphic.attributes.Longitude, res.graphic.attributes.Latitude],
