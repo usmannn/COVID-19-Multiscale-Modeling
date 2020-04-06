@@ -227,24 +227,20 @@ view.whenLayerView(layer).then(function(layerView) {
 		for (p=0; p < response.results.length; p++)
 		{
 			var res = response.results[p];
-			//console.log(res);
-			//console.log(layerView);
-			//console.log(layerView.graphics);
 			if (res.graphic.layer === layer)
 			{
 				var query = layer.createQuery();
-				query.where = "Date = '3/21/2020'";				
-				console.log(query);
+				query.where = "Date = '3/21/2020'";
 				layer.queryFeatures(query)
 				  .then(function(response){
 				     console.log(response);			     
 				     
 					for(q=0; q < response.features.length; q++)
 					{
-						if(response.features[q].attributes.Country_name != res.graphic.attributes.Country_name)
-						{
+						//if(response.features[q].attributes.Country_name != res.graphic.attributes.Country_name)
+						//{
 							console.log(response.features[q].attributes.Country_name);
-						}
+						//}
 					}				     
 				  });				
 			}
