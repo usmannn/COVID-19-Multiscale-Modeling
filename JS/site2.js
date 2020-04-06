@@ -43,6 +43,7 @@ require([
   'esri/symbols/SimpleLineSymbol',
   'esri/layers/GraphicsLayer',
   'esri/core/sql/WhereClause',
+  'esri/intl',
   'dojo/domReady!'
 ], function(
   CanvasFlowmapLayer,
@@ -60,7 +61,8 @@ require([
   geometryEngine,
   SimpleLineSymbol,
   GraphicsLayer,
-  WhereClause
+  WhereClause,
+  intl
 ) {
     
 // popup configuration
@@ -134,7 +136,9 @@ view.ui.add(timeSlider, "manual");
 view.ui.add("titleDiv", "top-right");
 
 // accessing layer with temporal data from the webmap
-let timeLayerView, currentTimeExtent;		
+let timeLayerView, currentTimeExtent;
+const dateFormatIntlOptions = intl.convertDateFormatToIntlOptions("short-date");
+
 view.whenLayerView(layer).then(function(lv) {
   timeLayerView = lv;
   const fullTimeExtent = layer.timeInfo.fullTimeExtent;
@@ -149,9 +153,9 @@ view.whenLayerView(layer).then(function(lv) {
 });
 
 timeSlider.watch("timeExtent", function(timeExtent){
-	console.log(timeExtent.start);
-	console.log(timeExtent.start.getMonth());
-	currentTimeExtent = timeExtent.start;
+	var formattedTimeExtent = intl.formatDate(timeExtent.start, dateFormatIntlOptions);
+	console.log(formattedTimeExtent);
+	currentTimeExtent = formattedTimeExtent;
 });
 	
 var layerList = new LayerList({
