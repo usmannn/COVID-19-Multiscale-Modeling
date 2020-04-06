@@ -154,7 +154,6 @@ view.whenLayerView(layer).then(function(lv) {
 
 timeSlider.watch("timeExtent", function(timeExtent){
 	var formattedTimeExtent = intl.formatDate(timeExtent.start, dateFormatIntlOptions);
-	console.log(formattedTimeExtent);
 	currentTimeExtent = formattedTimeExtent;
 });
 	
@@ -241,10 +240,10 @@ view.whenLayerView(layer).then(function(layerView) {
 				     
 					for(q=0; q < response.features.length; q++)
 					{
-						//if(response.features[q].attributes.Country_name != res.graphic.attributes.Country_name)
-						//{
+						if(response.features[q].attributes.Country_name != res.graphic.attributes.Country_name)
+						{
 							console.log(response.features[q].attributes.Country_name);
-						//}
+						}
 					}				     
 				  });				
 			}
