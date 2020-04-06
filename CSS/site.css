@@ -27,6 +27,10 @@ html, body {
 	font-weight: 36;
 	text-align: center;
 }
+#edgesDiv {
+	height: 300px;
+	overflow:auto;
+}
 
 #sidebar {
 	z-index: 99;
@@ -38,3 +42,18 @@ html, body {
 	width: 15%;
 	float: right;
 }
+
+#nodes {
+	height:300px; 
+	overflow:auto;
+}
+
+#edges {
+	height:300px; 
+	overflow:auto;
+}
+
+#view_buffer {
+	height:50px;
+}
+
