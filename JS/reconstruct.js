@@ -8,17 +8,18 @@ function addMarkerOnSlider()
 	var sliderTrack = document.getElementsByClassName("esri-slider__track");
 	var childs = sliderTrack[0].childNodes;
 	console.log(childs.length);
-	var lastChild = childs[childs.length-1];
+	var sLastChild = childs[childs.length-1];
 	
-	var lastChildScale = lastChild.style.transform.split(" ");
+	var sLastChildScale = sLastChild.style.transform.split(" ");
 	
 	var markerDiv = document.createElement("div");
 	markerDiv.style.color = "red";
 	markerDiv.style.fontSize = "24px";
-	markerDiv.style.transform = lastChildScale[2]+lastChildScale[3];
+	markerDiv.style.transform = sLastChildScale[2]+sLastChildScale[3];
 	markerDiv.innerHTML = marker;
 	console.log(markerDiv.style.transform);
-	sliderTrack[0].appendChild(markerDiv);
+	
+	sliderTrack[0].insertBefore(markerDiv, childs[childs.length]);
 	
 }
 
