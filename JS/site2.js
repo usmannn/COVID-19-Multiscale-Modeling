@@ -233,26 +233,20 @@ view.whenLayerView(layer).then(function(layerView) {
 			if (res.graphic.layer === layer)
 			{
 				var query = layer.createQuery();
-				query.where = "Country_name = 'Canada'";				
+				query.where = "Date = '3/21/2020'";				
 				console.log(query);
 				layer.queryFeatures(query)
 				  .then(function(response){
-				     console.log(response);
-				     var stats = response.features[0].attributes;
-				     console.log(stats);
-				  });
-				/*
-				console.log("inside layer check");
-				console.log(layer);
-				console.log("# graphics in layer: " + view.map.graphics.length);
-				for(q=0; q<view.map.graphics.length; q++)
-				{
-					if(view.map.graphics[q].attributes.Country_name != res.graphic.attributes.Country_name)
+				     console.log(response);			     
+				     
+					for(q=0; q < response.features.length; q++)
 					{
-						console.log(view.map.graphics[q].attributes.Country_name);
-					}
-				}
-				*/
+						if(response.features[q].attributes.Country_name != res.graphic.attributes.Country_name)
+						{
+							console.log(response.features[q].attributes.Country_name);
+						}
+					}				     
+				  });				
 			}
 			break;
 		}		
