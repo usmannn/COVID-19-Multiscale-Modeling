@@ -210,7 +210,7 @@ view.when(function() {
 				cell_id.style.visibility = 'hidden';
 				
 				var cell_name = row.insertCell(-1);
-				cell_name.innerHTML = attributes.ID;
+				cell_name.innerHTML = attributes.id;
 				cell_name.style.fontWeight = "bold";
 				
 				var cell_action = row.insertCell(-1);
