@@ -401,6 +401,12 @@ view.when(function() {
 				   attributes: lineAtt,
 				   popupTemplate: {
 				   	title: "Connection Information",
+					actions: [
+					      {
+						title: "Remove from Predictions",
+						id: "removeFromPrediction"
+					      }
+				        ],
    					content: "" +
 						"<p>From = " + result.graphic.attributes.From_Airport + "</p>" +
 						"<p>" + result.graphic.attributes.From_Name + ", " + result.graphic.attributes.From_Country + "</p>" +
