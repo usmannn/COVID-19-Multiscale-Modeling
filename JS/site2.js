@@ -216,25 +216,19 @@ view.whenLayerView(layer).then(function(layerView) {
 		x: event.x,
 		y: event.y
 	   };
-	   console.log("clicked");
+	  
 	   view.hitTest(screenPoint).then(function(response) {
 		if (!response.results.length) {
 			return;
 		}
-	   console.log("hittest clicked");
-	   console.log(response.results.length);
-		// check if the graphic(s) belongs to the layer of interest
-		// and mark them as selected for Bezier path display
-		response.results.forEach(function(result) {
-			console.log("for each executed");
-			console.log(result);
-			console.log(result.graphic.layer);
-			console.log(layer);
-			if (result.graphic.layer === layer) {
-				//alert("FeatureLayer object selected...");
-				
+		for (p=0; p < response.results.length; p++)
+		{
+			var res = response.results[p];
+			console.log(res);
+			if (res.graphic.layer === layer) {
+				console.log(res);				
 				const query = layerView.layer.createQuery();
-				query.where = "Country_name <> '" + result.graphic.attributes.Country_name + "'";
+				query.where = "Country_name <> '" + res.graphic.attributes.Country_name + "'";
 				query.outFields = ["*"];
 				console.log(query);
 				layerView.queryFeatures(query)
@@ -243,7 +237,7 @@ view.whenLayerView(layer).then(function(layerView) {
 			        });
 			}
 			break;
-		});
+		}		
 	    });
 	});
 });
