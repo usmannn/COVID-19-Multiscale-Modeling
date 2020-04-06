@@ -153,7 +153,8 @@ view.whenLayerView(layer).then(function(lv) {
 });
 
 timeSlider.watch("timeExtent", function(timeExtent){
-	var formattedTimeExtent = intl.formatDate(timeExtent.start, dateFormatIntlOptions);
+	var _d = new Date(timeExtent.start);
+	var formattedTimeExtent = intl.formatDate(_d .setDate(_d .getDate() + 1), dateFormatIntlOptions);
 	currentTimeExtent = formattedTimeExtent;
 });
 	
