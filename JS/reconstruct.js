@@ -49,7 +49,7 @@ require([
 var query_index = 0;
 
 $.ajax({
-  url: "http://128.6.23.29:1919/?mode=init",
+  url: "file://D:/Downloads/covid19/COVID-19-Multiscale-Modeling-master/JS/download.csv",
   async: false,
   
   success: function(response) {
@@ -66,34 +66,34 @@ $.ajax({
 
           size: 10,
   
-        color: [211, 255, 0, 0],
+        color: "red",
    
        outline: {
             
 width: 1,
             
-color: "#FF0055",
+color: "yellow",
           
 style: "solid"
  }
        
  },
-visualVariales:[
+visualVariables:[
 {
 
 type: "size",
   field: "infectious",
 valueUnit: "unknown",
   minDataValue: 0,
-  maxDataValue: 410,
-  minSize: 10,
-  maxSize: 50
+  maxDataValue: 2000,
+  minSize: 5,
+  maxSize: 30
 }]
 };
 
 //step 1
 
-
+var i;
     for(i=1; i < data.length; i++) //set to 100 for time saving
     {
 	if(data[i][0] == "-----")break;
@@ -124,9 +124,19 @@ valueUnit: "unknown",
 
 	
     }
+
+
+
+
+
+for(i=i+2; i < data.length; i++)
+{
+	if(edges[data[i][0]] == undefined)edges[data[i][0]] = [];
+	edges[data[i][0]].push({to: data[i][1], weight: parseInt(data[i][2])})
+}
     
    
-    
+console.log(edges);   
 
 
 
