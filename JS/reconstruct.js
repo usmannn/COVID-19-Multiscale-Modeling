@@ -49,7 +49,7 @@ require([
 var query_index = 0;
 
 $.ajax({
-  url: "file://D:/Downloads/covid19/COVID-19-Multiscale-Modeling-master/JS/download.csv",
+  url: "Data/download.csv",
   async: false,
   
   success: function(response) {
