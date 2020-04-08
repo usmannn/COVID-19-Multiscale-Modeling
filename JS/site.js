@@ -332,7 +332,7 @@ require([
 									To: response.features[q].attributes.id
 								};
 
-								var line = geometryEngine.geodesicDensify(geographicLine, 10000);
+								var line = geometryEngine.geodesicDensify(geographicLine, 7000);
 								view.map.findLayerById("connections").add(new Graphic({
 									geometry: line,
 									symbol: lineSymbol,
