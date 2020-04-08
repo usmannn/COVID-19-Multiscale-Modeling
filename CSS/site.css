@@ -20,6 +20,7 @@ html, body {
 	left: 100px;
 	right: 100px;
 	bottom: 20px;
+	display: none;
 }
 
 #titleDiv {
@@ -30,6 +31,7 @@ html, body {
 #edgesDiv {
 	height: 300px;
 	overflow:auto;
+	display: none;
 }
 
 #sidebar {
@@ -57,3 +59,59 @@ html, body {
 	height:50px;
 }
 
+#construct_button{
+	display: none;
+}
+
+#s_overlay {
+  position: fixed;
+  display: block;
+  width: 75%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
+  right: 5%;
+  bottom: 5%;
+  background-color: rgba(0,0,0,0.9);
+  z-index: 2;
+  cursor: pointer;
+}
+
+#s_world{
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  font-size: 30px;
+  color: black;
+  background-color: orange;
+  border-radius: 25px;
+  padding: 10px;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+#s_us{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 30px;
+  color: black;
+  background-color: orange;
+  border-radius: 25px;
+  padding: 10px;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+#s_ca{
+  position: absolute;
+  top: 50%;
+  left: 76%;
+  font-size: 30px;
+  color: black;
+  background-color: orange;
+  border-radius: 25px;
+  padding: 10px;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
