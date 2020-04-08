@@ -4,7 +4,7 @@ function removeEdge(entry)
 	var entry_row = document.getElementById("edge_list_table").rows[i];
 	var entry_uid = entry_row.cells[0].innerHTML;
 	//alert("Selected UID: " + entry_uid);
-		
+	
 	// if not already exist, add the id to selected_ids list
 	if(!selected_edge_ids .includes(entry_uid))
 	{
@@ -27,172 +27,212 @@ function removeEdge(entry)
 }
 
 require([
-  'Canvas-Flowmap-Layer/CanvasFlowmapLayer',
-  'esri/Graphic',
-  'esri/WebMap',
-  'esri/views/MapView',
-  'esri/widgets/TimeSlider',
-  'esri/widgets/LayerList',
-  'esri/widgets/Expand',
-  'esri/widgets/Legend',
-  'esri/layers/FeatureLayer',
-  'esri/widgets/Popup',
-  'esri/geometry/Polyline',
-  'esri/views/draw/Draw',
-  'esri/geometry/geometryEngine',
-  'esri/symbols/SimpleLineSymbol',
-  'esri/layers/GraphicsLayer',
-  'esri/core/sql/WhereClause',
-  'esri/intl',
-  'dojo/domReady!'
-], function(
-  CanvasFlowmapLayer,
-  Graphic,
-  WebMap,
-  MapView,
-  TimeSlider,
-  LayerList,
-  Expand,
-  Legend,
-  FeatureLayer,
-  Popup,
-  Polyline,
-  Draw,
-  geometryEngine,
-  SimpleLineSymbol,
-  GraphicsLayer,
-  WhereClause,
-  intl
-) {
-    
-// popup configuration
-popupTemplate = {
-    title: "Country: {ID}",
-      actions: [
-      {
-        title: "Remove from Predictions",
-        id: "removeFromPrediction"
-      }
-      ],
-    content: [
-    {
-      type: "fields",
-      fieldInfos: [                  
-	  {
-	    fieldName: "s",
-	    label: "Susceptible"
-	  },
-	  {
-	    fieldName: "d",
-	    label: "Total Deaths"
-	  },
-	  {
-	    fieldName: "i",
-	    label: "Infectious"
-	  },
-	  {
-	    fieldName: "r",
-	    label: "Recovered"
-	  },	  
-	  {
-	    fieldName: "population",
-	    label: "Total Population"
-	  }
-	]
-    }
-    ]
-};
+	'Canvas-Flowmap-Layer/CanvasFlowmapLayer',
+	'esri/Graphic',
+	'esri/WebMap',
+	'esri/views/MapView',
+	'esri/widgets/TimeSlider',
+	'esri/widgets/LayerList',
+	'esri/widgets/Expand',
+	'esri/widgets/Legend',
+	'esri/layers/FeatureLayer',
+	'esri/widgets/Popup',
+	'esri/geometry/Polyline',
+	'esri/views/draw/Draw',
+	'esri/geometry/geometryEngine',
+	'esri/symbols/SimpleLineSymbol',
+	'esri/layers/GraphicsLayer',
+	'esri/core/sql/WhereClause',
+	'esri/intl',
+	'dojo/domReady!'
+	], function(
+		CanvasFlowmapLayer,
+		Graphic,
+		WebMap,
+		MapView,
+		TimeSlider,
+		LayerList,
+		Expand,
+		Legend,
+		FeatureLayer,
+		Popup,
+		Polyline,
+		Draw,
+		geometryEngine,
+		SimpleLineSymbol,
+		GraphicsLayer,
+		WhereClause,
+		intl
+		) {
 		
-  //const layer = webmap.findLayerById('40b129da4bd84efa9993b768b8c6ead6');		
-  layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/COVID_19_Spread_v2/FeatureServer/0",
-  //layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
-    {
-      outFields: [ "*" ],
-      useViewTime: true,
-      popupEnabled: true,
-      popupTemplate: popupTemplate
-    }
-  );
- webmap = new WebMap({
-      // use a standard Web Mercator map projection basemap
-      //basemap: 'dark-gray-vector'
-      portalItem: {
-	id: "9abddb687df74894878b7cc1ef90a902"
-      },
-	 layers: [layer]
-    }); 
- view = new MapView({
-    container: 'viewDiv',
-    map: webmap, 
-      
-    ui: {
-      components: ['zoom', 'attribution']
-    }
-  });
+	// popup configuration
+	popupTemplate = {
+		title: "Country: {id}",
+		actions: [
+		{
+			title: "Remove from Predictions",
+			id: "removeFromPrediction"
+		}
+		],
+		content: [
+		{
+			type: "fields",
+			fieldInfos: [                  
+			{
+				fieldName: "s",
+				label: "Susceptible"
+			},
+			{
+				fieldName: "d",
+				label: "Total Deaths"
+			},
+			{
+				fieldName: "i",
+				label: "Infectious"
+			},
+			{
+				fieldName: "r",
+				label: "Recovered"
+			},	  
+			{
+				fieldName: "population",
+				label: "Total Population"
+			}
+			]
+		}
+		]
+	};
 
-  // time slider widget initialization
-timeSlider = new TimeSlider({
-  container: "timeSlider",
-  mode: "time-window",
- // mode: "instant",
-  view: view
-});
+	//const layer = webmap.findLayerById('40b129da4bd84efa9993b768b8c6ead6');		
+	layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/COVID_19_Spread_v2/FeatureServer/0",
+	//layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
+	{
+		outFields: [ "*" ],
+		useViewTime: true,
+		popupEnabled: true,
+		popupTemplate: popupTemplate,
+		id: "nodes"
+	});
 
-//console.log(timeSlider);
-view.ui.add(timeSlider, "manual");
+	// Read edges info
+	$.ajax({
+			url: "Data/download.csv",
+			//url: "file://D:/Workspace/ArcGIS/COVID-19-Multiscale-Modeling/Data/download.csv",
+			async: false,
+			success: function(response) {
 
-// add the UI for titles, stats and chart.
-view.ui.add("titleDiv", "top-right");
+				var edgeInfo = $.csv.toArrays(response);				
+				var isEdge = false;
+				for(var n=0; n < edgeInfo.length; n++)
+				{
+					if(edgeInfo[n][0] == "-----")
+					{
+						isEdge = true;
+						continue;
+					}
+					/*
+					if(edges[edgeInfo[n][0]] == undefined) 
+						edges[edgeInfo[n][0]] = [];
+					edges[edgeInfo[n][0]].push(edgeInfo[n][1])
+					*/
+					if(isEdge)
+					{
+						if(edges[edgeInfo[n][0]] == undefined) 
+							edges[edgeInfo[n][0]] = "'INVALID'";
 
-// accessing layer with temporal data from the webmap
-let timeLayerView, currentTimeExtent;
-const dateFormatIntlOptions = intl.convertDateFormatToIntlOptions("short-date");
+						if(edges[edgeInfo[n][0]].length > 0)
+							edges[edgeInfo[n][0]] += ",'" + edgeInfo[n][1] + "'";
+						else
+							edges[edgeInfo[n][0]] = "'" + edgeInfo[n][1] + "'";
+					}
+				}
+			},
+			dataType: "text",
+			error: function(xhr) {
+					//Do Something to handle error
+			}
+		});
 
-view.whenLayerView(layer).then(function(lv) {
-  timeLayerView = lv;
-  const fullTimeExtent = layer.timeInfo.fullTimeExtent;
-  // set up time slider properties
-  timeSlider.fullTimeExtent = fullTimeExtent;
-  timeSlider.stops = {
-	interval: {
-		value: 1,
-		unit: "days"
-	}
-  };
-});
+	webmap = new WebMap({
+	  // use a standard Web Mercator map projection basemap
+	  //basemap: 'dark-gray-vector'
+	  portalItem: {
+		id: "9abddb687df74894878b7cc1ef90a902"
+	  },
+	  layers: [layer]
+	}); 
+	view = new MapView({
+		container: 'viewDiv',
+		map: webmap, 
+		
+		ui: {
+			components: ['zoom', 'attribution']
+		}
+	});
 
-timeSlider.watch("timeExtent", function(timeExtent){
+	// time slider widget initialization
+	timeSlider = new TimeSlider({
+		container: "timeSlider",
+		mode: "time-window",
+	// mode: "instant",
+	view: view
+	});
+
+	//console.log(timeSlider);
+	view.ui.add(timeSlider, "manual");
+
+	// add the UI for titles, stats and chart.
+	view.ui.add("titleDiv", "top-right");
+
+	// accessing layer with temporal data from the webmap
+	let timeLayerView, currentTimeExtent;
+	const dateFormatIntlOptions = intl.convertDateFormatToIntlOptions("short-date");
+
+	view.whenLayerView(layer).then(function(lv) {
+	timeLayerView = lv;
+	const fullTimeExtent = layer.timeInfo.fullTimeExtent;
+	// set up time slider properties
+	timeSlider.fullTimeExtent = fullTimeExtent;
+	timeSlider.stops = {
+		interval: {
+			value: 1,
+			unit: "days"
+		}
+	};
+	});
+
+	timeSlider.watch("timeExtent", function(timeExtent){
 	var _d = new Date(timeExtent.start);
 	var formattedTimeExtent = intl.formatDate(_d .setDate(_d .getDate() + 1), dateFormatIntlOptions);
 	currentTimeExtent = formattedTimeExtent;
-	
+
 	if (view.map.findLayerById("connections")) {
 		if(view.map.findLayerById("connections").graphics.length > 0)
 		{
-		      view.map.findLayerById("connections").graphics.removeAll();
+			view.map.findLayerById("connections").graphics.removeAll();
 		}
 	}
-});
+	});
 
-var layerList = new LayerList({
-    view: view
-  });		
+	var layerList = new LayerList({
+	view: view
+	});		
 
-  const layersExpand = new Expand({
-    expandIconClass: "esri-icon-collection",
-    expandTooltip: "Layers",
-    view: view,
-    content: layerList,
-    expanded: false
-  });
+	const layersExpand = new Expand({
+	expandIconClass: "esri-icon-collection",
+	expandTooltip: "Layers",
+	view: view,
+	content: layerList,
+	expanded: false
+	});
 
-  // Adding selected feature to restricted country list when removeFromPrediction is clicked 
-view.when(function() {
-	var popup = view.popup;
-	popup.viewModel.on("trigger-action", function(event) {
-		if (event.action.id === "removeFromPrediction") {
-						
-			var attributes = popup.viewModel.selectedFeature.attributes;
+	// Adding selected feature to restricted country list when removeFromPrediction is clicked 
+	view.when(function() {
+		var popup = view.popup;
+		popup.viewModel.on("trigger-action", function(event) {
+			if (event.action.id === "removeFromPrediction") {
+				
+				var attributes = popup.viewModel.selectedFeature.attributes;
 			//console.log(attributes);
 			//alert("Action called: removeFromPrediction() | object id: " + attributes.ObjectId);
 			
@@ -205,7 +245,7 @@ view.when(function() {
 				var table = document.getElementById("table_restricted_countries");
 				var row = table.insertRow(-1);
 				
-				var cell_id = row.insertCell(-1);
+				var cell_id = row.insertCell(-1);				
 				cell_id.innerHTML = attributes.ObjectId;
 				cell_id.style.visibility = 'hidden';
 				
@@ -218,117 +258,117 @@ view.when(function() {
 			}
 		}		
 	});
-});
-	
-view.ui.add(layersExpand, "top-left");
-view.ui.add("titleDiv", "top-right");
-var button_reconstruct = document.getElementById("construct_button");
-view.ui.add(button_reconstruct, "top-right");
+	});
 
-// test: to render edges (polylines) between nodes	
-view.map.layers.add(new GraphicsLayer({ id: "connections", title: "Connections" }));
-const draw = new Draw({
-          view: view
-        });
-	
+	view.ui.add(layersExpand, "top-left");
+	view.ui.add("titleDiv", "top-right");
+	var button_reconstruct = document.getElementById("construct_button");
+	view.ui.add(button_reconstruct, "top-right");
 
-view.whenLayerView(layer).then(function(layerView) {	
+	// test: to render edges (polylines) between nodes	
+	view.map.layers.add(new GraphicsLayer({ id: "connections", title: "Connections" }));
+	const draw = new Draw({
+	view: view
+	});
+
+
+	view.whenLayerView(layer).then(function(layerView) {	
 	// Listen to the click event on the map view.
 	view.on("click", function(event) {
-	   var screenPoint = {
-		x: event.x,
-		y: event.y
-	   };
-	  
-	   view.hitTest(screenPoint).then(function(response) {
-		if (!response.results.length) {
-			var edgesDiv = document.getElementById("edgesDiv");
-			edgesDiv.innerHTML = "";
+		var screenPoint = {
+			x: event.x,
+			y: event.y
+		};
+		
+		view.hitTest(screenPoint).then(function(response) {
+			if (!response.results.length) {
+				var edgesDiv = document.getElementById("edgesDiv");
+				edgesDiv.innerHTML = "";
 
-			// remove previous selection
-			if(view.map.findLayerById("connections").graphics.length > 0)
-			{
-				view.map.findLayerById("connections").graphics.removeAll();
+				// remove previous selection
+				if(view.map.findLayerById("connections").graphics.length > 0)
+				{
+					view.map.findLayerById("connections").graphics.removeAll();
+				}
+				return;
 			}
-			return;
-		}
-		for (p=0; p < response.results.length; p++)
-		{
-			var res = response.results[p];
-			if (res.graphic.layer === layer)
+			for (p=0; p < response.results.length; p++)
 			{
-				var query = layer.createQuery();
-				query.where = "Date = date'"+currentTimeExtent+"'";
-				layer.queryFeatures(query)
-				  .then(function(response){
-					// Create a symbol for drawing the line
-					var lineSymbol = {
-					  type: "simple-line", // autocasts as SimpleLineSymbol()
-					  color: [255,0,0,0.5],
-					  width: 0.75,
-					  cap : "round"
-					};
-				
-					var edgesDiv = document.getElementById("edgesDiv");
-					var _html = "<table id=\"edge_list_table\" class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th style=\"visibility:hidden;\">UID</th><th>From</th><th>To</th><th>Connection</th></tr>";		
-					var _tmpUIDs = [];
-					for(q=0; q < response.features.length; q++)
-					{
-						if(response.features[q].attributes.id != res.graphic.attributes.id &&
-						  !_tmpUIDs.includes(response.features[q].attributes.id))
+				var res = response.results[p];
+				if (res.graphic.layer.id === 'nodes')
+				{
+					var query = layer.createQuery();
+					query.where = "Date = date'"+currentTimeExtent+"' AND id IN (" + edges[res.graphic.attributes.id] + ")";
+					layer.queryFeatures(query)
+					.then(function(response){
+						// Create a symbol for drawing the line
+						var lineSymbol = {
+						  type: "simple-line", // autocasts as SimpleLineSymbol()
+						  color: [255,0,0,0.5],
+						  width: 0.75,
+						  cap : "round"
+						};
+						
+						var edgesDiv = document.getElementById("edgesDiv");
+						var _html = "<table id=\"edge_list_table\" class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th style=\"visibility:hidden;\">UID</th><th>From</th><th>To</th><th>Connection</th></tr>";		
+						var _tmpUIDs = [];
+						for(q=0; q < response.features.length; q++)
 						{
-							_html +=  "<tr><td style=\"visibility:hidden;\">" + response.features[q].attributes.id + "</td><td>" + res.graphic.attributes.id + "</td><td>" + response.features[q].attributes.id + "</td>";
-							_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
-							 _tmpUIDs.push(response.features[q].attributes.id);
-							
-							var geographicLine = new Polyline();
-							geographicLine.addPath([
-							    [res.graphic.attributes.long, res.graphic.attributes.lat],
-							    [response.features[q].attributes.long, response.features[q].attributes.lat]
-							  ]);
-							// Create an object for storing attributes related to the line
-							var lineAtt = {
-							  From: res.graphic.attributes.id,
-							  To: response.features[q].attributes.id
-							};
+							if(response.features[q].attributes.id != res.graphic.attributes.id &&
+								!_tmpUIDs.includes(response.features[q].attributes.id))
+							{
+								_html +=  "<tr><td style=\"visibility:hidden;\">" + response.features[q].attributes.id + "</td><td>" + res.graphic.attributes.id + "</td><td>" + response.features[q].attributes.id + "</td>";
+								_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
+								_tmpUIDs.push(response.features[q].attributes.id);
+								
+								var geographicLine = new Polyline();
+								geographicLine.addPath([
+									[res.graphic.attributes.long, res.graphic.attributes.lat],
+									[response.features[q].attributes.long, response.features[q].attributes.lat]
+									]);
+								// Create an object for storing attributes related to the line
+								var lineAtt = {
+									From: res.graphic.attributes.id,
+									To: response.features[q].attributes.id
+								};
 
-							 var line = geometryEngine.geodesicDensify(geographicLine, 10000);
-							 view.map.findLayerById("connections").add(new Graphic({
-							   geometry: line,
-							   symbol: lineSymbol,
-							   attributes: lineAtt
-							   /*popupTemplate: {
-								title: "Connection Info",
-								actions: [
-								      {
-									title: "Remove from Predictions",
-									id: "removeFromPredictionEdge"
-								      }
-								],
-								content: "" +
-									"<p>From = " + result.graphic.attributes.From_Airport + "</p>" +
-									"<p>" + result.graphic.attributes.From_Name + ", " + result.graphic.attributes.From_Country + "</p>" +
-									"<p>To = " + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport + "</p>" +
-									"<p>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Name + ", " + canvasFlowmapLayer.graphics.items[k].attributes.To_Country + "</p>"
-							    }*/
-							  }));
+								var line = geometryEngine.geodesicDensify(geographicLine, 10000);
+								view.map.findLayerById("connections").add(new Graphic({
+									geometry: line,
+									symbol: lineSymbol,
+									attributes: lineAtt
+								   /*popupTemplate: {
+									title: "Connection Info",
+									actions: [
+										  {
+										title: "Remove from Predictions",
+										id: "removeFromPredictionEdge"
+										  }
+									],
+									content: "" +
+										"<p>From = " + result.graphic.attributes.From_Airport + "</p>" +
+										"<p>" + result.graphic.attributes.From_Name + ", " + result.graphic.attributes.From_Country + "</p>" +
+										"<p>To = " + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport + "</p>" +
+										"<p>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Name + ", " + canvasFlowmapLayer.graphics.items[k].attributes.To_Country + "</p>"
+									}*/
+								}));
+							}
 						}
-					}
-					_html += "</table>";
-					edgesDiv.innerHTML = _html;
-					view.ui.add(edgesDiv, "top-right");
-				  });				
-			}
-			break;
-		}		
-	    });
+						_html += "</table>";
+						edgesDiv.innerHTML = _html;
+						view.ui.add(edgesDiv, "top-right");
+					});				
+				}
+				break;
+			}		
+		});
 	});
-});
-	
-function getValues(response)
-{
+	});
+
+	function getValues(response)
+	{
 	console.log("Results found: " + results.features.length);
-    	console.log(results.features);
-}
+	console.log(results.features);
+	}
 
 });
