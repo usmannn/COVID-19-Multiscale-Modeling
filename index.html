@@ -49,9 +49,9 @@
 <body onload="load()">	
 
 <div id="s_overlay">
-			<div id="s_world" onclick="overlayOff()">World</div>
-			<div id="s_us" onclick="overlayOff()">United States</div>
-			<div id="s_ca" onclick="overlayOff()">Canada</div>
+			<div id="s_world" onclick="overlayOff(this.id)">World</div>
+			<div id="s_us" onclick="overlayOff(this.id)">United States</div>
+			<div id="s_ca" onclick="overlayOff(this.id)">Canada</div>
 		</div>		
 	<div id="viewDiv">
 		
@@ -136,12 +136,12 @@
 		reconstruct([restricted_countries, restricted_connections]);
 	}
 
-	function overlayOff() {
+	function overlayOff(selection_id) {
 		document.getElementById("s_overlay").style.display = "none";
 		document.getElementById("construct_button").style.display = "block";
 		document.getElementById("timeSlider").style.display = "block";
 		document.getElementById("edgesDiv").style.display = "block";
-		initialize();
+		initialize(selection_id);
 	}
 
 </script>
