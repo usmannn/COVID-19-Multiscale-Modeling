@@ -141,7 +141,9 @@
 			restricted_connections.push(name);
 		}
 		
-		reconstruct([restricted_countries, restricted_connections]);
+		var days_to_predict = document.getElementById("counter").value;
+		
+		reconstruct([restricted_countries, restricted_connections, days_to_predict]);
 	}
 
 	function overlayOff(selection_id) {
