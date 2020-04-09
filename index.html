@@ -57,7 +57,7 @@
 		
 	</div>
 
-	<div id="externalDiv" onmouseover="showCounter(){document.getElementById("counter_setup").style.display  = "block";}" onmouseout="hideCounter(){document.getElementById("counter_setup").style.display  = "none";}">		
+	<div id="externalDiv" onmouseover="showCounter()" onmouseout="hideCounter()">		
 		<p id="counter_setup">
 			<label id="counter_label" class="esri-widget esri-component">Days to Predict:</label>
 			<input type="number" id="counter" name="days" step="7" size="1" class="esri-widget esri-component">
@@ -153,5 +153,12 @@
 		document.getElementById("edgesDiv").style.display = "block";
 		initialize(selection_id);
 	}
-
+	
+	function showCounter(){
+		document.getElementById("counter_setup").style.display  = "block";
+	} 
+	
+	function hideCounter(){
+		document.getElementById("counter_setup").style.display  = "none";
+	}
 </script>
