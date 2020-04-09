@@ -50,7 +50,7 @@ function removeEdge(entry)
 	}
 }
 
-function initialize()
+function initialize(selection_id)
 {
 
 	require([
@@ -71,6 +71,7 @@ function initialize()
 		'esri/layers/GraphicsLayer',
 		'esri/core/sql/WhereClause',
 		'esri/intl',
+		'esri/geometry/Point',
 		'dojo/domReady!'
 		], function(
 			CanvasFlowmapLayer,
@@ -89,7 +90,8 @@ function initialize()
 			SimpleLineSymbol,
 			GraphicsLayer,
 			WhereClause,
-			intl
+			intl,
+			Point
 			) {
 			
 		// popup configuration
@@ -129,6 +131,35 @@ function initialize()
 			}
 			]
 		};
+		
+		if(selection_id == "s_ca")
+		{
+			var pt = new Point({
+			  latitude: 53.9333,
+			  longitude: -116.5765
+			});
+
+			view.goTo({
+				target: pt,
+				zoom: 5
+			}, {
+			  duration: "5000"
+			});
+		}
+		else if(selection_id == "s_us")
+		{
+			var pt = new Point({
+			  latitude: 34.22333378,
+			  longitude: -82.46170658
+			});
+
+			view.goTo({
+				target: pt,
+				zoom: 5
+			}, {
+			  duration: "5000"
+			});
+		}
 
 		//const layer = webmap.findLayerById('40b129da4bd84efa9993b768b8c6ead6');		
 		layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/COVID_19_Spread_v2/FeatureServer/0",
