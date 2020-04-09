@@ -75,7 +75,7 @@ html, body {
 }
 
 #counter_setup{
-	display: block;
+	display: none;
 }
 
 #s_overlay {
