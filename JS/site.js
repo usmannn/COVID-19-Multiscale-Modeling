@@ -351,6 +351,7 @@ function initialize(selection_id)
 					{
 						view.map.findLayerById("connections").graphics.removeAll();
 					}
+					document.getElementById("counter_setup").style.display  = "none";
 					return;
 				}
 				for (p=0; p < response.results.length; p++)
