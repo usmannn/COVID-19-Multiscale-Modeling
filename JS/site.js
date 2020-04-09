@@ -323,7 +323,7 @@ function initialize(selection_id)
 
 		view.ui.add(layersExpand, "top-left");
 		view.ui.add("titleDiv", "top-right");
-		var button_reconstruct = document.getElementById("construct_button");
+		var button_reconstruct = document.getElementById("externalDiv");
 		view.ui.add(button_reconstruct, "top-right");
 
 		// test: to render edges (polylines) between nodes	
