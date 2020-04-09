@@ -61,6 +61,21 @@ html, body {
 
 #construct_button{
 	display: none;
+	float: right;
+}
+
+#counter{
+	width: 50px;
+}
+
+#counter_label{
+	padding: 10px;
+	font-weight: 36;
+	text-align: center;
+}
+
+#counter_setup{
+	display: none;
 }
 
 #s_overlay {
