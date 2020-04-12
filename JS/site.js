@@ -393,7 +393,7 @@ function initialize(selection_id)
 							'modeBarButtonsToRemove': ['toggleSpikelines', 'pan2d', 'lasso2d', 'sendDataToCloud', 'editInChartStudio', 'select2d', 'zoomIn2d', 'zoom2d', 'zoomOut2d', 'autoScale2d', 'hoverClosestCartesian', 'hoverCompareCartesian']
 					    	};
 
-						Plotly.newPlot(plotDiv, traces, {title: 'SIR chart up to current time'}, config);
+						Plotly.newPlot(plotDiv, traces, layout, config);
 						plotExpand.expanded = true;
 					});
 				}
