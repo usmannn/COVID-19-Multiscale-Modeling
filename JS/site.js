@@ -101,6 +101,10 @@ function initialize(selection_id)
 			{
 				title: "Remove from Predictions",
 				id: "removeFromPrediction"
+			},
+			{
+				title: "SIR Plot",
+				id: "plotSIR"
 			}
 			],
 			content: [
@@ -286,43 +290,119 @@ function initialize(selection_id)
 		content: layerList,
 		expanded: false
 		});
+		
+		var plotExpand = new Expand({
+			expandIconClass: "esri-icon-polyline",
+			expandTooltip: "SIR Plot",
+			content: plotDiv,
+			expanded: false
+		});
 
 		// Adding selected feature to restricted country list when removeFromPrediction is clicked 
 		view.when(function() {
 			var popup = view.popup;
 			popup.viewModel.on("trigger-action", function(event) {
-				if (event.action.id === "removeFromPrediction") {
-					
-					var attributes = popup.viewModel.selectedFeature.attributes;
-				//console.log(attributes);
-				//alert("Action called: removeFromPrediction() | object id: " + attributes.ObjectId);
-				
-				// if not already exist, add the id to selected_ids list
-				if(!selected_ids.includes(attributes.ObjectId))
+				var attributes = popup.viewModel.selectedFeature.attributes;
+				var _layer = popup.viewModel.selectedFeature.layer;
+				if (event.action.id === "removeFromPrediction")
 				{
-					selected_ids.push(attributes.ObjectId);
-					
-					// make an entry for the selected feature in restricted countries panel
-					var table = document.getElementById("table_restricted_countries");
-					var row = table.insertRow(-1);
-					
-					var cell_id = row.insertCell(-1);				
-					cell_id.innerHTML = attributes.ObjectId;
-					cell_id.style.visibility = 'hidden';
-					
-					var cell_name = row.insertCell(-1);
-					cell_name.innerHTML = attributes.id;
-					cell_name.style.fontWeight = "bold";
-					
-					var cell_action = row.insertCell(-1);
-					cell_action.innerHTML = "<button type=\"button\" class=\"btn btn-primary\" onclick=\"clearCountrySelection(this)\"> Clear </button>";
+					// if not already exist, add the id to selected_ids list
+					if(!selected_ids.includes(attributes.ObjectId))
+					{
+						selected_ids.push(attributes.ObjectId);
+
+						// make an entry for the selected feature in restricted countries panel
+						var table = document.getElementById("table_restricted_countries");
+						var row = table.insertRow(-1);
+
+						var cell_id = row.insertCell(-1);				
+						cell_id.innerHTML = attributes.ObjectId;
+						cell_id.style.visibility = 'hidden';
+
+						var cell_name = row.insertCell(-1);
+						cell_name.innerHTML = attributes.id;
+						cell_name.style.fontWeight = "bold";
+
+						var cell_action = row.insertCell(-1);
+						cell_action.innerHTML = "<button type=\"button\" class=\"btn btn-primary\" onclick=\"clearCountrySelection(this)\"> Clear </button>";
+					}
 				}
-			}		
-		});
+				if (event.action.id === "plotSIR") 
+				{
+					var query = _layer.createQuery();
+					query.where = "Date <= date'"+currentTimeExtent+"' AND id = '"+attributes.id+"'";
+
+					_layer.queryFeatures(query).then(function(response){
+						var s = [];
+						var i = [];
+						var r = [];
+						var d = [];
+
+						for (j = 0; j < response.features.length; j++)
+						{
+							s.push(response.features[j].attributes.s);
+							i.push(response.features[j].attributes.i);
+							r.push(response.features[j].attributes.r);
+							var date = new Date(response.features[j].attributes.date)
+							var month = '' + (date.getMonth() + 1), day = '' + date.getDate(), year = date.getFullYear();
+							if (month.length < 2) month = '0' + month;
+							if (day.length < 2) day = '0' + day;
+							d.push([year,month,day].join('-'));
+						}
+						var plotDiv = document.getElementById("plotDiv");
+						var traces = [
+							{x: d, y: s,name:'Susceptible', stackgroup: 'one', groupnorm:'percent'},
+							{x: d, y: i,name:'Infected', stackgroup: 'one'},
+							{x: d, y: r,name:'Recovered', stackgroup: 'one'}
+						];
+						var layout = {
+							title: 'SIR Plot (Country: '+attributes.id+')',
+							xaxis: {
+							    autorange: true,
+							    //showgrid: false,
+							    //zeroline: false,
+							    showline: false,
+							    autotick: true,
+							    //ticks: '',
+							    //showticklabels: false,
+							    fixedrange: true
+							},
+							yaxis: {
+							    autorange: true,
+							    //showgrid: false,
+							    //zeroline: false,
+							    //showline: false,
+							    autotick: true,
+							    //ticks: '',
+							    //showticklabels: false,
+							    fixedrange: true
+							},
+							autosize: true,
+							showlegend: false
+					    	};
+						var config = {
+							toImageButtonOptions: {
+							format: 'svg', // one of png, svg, jpeg, webp
+							filename: 'SIR_Plot_'+currentTimeExtent,
+							height: 600,
+							width: 800,
+							scale: 1,
+							},
+							displayModeBar: true,
+							'displaylogo': false,
+							'modeBarButtonsToRemove': ['toggleSpikelines', 'pan2d', 'lasso2d', 'sendDataToCloud', 'editInChartStudio', 'select2d', 'zoomIn2d', 'zoom2d', 'zoomOut2d', 'autoScale2d', 'hoverClosestCartesian', 'hoverCompareCartesian']
+					    	};
+
+						Plotly.newPlot(plotDiv, traces, {title: 'SIR chart up to current time'}, config);
+						plotExpand.expanded = true;
+					});
+				}
+			});
 		});
 
 		view.ui.add(layersExpand, "top-left");
 		view.ui.add("titleDiv", "top-right");
+		view.ui.add(plotExpand, "top-left");
 		var button_reconstruct = document.getElementById("externalDiv");
 		view.ui.add(button_reconstruct, "top-right");
 
@@ -345,6 +425,8 @@ function initialize(selection_id)
 				if (!response.results.length) {
 					var edgesDiv = document.getElementById("edgesDiv");
 					edgesDiv.innerHTML = "";
+					
+					plotExpand.expanded = false;
 
 					// remove previous selection
 					if(view.map.findLayerById("connections").graphics.length > 0)
