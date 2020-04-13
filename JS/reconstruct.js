@@ -49,11 +49,11 @@ function getLayer(_url)
 
 							width: 1,
 							color: {
-							r: 255,
-							g: 255,
-							b: 0,
-							a: 0.3
-						}
+								r: 255,
+								g: 255,
+								b: 0,
+								a: 0.3
+							},
 							style: "solid"
 						}
 
