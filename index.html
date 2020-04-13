@@ -60,10 +60,10 @@
 	<div id="externalDiv" onmouseover="showCounter()" onmouseout="hideCounter()">		
 		<p id="counter_setup">
 			<label id="counter_label" class="esri-widget esri-component">Days to Predict:</label>
-			<input type="number" id="counter" name="days" step="7" size="1" class="esri-widget esri-component">
+			<input type="number" id="counter" name="days" step="7" size="1" min="7" class="esri-widget esri-component">
 		</p>
 		<p>
-			<button type="button" class="btn btn-primary" id="construct_button" onclick="return processReconstruct();"> Re-Construct </button>
+			<button type="button" class="btn btn-primary" id="construct_button" onclick="return processReconstruct();"> Predict </button>
 		</p>
 	</div>
 	
