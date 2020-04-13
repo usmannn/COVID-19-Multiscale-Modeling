@@ -38,15 +38,22 @@ function getLayer(_url)
 					symbol: {
 						type: "simple-marker",
 						style: "circle",
-
 						size: 10,
-
-						color: "#33FF5500",
-
+						color: {
+							r: 255,
+							g: 0,
+							b: 0,
+							a: 0.3
+						},
 						outline: {
 
 							width: 1,
-							color: "#33FFFF00",
+							color: {
+							r: 255,
+							g: 255,
+							b: 0,
+							a: 0.3
+						}
 							style: "solid"
 						}
 
