@@ -143,7 +143,11 @@
 		
 		var days_to_predict = document.getElementById("counter").value;
 		
-		reconstruct([restricted_countries, restricted_connections, days_to_predict]);
+		var _d = new Date(timeSlider.timeExtent.start);
+		_d.setDate(_d.getDate() + parseInt(days_to_predict));
+		var formattedTimeExtent = (_d.getMonth()+1) + "-" + _d.getDate() + "-" + _d.getFullYear();
+
+		reconstruct([restricted_countries, restricted_connections, formattedTimeExtent]);
 	}
 
 	function overlayOff(selection_id) {
