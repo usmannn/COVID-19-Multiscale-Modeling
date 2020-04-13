@@ -50,6 +50,93 @@ function removeEdge(entry)
 	}
 }
 
+function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
+{
+	var query = _layer.createQuery();
+	console.log(attributes.id);
+	query.where = "Date <= date'"+currentTimeExtent+"' AND id = '"+attributes.id+"'";
+
+	_layer.queryFeatures(query).then(function(response){
+
+		//console.log(response.features);
+
+		var s = [];
+		var i = [];
+		var r = [];
+		var d = [];
+
+		for (j = 0; j < response.features.length; j++)
+		{
+			s.push(response.features[j].attributes.s);
+			i.push(response.features[j].attributes.i);
+			r.push(response.features[j].attributes.r);
+			var date = new Date(response.features[j].attributes.date)
+			var month = '' + (date.getMonth() + 1), day = '' + date.getDate(), year = date.getFullYear();
+			if (month.length < 2) month = '0' + month;
+			if (day.length < 2) day = '0' + day;
+			d.push([year,month,day].join('-'));
+		}					
+
+		/*console.log(s);
+		console.log(i);
+		console.log(r);
+		console.log(d);
+		*/
+		//var plotDiv = document.getElementById('plot');
+
+
+		var plotDiv = document.getElementById("plotDiv");
+
+		var traces = [
+			{x: d, y: s,name:'Susceptible', stackgroup: 'one', groupnorm:'percent'},
+			{x: d, y: i,name:'Infected', stackgroup: 'one'},
+			{x: d, y: r,name:'Recovered', stackgroup: 'one'}
+		];
+
+		var layout = {
+	        title: 'SIR Plot (Country: '+attributes.id+')',
+	        xaxis: {
+	            autorange: true,
+	            //showgrid: false,
+	            //zeroline: false,
+	            showline: false,
+	            autotick: true,
+	            //ticks: '',
+	            //showticklabels: false,
+	            fixedrange: true
+	        },
+	        yaxis: {
+	            autorange: true,
+	            //showgrid: false,
+	            //zeroline: false,
+	            //showline: false,
+	            autotick: true,
+	            //ticks: '',
+	            //showticklabels: false,
+	            fixedrange: true
+	        },
+	        autosize: true,
+	        showlegend: false
+	    };
+
+		var config = {
+			toImageButtonOptions: {
+	            format: 'svg', // one of png, svg, jpeg, webp
+	            filename: 'SIR_Plot_'+currentTimeExtent,
+	            height: 600,
+	            width: 800,
+	            scale: 1,
+	        },
+	        displayModeBar: true,
+	        'displaylogo': false,
+	        'modeBarButtonsToRemove': ['toggleSpikelines', 'pan2d', 'lasso2d', 'sendDataToCloud', 'editInChartStudio', 'select2d', 'zoomIn2d', 'zoom2d', 'zoomOut2d', 'autoScale2d', 'hoverClosestCartesian', 'hoverCompareCartesian']
+	    };
+		
+		Plotly.newPlot(plotDiv, traces, layout, config);
+		plotExpand.expanded = true;
+	});
+}
+
 function initialize(selection_id)
 {
 
@@ -329,73 +416,7 @@ function initialize(selection_id)
 				}
 				if (event.action.id === "plotSIR") 
 				{
-					var query = _layer.createQuery();
-					query.where = "Date <= date'"+currentTimeExtent+"' AND id = '"+attributes.id+"'";
-
-					_layer.queryFeatures(query).then(function(response){
-						var s = [];
-						var i = [];
-						var r = [];
-						var d = [];
-
-						for (j = 0; j < response.features.length; j++)
-						{
-							s.push(response.features[j].attributes.s);
-							i.push(response.features[j].attributes.i);
-							r.push(response.features[j].attributes.r);
-							var date = new Date(response.features[j].attributes.date)
-							var month = '' + (date.getMonth() + 1), day = '' + date.getDate(), year = date.getFullYear();
-							if (month.length < 2) month = '0' + month;
-							if (day.length < 2) day = '0' + day;
-							d.push([year,month,day].join('-'));
-						}
-						var plotDiv = document.getElementById("plotDiv");
-						var traces = [
-							{x: d, y: s,name:'Susceptible', stackgroup: 'one', groupnorm:'percent'},
-							{x: d, y: i,name:'Infected', stackgroup: 'one'},
-							{x: d, y: r,name:'Recovered', stackgroup: 'one'}
-						];
-						var layout = {
-							title: 'SIR Plot (Country: '+attributes.id+')',
-							xaxis: {
-							    autorange: true,
-							    //showgrid: false,
-							    //zeroline: false,
-							    showline: false,
-							    autotick: true,
-							    //ticks: '',
-							    //showticklabels: false,
-							    fixedrange: true
-							},
-							yaxis: {
-							    autorange: true,
-							    //showgrid: false,
-							    //zeroline: false,
-							    //showline: false,
-							    autotick: true,
-							    //ticks: '',
-							    //showticklabels: false,
-							    fixedrange: true
-							},
-							autosize: true,
-							showlegend: false
-					    	};
-						var config = {
-							toImageButtonOptions: {
-							format: 'svg', // one of png, svg, jpeg, webp
-							filename: 'SIR_Plot_'+currentTimeExtent,
-							height: 600,
-							width: 800,
-							scale: 1,
-							},
-							displayModeBar: true,
-							'displaylogo': false,
-							'modeBarButtonsToRemove': ['toggleSpikelines', 'pan2d', 'lasso2d', 'sendDataToCloud', 'editInChartStudio', 'select2d', 'zoomIn2d', 'zoom2d', 'zoomOut2d', 'autoScale2d', 'hoverClosestCartesian', 'hoverCompareCartesian']
-					    	};
-
-						Plotly.newPlot(plotDiv, traces, layout, config);
-						plotExpand.expanded = true;
-					});
+					plotSIR(attributes, _layer, currentTimeExtent, plotExpand);
 				}
 			});
 		});
@@ -438,6 +459,12 @@ function initialize(selection_id)
 				for (p=0; p < response.results.length; p++)
 				{
 					var res = response.results[p];
+					
+					if(plotExpand.expanded)
+					{
+						plotSIR(res.graphic.attributes, res.graphic.layer, currentTimeExtent, plotExpand);
+					}
+					
 					if (res.graphic.layer.id === 'nodes')
 					{
 						var query = layer.createQuery();
