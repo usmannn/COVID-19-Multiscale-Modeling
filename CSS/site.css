@@ -64,6 +64,10 @@ html, body {
 	float: right;
 }
 
+#externalDiv{
+	box-shadow: none;
+}
+
 #counter{
 	width: 50px;
 }
