@@ -21,44 +21,18 @@ function addMarkerOnSlider()
 	scaleElement[0].parentNode.insertBefore(markerDiv, scaleElement[0].nextSibling);
 }
 
-function reconstruct(restricted_list)
+function getLayer(_url)
 {
-	addMarkerOnSlider();
+	var query;
+	require(["esri/layers/FeatureLayer"], function(FeatureLayer){
 
-// step 0 
-
-// send request to Xun's API
-require([
-	"esri/WebMap",
-	"esri/views/MapView",
-	"esri/widgets/LayerList",
-	"esri/widgets/TimeSlider",
-	"esri/widgets/Expand",
-	"esri/widgets/Legend",
-	"esri/Graphic",
-	"esri/core/Collection",
-	"esri/layers/FeatureLayer",
-	"esri/TimeExtent",
-	"esri/layers/support/TimeInfo",
-	"esri/widgets/Popup",
-	"esri/widgets/Feature",
-	"esri/views/layers/support/FeatureFilter"
-	
-	], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection,Graphic, Legend, FeatureLayer, Popup, Feature, FeatureFilter) {
-
-		var query_index = 0;
-
-		$.ajax({
-			url: "Data/download.csv",
+	$.ajax({
+			url: _url,
 			//url: "file://D:/Workspace/ArcGIS/COVID-19-Multiscale-Modeling/Data/download.csv",
 			async: false,
-
 			success: function(response) {
-
 				var data = $.csv.toArrays(response);
-
 				var graphicsList = [];
-
 				var vRenderer = {
 					type: "simple", 
 					symbol: {
@@ -93,7 +67,7 @@ require([
 				//step 1
 
 				var i;
-				for(i=1; i < data.length; i++) //set to 100 for time saving
+				for(i=1; i < data.length; i++) 
 				{
 					if(data[i][0] == "-----")break;
 					if(data[i][6] == "None")continue;
@@ -130,12 +104,10 @@ require([
 				console.log(edges);
 				*/
 
-				//step 2
-
-				query_index += 1;
+					
 
 
-				var query = new FeatureLayer({
+				query = new FeatureLayer({
 					source: graphicsList,
 					objectIdField: "ObjectId",
 					fields: [{
@@ -174,7 +146,7 @@ require([
 					geometryType: "point",
 					popupEnabled: true,
 					popupTemplate: popupTemplate,
-					title: "query" + query_index,
+					title: "query",
 					id: "nodes",
 					timeInfo: {
 						startField: "date"
@@ -184,12 +156,55 @@ require([
 
 				);
 
-				//step 3
+				console.log(query);
 
 
-				layer.visible = false;
-				//console.log(query);
+				
 
+			},
+			dataType: "text",
+			error: function(xhr) {
+					//Do Something to handle error
+				}
+		});
+
+});
+return query;
+}
+
+function reconstruct(restricted_list)
+{
+	addMarkerOnSlider();
+	
+
+// step 0 
+
+// send request to Xun's API
+require([
+	"esri/WebMap",
+	"esri/views/MapView",
+	"esri/widgets/LayerList",
+	"esri/widgets/TimeSlider",
+	"esri/widgets/Expand",
+	"esri/widgets/Legend",
+	"esri/Graphic",
+	"esri/core/Collection",
+	"esri/layers/FeatureLayer",
+	"esri/TimeExtent",
+	"esri/layers/support/TimeInfo",
+	"esri/widgets/Popup",
+	"esri/widgets/Feature",
+	"esri/views/layers/support/FeatureFilter"
+	
+	], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection,Graphic, Legend, FeatureLayer, Popup, Feature, FeatureFilter) {
+
+		
+		
+		
+	layer.visible = false;
+				
+				var query = getLayer("Data/download.csv");
+				console.log(query);
 				webmap.add(query);
 				let timeLayerView2;
 
@@ -215,13 +230,6 @@ require([
 						timeExtent: value
 					};
 				});
-
-			},
-			dataType: "text",
-			error: function(xhr) {
-					//Do Something to handle error
-				}
-		});
 
 	});
 }
