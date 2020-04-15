@@ -21,14 +21,17 @@ function addMarkerOnSlider()
 	scaleElement[0].parentNode.insertBefore(markerDiv, scaleElement[0].nextSibling);
 }
 
-function getLayer(_url)
+function getLayer(_url, layer_name, isInit=false)
 {
-	var query;
+	var query, alpha;
+	
+	if(isInit) alpha = 0.8;
+	else alpha = 0.3;
+
 	require(["esri/layers/FeatureLayer"], function(FeatureLayer){
 
 	$.ajax({
 			url: _url,
-			//url: "file://D:/Workspace/ArcGIS/COVID-19-Multiscale-Modeling/Data/download.csv",
 			async: false,
 			success: function(response) {
 				var data = $.csv.toArrays(response);
@@ -43,7 +46,7 @@ function getLayer(_url)
 							r: 255,
 							g: 0,
 							b: 0,
-							a: 0.3
+							a: alpha
 						},
 						outline: {
 
@@ -52,7 +55,7 @@ function getLayer(_url)
 								r: 255,
 								g: 255,
 								b: 0,
-								a: 0.3
+								a: alpha
 							},
 							style: "solid"
 						}
@@ -76,54 +79,55 @@ function getLayer(_url)
 				var i;
 				for(i=1; i < data.length; i++) 
 				{
-					if(data[i][0] == "-----")break;
-					if(data[i][6] == "None")continue;
-					var d = new Date(data[i][8]);
+					if(data[i][0] == "-----") break;
+					if(data[i][7] == "0.0") continue;
+					var d = new Date(data[i][9]);					
 					//console.log(d);
-					graphicsList.push(
-						{  geometry: {
+					graphicsList.push({ 
+						geometry: {
 							type: "point",
-							longitude: parseFloat(data[i][6]),
-							latitude: parseFloat(data[i][7])
+							longitude: parseFloat(data[i][7]),
+							latitude: parseFloat(data[i][8])
 						},
 
 						attributes: {
-							OBJECTID: i,
+							ObjectID: i,
 							id: data[i][0],
-							s: parseInt(data[i][1]),
-							i: parseInt(data[i][2]),
-							r: parseInt(data[i][3]),
-							d: parseInt(data[i][4]),
-							population: parseInt(data[i][5]),
-							long: parseFloat(data[i][6]),
-							lat: parseFloat(data[i][7]),
-							date: d.getTime()}
-
-
-						});	
+							name: data[i][1],
+							s: parseInt(data[i][2]),
+							i: parseInt(data[i][3]),
+							r: parseInt(data[i][4]),
+							d: parseInt(data[i][5]),
+							population: parseInt(data[i][6]),
+							long: parseFloat(data[i][7]),
+							lat: parseFloat(data[i][8]),
+							date: d.getTime()
+						}
+					});	
 				}
-				/*
+
 				for(i=i+2; i < data.length; i++)
 				{
-					if(edges[data[i][0]] == undefined)edges[data[i][0]] = [];
-					edges[data[i][0]].push({to: data[i][1], weight: parseInt(data[i][2])})
+
+					if(edges[data[i][0]] && edges[data[i][0]].length > 0)
+						edges[data[i][0]] += ",'" + data[i][1] + "'";
+					else
+						edges[data[i][0]] = "'" + data[i][1] + "'";
 				}
-				console.log(edges);
-				*/
-
-					
-
 
 				query = new FeatureLayer({
 					source: graphicsList,
-					objectIdField: "ObjectId",
+					objectIdField: "ObjectID",
 					fields: [{
-						name: "ObjectId",
+						name: "ObjectID",
 						type: "oid"
-					}, {
+					},{
 						name: "id",
 						type: "string"
-					}, {
+					},{
+						name: "name",
+						type: "string"
+					},{
 						name: "s",
 						type: "integer"
 					},{
@@ -153,90 +157,82 @@ function getLayer(_url)
 					geometryType: "point",
 					popupEnabled: true,
 					popupTemplate: popupTemplate,
-					title: "query",
+					title: layer_name,
 					id: "nodes",
 					timeInfo: {
 						startField: "date"
 					},
 					renderer: vRenderer
-				}
-
-				);
-
-				console.log(query);
-
-
-				
-
+				});
 			},
 			dataType: "text",
 			error: function(xhr) {
-					//Do Something to handle error
-				}
+					alert("Failed to load data from server...");
+			}
 		});
 
-});
-return query;
+	});
+	
+	return query;
 }
 
 function reconstruct(restricted_list)
 {
-	addMarkerOnSlider();
-	
+	// step 0 
 
-// step 0 
-
-// send request to Xun's API
-require([
-	"esri/WebMap",
-	"esri/views/MapView",
-	"esri/widgets/LayerList",
-	"esri/widgets/TimeSlider",
-	"esri/widgets/Expand",
-	"esri/widgets/Legend",
-	"esri/Graphic",
-	"esri/core/Collection",
-	"esri/layers/FeatureLayer",
-	"esri/TimeExtent",
-	"esri/layers/support/TimeInfo",
-	"esri/widgets/Popup",
-	"esri/widgets/Feature",
-	"esri/views/layers/support/FeatureFilter"
-	
-	], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection,Graphic, Legend, FeatureLayer, Popup, Feature, FeatureFilter) {
-
+	// send request to Xun's API
+	require([
+		"esri/WebMap",
+		"esri/views/MapView",
+		"esri/widgets/LayerList",
+		"esri/widgets/TimeSlider",
+		"esri/widgets/Expand",
+		"esri/widgets/Legend",
+		"esri/Graphic",
+		"esri/core/Collection",
+		"esri/layers/FeatureLayer",
+		"esri/TimeExtent",
+		"esri/layers/support/TimeInfo",
+		"esri/widgets/Popup",
+		"esri/widgets/Feature",
+		"esri/views/layers/support/FeatureFilter"
 		
-		
-		
-	layer.visible = false;
-				
-				var query = getLayer("Data/download.csv");
-				console.log(query);
-				webmap.add(query);
-				let timeLayerView2;
+		], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection,Graphic, Legend, FeatureLayer, Popup, Feature, FeatureFilter) {
 
-				view.whenLayerView(query).then(function(lv) {
+			layer.visible = false;
+			
+			console.log(restricted_list[3]);
+			queryLayer = getLayer(restricted_list[3], "Query");
 
-					timeLayerView2 = lv;
+			view.map.layers.add(queryLayer);
+			let timeLayerView2;
 
-					const fullTimeExtent = layer.timeInfo.fullTimeExtent;
-					// set up time slider properties
-					timeSlider.fullTimeExtent = fullTimeExtent;
-					timeSlider.stops = {
-						interval: {
-							value: 1,
-							unit: "days"
-						}
-					};
-				});
+			view.whenLayerView(queryLayer).then(function(lv) {
 
-				timeSlider.watch("timeExtent", function(value){
+				timeLayerView2 = lv;
+
+				const fullTimeExtent = queryLayer.timeInfo.fullTimeExtent;
+				// set up time slider properties
+				timeSlider.fullTimeExtent = fullTimeExtent;
+				timeSlider.stops = {
+					interval: {
+						value: 1,
+						unit: "days"
+					}
+				};
+				//timeSlider.mode = "time-window";
+				//timeSlider.values = [restricted_list[2], timeSlider.fullTimeExtent.end];
+			});
+
+			timeSlider.watch("timeExtent", function(value){
 
 
-					timeLayerView2.filter = {
-						timeExtent: value
-					};
-				});
+				timeLayerView2.filter = {
+					timeExtent: value
+				};
+			});
 
-	});
+		});
+
+	setTimeout(addMarkerOnSlider, 5000);
 }
