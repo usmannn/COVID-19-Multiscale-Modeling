@@ -10,9 +10,11 @@
 		var view;
 		var webmap;
 		var layer;
+		var queryLayer;
 		var timeSlider;
 		var edges = [];
 		var edgesString = "";
+		var url = "";
 	</script>
 
 	<meta charset="utf-8">
@@ -147,7 +149,9 @@
 		_d.setDate(_d.getDate() + parseInt(days_to_predict));
 		var formattedTimeExtent = (_d.getMonth()+1) + "-" + _d.getDate() + "-" + _d.getFullYear();
 
-		reconstruct([restricted_countries, restricted_connections, formattedTimeExtent]);
+		url += "&to_date=" + formattedTimeExtent;
+
+		reconstruct([restricted_countries, restricted_connections, _d, url]);
 	}
 
 	function overlayOff(selection_id) {
