@@ -57,9 +57,7 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 	query.where = "date <= " + _dd.getTime() + " AND id = '"+attributes.id+"'";
 	_layer.queryFeatures(query)
 	.then(function(response){
-
-		console.log("Query executed...");
-		console.log("Records found: " + response.features.length);
+		
 		var name = [];
 		var s = [];
 		var i = [];
@@ -295,6 +293,25 @@ function initialize(selection_id)
 		// add the UI for titles, stats and chart.
 		view.ui.add("titleDiv", "top-right");
 
+		var layerList = new LayerList({
+		view: view
+		});		
+
+		const layersExpand = new Expand({
+		expandIconClass: "esri-icon-collection",
+		expandTooltip: "Layers",
+		view: view,
+		content: layerList,
+		expanded: false
+		});
+
+		var plotExpand = new Expand({
+			expandIconClass: "esri-icon-polyline",
+			expandTooltip: "SIR Plot",
+			content: plotDiv,
+			expanded: false
+		});
+
 		// accessing layer with temporal data from the webmap
 		let timeLayerView, currentTimeExtent;
 		const dateFormatIntlOptions = intl.convertDateFormatToIntlOptions("short-date");
@@ -323,35 +340,16 @@ function initialize(selection_id)
 					view.map.findLayerById("connections").graphics.removeAll();
 				}
 			}
+
 			// update data in SIR plot if opened
 			if(plotExpand.expanded)
 			{
 				var plotDiv = document.getElementById("plotDiv");
-				if(plotDiv) // => current data
+				if(plotDiv.data) // => current data
 				{
-					// use selectedFeature to access attributes and layer
-					// Plotly.reStyle(plotDiv, new_traces);
+					plotSIR(selectedFeature.attributes,selectedFeature.layer,currentTimeExtent,plotExpand);
 				}
 			}
-		});
-
-		var layerList = new LayerList({
-		view: view
-		});		
-
-		const layersExpand = new Expand({
-		expandIconClass: "esri-icon-collection",
-		expandTooltip: "Layers",
-		view: view,
-		content: layerList,
-		expanded: false
-		});
-		
-		var plotExpand = new Expand({
-			expandIconClass: "esri-icon-polyline",
-			expandTooltip: "SIR Plot",
-			content: plotDiv,
-			expanded: false
 		});
 
 		// Adding selected feature to restricted country list when removeFromPrediction is clicked 
