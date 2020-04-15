@@ -226,6 +226,7 @@ function initialize(selection_id)
 		};
 		
 		url = "";
+		var selectedFeature;
 		
 		if(selection_id == "s_ca")
 		{
@@ -312,16 +313,26 @@ function initialize(selection_id)
 		});
 
 		timeSlider.watch("timeExtent", function(timeExtent){
-		var _d = new Date(timeExtent.start);
-		var formattedTimeExtent = intl.formatDate(_d .setDate(_d .getDate() + 1), dateFormatIntlOptions);
-		currentTimeExtent = formattedTimeExtent;
+			var _d = new Date(timeExtent.start);
+			var formattedTimeExtent = intl.formatDate(_d .setDate(_d .getDate() + 1), dateFormatIntlOptions);
+			currentTimeExtent = formattedTimeExtent;
 
-		if (view.map.findLayerById("connections")) {
-			if(view.map.findLayerById("connections").graphics.length > 0)
-			{
-				view.map.findLayerById("connections").graphics.removeAll();
+			if (view.map.findLayerById("connections")) {
+				if(view.map.findLayerById("connections").graphics.length > 0)
+				{
+					view.map.findLayerById("connections").graphics.removeAll();
+				}
 			}
-		}
+			// update data in SIR plot if opened
+			if(plotExpand.expanded)
+			{
+				var plotDiv = document.getElementById("plotDiv");
+				if(plotDiv) // => current data
+				{
+					// use selectedFeature to access attributes and layer
+					// Plotly.reStyle(plotDiv, new_traces);
+				}
+			}
 		});
 
 		var layerList = new LayerList({
@@ -349,6 +360,7 @@ function initialize(selection_id)
 			popup.viewModel.on("trigger-action", function(event) {
 				var attributes = popup.viewModel.selectedFeature.attributes;
 				var _layer = popup.viewModel.selectedFeature.layer;
+				selectedFeature = popup.viewModel.selectedFeature;
 				if (event.action.id === "removeFromPrediction")
 				{
 					// if not already exist, add the id to selected_ids list
