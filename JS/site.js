@@ -241,7 +241,7 @@ function initialize(selection_id)
 			  duration: "5000"
 			});
 
-			url = "http://128.6.23.29:1919/?mode=get&node=CA";
+			url = "https://128.6.23.29:1919/?mode=get&node=CA";
 		}
 		else if(selection_id == "s_us")
 		{
@@ -257,11 +257,11 @@ function initialize(selection_id)
 			  duration: "5000"
 			});
 
-			url = "http://128.6.23.29:1919/?mode=get&node=US";
+			url = "https://128.6.23.29:1919/?mode=get&node=US";
 		}
 		else
 		{
-			url = "http://128.6.23.29:1919/?mode=init";
+			url = "https://128.6.23.29:1919/?mode=init";
 		}
 
 		/*
