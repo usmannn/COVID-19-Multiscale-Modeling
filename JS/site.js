@@ -53,13 +53,14 @@ function removeEdge(entry)
 function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 {
 	var query = _layer.createQuery();
-	console.log(attributes.id);
-	query.where = "Date <= date'"+currentTimeExtent+"' AND id = '"+attributes.id+"'";
+	var _dd = new Date(timeSlider.timeExtent.start);
+	query.where = "date <= " + _dd.getTime() + " AND id = '"+attributes.id+"'";
+	_layer.queryFeatures(query)
+	.then(function(response){
 
-	_layer.queryFeatures(query).then(function(response){
-
-		//console.log(response.features);
-
+		console.log("Query executed...");
+		console.log("Records found: " + response.features.length);
+		var name = [];
 		var s = [];
 		var i = [];
 		var r = [];
@@ -67,6 +68,7 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 
 		for (j = 0; j < response.features.length; j++)
 		{
+			name.push(response.features[j].attributes.name);
 			s.push(response.features[j].attributes.s);
 			i.push(response.features[j].attributes.i);
 			r.push(response.features[j].attributes.r);
@@ -75,15 +77,7 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 			if (month.length < 2) month = '0' + month;
 			if (day.length < 2) day = '0' + day;
 			d.push([year,month,day].join('-'));
-		}					
-
-		/*console.log(s);
-		console.log(i);
-		console.log(r);
-		console.log(d);
-		*/
-		//var plotDiv = document.getElementById('plot');
-
+		}
 
 		var plotDiv = document.getElementById("plotDiv");
 
@@ -94,7 +88,7 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 		];
 
 		var layout = {
-	        title: 'SIR Plot (Country: '+attributes.id+')',
+	        title: 'SIR Plot (Country: '+attributes.name+')',
 	        xaxis: {
 	            autorange: true,
 	            //showgrid: false,
@@ -116,7 +110,7 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 	            fixedrange: true
 	        },
 	        autosize: true,
-	        showlegend: false
+	        showlegend: true
 	    };
 
 		var config = {
@@ -183,7 +177,7 @@ function initialize(selection_id)
 			
 		// popup configuration
 		popupTemplate = {
-			title: "Country: {id}",
+			title: "Country: {name}",
 			actions: [
 			{
 				title: "Remove from Predictions",
@@ -198,6 +192,14 @@ function initialize(selection_id)
 			{
 				type: "fields",
 				fieldInfos: [                  
+				{
+					fieldName: "id",
+					label: "ID"
+				},
+				{
+					fieldName: "name",
+					label: "Name"
+				},
 				{
 					fieldName: "s",
 					label: "Susceptible"
@@ -223,6 +225,8 @@ function initialize(selection_id)
 			]
 		};
 		
+		url = "";
+		
 		if(selection_id == "s_ca")
 		{
 			var pt = new Point({
@@ -236,6 +240,8 @@ function initialize(selection_id)
 			}, {
 			  duration: "5000"
 			});
+
+			url = "http://128.6.23.29:1919/?mode=get&node=CA";
 		}
 		else if(selection_id == "s_us")
 		{
@@ -250,8 +256,15 @@ function initialize(selection_id)
 			}, {
 			  duration: "5000"
 			});
+
+			url = "http://128.6.23.29:1919/?mode=get&node=US";
+		}
+		else
+		{
+			url = "http://128.6.23.29:1919/?mode=init";
 		}
 
+		/*
 		//const layer = webmap.findLayerById('40b129da4bd84efa9993b768b8c6ead6');		
 		layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/COVID_19_Spread_v2/FeatureServer/0",
 		//layer = new FeatureLayer("https://services.arcgis.com/4TKcmj8FHh5Vtobt/arcgis/rest/services/Dummy_COVID19_Spread_Temporal_Data/FeatureServer/0",
@@ -262,71 +275,16 @@ function initialize(selection_id)
 			popupTemplate: popupTemplate,
 			id: "nodes"
 		});
-
-		view.map.layers.add(layer);
-
-		// Read edges info
-		$.ajax({
-				url: "Data/download.csv",
-				//url: "file://D:/Workspace/ArcGIS/COVID-19-Multiscale-Modeling/Data/download.csv",
-				async: false,
-				success: function(response) {
-
-					var edgeInfo = $.csv.toArrays(response);				
-					var isEdge = false;
-					for(var n=0; n < edgeInfo.length; n++)
-					{
-						if(edgeInfo[n][0] == "-----")
-						{
-							isEdge = true;
-							continue;
-						}
-						/*
-						if(edges[edgeInfo[n][0]] == undefined) 
-							edges[edgeInfo[n][0]] = [];
-						edges[edgeInfo[n][0]].push(edgeInfo[n][1])
-						*/
-						if(isEdge)
-						{
-							if(edges[edgeInfo[n][0]] == undefined) 
-								edges[edgeInfo[n][0]] = "'INVALID'";
-
-							if(edges[edgeInfo[n][0]].length > 0)
-								edges[edgeInfo[n][0]] += ",'" + edgeInfo[n][1] + "'";
-							else
-								edges[edgeInfo[n][0]] = "'" + edgeInfo[n][1] + "'";
-						}
-					}
-				},
-				dataType: "text",
-				error: function(xhr) {
-						//Do Something to handle error
-				}
-			});
-		/*
-		webmap = new WebMap({
-		  // use a standard Web Mercator map projection basemap
-		  //basemap: 'dark-gray-vector'
-		  portalItem: {
-			id: "9abddb687df74894878b7cc1ef90a902"
-		  },
-		  layers: [layer]
-		}); 
-		view = new MapView({
-			container: 'viewDiv',
-			map: webmap, 
-			
-			ui: {
-				components: ['zoom', 'attribution']
-			}
-		});
 		*/
+
+		layer = getLayer(url, "Base Data", true);
+		view.map.layers.add(layer);
 
 		// time slider widget initialization
 		timeSlider = new TimeSlider({
 			container: "timeSlider",
-			mode: "time-window",
-		// mode: "instant",
+			//mode: "time-window",
+			mode: "instant",
 		view: view
 		});
 
@@ -394,20 +352,20 @@ function initialize(selection_id)
 				if (event.action.id === "removeFromPrediction")
 				{
 					// if not already exist, add the id to selected_ids list
-					if(!selected_ids.includes(attributes.ObjectId))
+					if(!selected_ids.includes(attributes.id))
 					{
-						selected_ids.push(attributes.ObjectId);
+						selected_ids.push(attributes.id);
 
 						// make an entry for the selected feature in restricted countries panel
 						var table = document.getElementById("table_restricted_countries");
 						var row = table.insertRow(-1);
 
 						var cell_id = row.insertCell(-1);				
-						cell_id.innerHTML = attributes.ObjectId;
+						cell_id.innerHTML = attributes.id;
 						cell_id.style.visibility = 'hidden';
 
 						var cell_name = row.insertCell(-1);
-						cell_name.innerHTML = attributes.id;
+						cell_name.innerHTML = attributes.name;
 						cell_name.style.fontWeight = "bold";
 
 						var cell_action = row.insertCell(-1);
@@ -468,9 +426,10 @@ function initialize(selection_id)
 					if (res.graphic.layer.id === 'nodes')
 					{
 						var query = layer.createQuery();
-						query.where = "Date = date'"+currentTimeExtent+"' AND id IN (" + edges[res.graphic.attributes.id] + ")";
+						var _dd = new Date(timeSlider.timeExtent.start);
+						query.where = "date = " + _dd.getTime() + " AND id IN (" + edges[res.graphic.attributes.id] + ")";
 						layer.queryFeatures(query)
-						.then(function(response){
+						.then(function(response){							
 							// Create a symbol for drawing the line
 							var lineSymbol = {
 							  type: "simple-line", // autocasts as SimpleLineSymbol()
@@ -487,7 +446,7 @@ function initialize(selection_id)
 								if(response.features[q].attributes.id != res.graphic.attributes.id &&
 									!_tmpUIDs.includes(response.features[q].attributes.id))
 								{
-									_html +=  "<tr><td style=\"visibility:hidden;\">" + response.features[q].attributes.id + "</td><td>" + res.graphic.attributes.id + "</td><td>" + response.features[q].attributes.id + "</td>";
+									_html +=  "<tr><td style=\"visibility:hidden;\">" + response.features[q].attributes.id + "</td><td>" + res.graphic.attributes.name + "</td><td>" + response.features[q].attributes.name + "</td>";
 									_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
 									_tmpUIDs.push(response.features[q].attributes.id);
 									
@@ -498,8 +457,10 @@ function initialize(selection_id)
 										]);
 									// Create an object for storing attributes related to the line
 									var lineAtt = {
-										From: res.graphic.attributes.id,
-										To: response.features[q].attributes.id
+										From_ID: res.graphic.attributes.id,
+										From: res.graphic.attributes.name,
+										To_ID: response.features[q].attributes.id,
+										To: response.features[q].attributes.name
 									};
 
 									var line = geometryEngine.geodesicDensify(geographicLine, 10000);
