@@ -17,6 +17,7 @@ function addMarkerOnSlider()
 	markerDiv.style.fontSize = "32px";
 	markerDiv.style.transform = scale;
 	markerDiv.innerHTML = marker;
+	markerDiv.id = "marker-div";
 
 	scaleElement[0].parentNode.insertBefore(markerDiv, scaleElement[0].nextSibling);
 }
@@ -101,7 +102,8 @@ function getLayer(_url, layer_name, isInit=false)
 							population: parseInt(data[i][6]),
 							long: parseFloat(data[i][7]),
 							lat: parseFloat(data[i][8]),
-							date: d.getTime()
+							date: d.getTime(),
+							weight: 1.0
 						}
 					});	
 				}
@@ -151,6 +153,10 @@ function getLayer(_url, layer_name, isInit=false)
 					},{
 						name: "date",
 						type: "date"
+					},{
+						name: "weight",
+						type: "double",
+						editable: true
 					}],
 					outFields: [ "*" ],
 					useViewTime: true,
@@ -176,10 +182,10 @@ function getLayer(_url, layer_name, isInit=false)
 	return query;
 }
 
-function reconstruct(restricted_list)
+function reconstruct(restricted_list, callback)
 {
 	// step 0 
-
+	endRealTimeExtent = timeSlider.timeExtent.start;
 	// send request to Xun's API
 	require([
 		"esri/WebMap",
@@ -201,10 +207,15 @@ function reconstruct(restricted_list)
 
 			layer.visible = false;
 			
-			console.log(restricted_list[3]);
+			//console.log(restricted_list[3]);
+			if(queryLayer) 
+			{	
+				queryLayer.visible = false;
+			}
 			queryLayer = getLayer(restricted_list[3], "Query");
-
 			view.map.layers.add(queryLayer);
+			currentLayer = queryLayer;
+
 			let timeLayerView2;
 
 			view.whenLayerView(queryLayer).then(function(lv) {
@@ -233,6 +244,9 @@ function reconstruct(restricted_list)
 			});
 
 		});
+
+	var markerDiv = document.getElementById("marker-div");
+    if(markerDiv) markerDiv.parentNode.removeChild(markerDiv);
 
 	setTimeout(addMarkerOnSlider, 5000);
 }
