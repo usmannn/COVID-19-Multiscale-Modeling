@@ -26,7 +26,7 @@ function removeEdge(entry)
 {
 	var i = entry.parentNode.parentNode.rowIndex;
 	var entry_row = document.getElementById("edge_list_table").rows[i];
-	var entry_uid = entry_row.cells[0].innerHTML;
+	var entry_uid = entry_row.cells[0].id;
 	//alert("Selected UID: " + entry_uid);
 	
 	// if not already exist, add the id to selected_ids list
@@ -39,11 +39,11 @@ function removeEdge(entry)
 		var row = table.insertRow(-1);
 
 		var cell_id = row.insertCell(-1);
-		cell_id.innerHTML = entry_uid;
+		cell_id.id = entry_uid;
 		cell_id.style.visibility = 'hidden';
 
 		var cell_name = row.insertCell(-1);
-		cell_name.innerHTML = "From: <b>" + entry_row.cells[1].innerHTML + "</b> To: <b>" + entry_row.cells[2].innerHTML + "</b>";
+		cell_name.innerHTML = "Remove:  <b>" + entry_row.cells[1].innerHTML + "</b>  ->  <b>" + entry_row.cells[2].innerHTML + "</b>";
 
 		var cell_action = row.insertCell(-1);
 		cell_action.innerHTML = "<button type=\"button\" class=\"btn btn-primary\" onclick=\"clearEdgeSelection(this)\"> Clear </button>";
@@ -57,7 +57,7 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 	query.where = "date <= " + _dd.getTime() + " AND id = '"+attributes.id+"'";
 	_layer.queryFeatures(query)
 	.then(function(response){
-		
+
 		var name = [];
 		var s = [];
 		var i = [];
@@ -85,31 +85,74 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 			{x: d, y: r,name:'Recovered', stackgroup: 'one'}
 		];
 
-		var layout = {
-	        title: 'SIR Plot (Country: '+attributes.name+')',
-	        xaxis: {
-	            autorange: true,
-	            //showgrid: false,
-	            //zeroline: false,
-	            showline: false,
-	            autotick: true,
-	            //ticks: '',
-	            //showticklabels: false,
-	            fixedrange: true
-	        },
-	        yaxis: {
-	            autorange: true,
-	            //showgrid: false,
-	            //zeroline: false,
-	            //showline: false,
-	            autotick: true,
-	            //ticks: '',
-	            //showticklabels: false,
-	            fixedrange: true
-	        },
-	        autosize: true,
-	        showlegend: true
-	    };
+		var layout;
+		if (_dd <= endRealTimeExtent)
+		{
+			layout = {
+				title: 'SIR Plot (Country: '+attributes.name+')',
+				xaxis: {
+					autorange: true,
+            		//showgrid: false,
+            		//zeroline: false,
+            		showline: false,
+            		autotick: true,
+            		//ticks: '',
+            		//showticklabels: false,
+            		fixedrange: true
+        		},
+            	yaxis: {
+            		autorange: true,
+            		//showgrid: false,
+            		//zeroline: false,
+            		//showline: false,
+            		autotick: true,
+            		//ticks: '',
+            		//showticklabels: false,
+            		fixedrange: true
+            	},
+            	autosize: true,
+            	showlegend: true
+            };
+        }
+        else
+        {
+        	layout = {
+        		title: 'SIR Plot (Country: '+attributes.name+')',
+        		xaxis: {
+        			autorange: true,
+            		//showgrid: false,
+            		//zeroline: false,
+            		showline: false,
+            		autotick: true,
+            		//ticks: '',
+            		//showticklabels: false,
+            		fixedrange: true
+            	},
+            	yaxis: {
+            		autorange: true,
+            		//showgrid: false,
+            		//zeroline: false,
+            		//showline: false,
+            		autotick: true,
+            		//ticks: '',
+            		//showticklabels: false,
+            		fixedrange: true
+            	},
+            	shapes: [{
+            		type: 'line',
+            		x0: endRealTimeExtent,
+            		y0: 0,
+            		x1: endRealTimeExtent,
+            		y1: 100,
+            		line: {
+            			color: 'red',
+            			width: 1.5,
+            		}
+            	}],
+            	autosize: true,
+            	showlegend: true
+            };
+        }
 
 		var config = {
 			toImageButtonOptions: {
@@ -278,6 +321,7 @@ function initialize(selection_id)
 
 		layer = getLayer(url, "Base Data", true);
 		view.map.layers.add(layer);
+		currentLayer = layer;
 
 		// time slider widget initialization
 		timeSlider = new TimeSlider({
@@ -316,9 +360,10 @@ function initialize(selection_id)
 		let timeLayerView, currentTimeExtent;
 		const dateFormatIntlOptions = intl.convertDateFormatToIntlOptions("short-date");
 
-		view.whenLayerView(layer).then(function(lv) {
+		view.whenLayerView(currentLayer).then(function(lv) {
 		timeLayerView = lv;
-		const fullTimeExtent = layer.timeInfo.fullTimeExtent;
+		const fullTimeExtent = currentLayer.timeInfo.fullTimeExtent;
+		endRealTimeExtent = currentLayer.timeInfo.fullTimeExtent.end;
 		// set up time slider properties
 		timeSlider.fullTimeExtent = fullTimeExtent;
 		timeSlider.stops = {
@@ -347,7 +392,7 @@ function initialize(selection_id)
 				var plotDiv = document.getElementById("plotDiv");
 				if(plotDiv.data) // => current data
 				{
-					plotSIR(selectedFeature.attributes,selectedFeature.layer,currentTimeExtent,plotExpand);
+					plotSIR(selectedFeature.attributes,currentLayer,currentTimeExtent,plotExpand);
 				}
 			}
 		});
@@ -371,11 +416,11 @@ function initialize(selection_id)
 						var row = table.insertRow(-1);
 
 						var cell_id = row.insertCell(-1);				
-						cell_id.innerHTML = attributes.id;
+						cell_id.id = attributes.id;
 						cell_id.style.visibility = 'hidden';
 
 						var cell_name = row.insertCell(-1);
-						cell_name.innerHTML = attributes.name;
+						cell_name.innerHTML = "Remove:  " + attributes.name;
 						cell_name.style.fontWeight = "bold";
 
 						var cell_action = row.insertCell(-1);
@@ -384,7 +429,7 @@ function initialize(selection_id)
 				}
 				if (event.action.id === "plotSIR") 
 				{
-					plotSIR(attributes, _layer, currentTimeExtent, plotExpand);
+					plotSIR(attributes, currentLayer, currentTimeExtent, plotExpand);
 				}
 			});
 		});
@@ -402,7 +447,7 @@ function initialize(selection_id)
 		});
 
 
-		view.whenLayerView(layer).then(function(layerView) {	
+		view.whenLayerView(currentLayer).then(function(layerView) {	
 		// Listen to the click event on the map view.
 		view.on("click", function(event) {
 			var screenPoint = {
@@ -430,15 +475,15 @@ function initialize(selection_id)
 					
 					if(plotExpand.expanded)
 					{
-						plotSIR(res.graphic.attributes, res.graphic.layer, currentTimeExtent, plotExpand);
+						plotSIR(res.graphic.attributes, currentLayer, currentTimeExtent, plotExpand);
 					}
 					
-					if (res.graphic.layer.id === 'nodes')
+					if (currentLayer.id === 'nodes')
 					{
-						var query = layer.createQuery();
+						var query = currentLayer.createQuery();
 						var _dd = new Date(timeSlider.timeExtent.start);
 						query.where = "date = " + _dd.getTime() + " AND id IN (" + edges[res.graphic.attributes.id] + ")";
-						layer.queryFeatures(query)
+						currentLayer.queryFeatures(query)
 						.then(function(response){							
 							// Create a symbol for drawing the line
 							var lineSymbol = {
@@ -456,9 +501,9 @@ function initialize(selection_id)
 								if(response.features[q].attributes.id != res.graphic.attributes.id &&
 									!_tmpUIDs.includes(response.features[q].attributes.id))
 								{
-									_html +=  "<tr><td style=\"visibility:hidden;\">" + response.features[q].attributes.id + "</td><td>" + res.graphic.attributes.name + "</td><td>" + response.features[q].attributes.name + "</td>";
+									_html +=  "<tr><td id=\""+ res.graphic.attributes.id+"->"+response.features[q].attributes.id + "\" style=\"visibility:hidden;\"></td><td>" + res.graphic.attributes.name + "</td><td>" + response.features[q].attributes.name + "</td>";
 									_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
-									_tmpUIDs.push(response.features[q].attributes.id);
+									_tmpUIDs.push(res.graphic.attributes.id+"->"+response.features[q].attributes.id);
 									
 									var geographicLine = new Polyline();
 									geographicLine.addPath([
