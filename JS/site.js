@@ -50,6 +50,33 @@ function removeEdge(entry)
 	}
 }
 
+function editFeatureUpdate(entry){	
+
+	var editWeight = document.getElementById("edit_weight_val");	
+	var editTableRow = document.getElementById("edit_attributes").rows[0];
+	var id = editTableRow.cells[0].id;
+	// if not already exist, add the id to selected_ids list
+	if(!selected_ids.includes(id))
+	{
+		selected_ids.push(id);
+
+		// make an entry for the selected feature in restricted countries panel
+		var table = document.getElementById("table_restricted_countries");
+		var row = table.insertRow(-1);
+
+		var cell_id = row.insertCell(-1);				
+		cell_id.id = id + "_w_" + editWeight.value;
+		cell_id.style.visibility = 'hidden';
+
+		var cell_name = row.insertCell(-1);
+		cell_name.innerHTML = "Update:  " + editTableRow.cells[1].innerHTML;
+		cell_name.style.fontWeight = "bold";
+
+		var cell_action = row.insertCell(-1);
+		cell_action.innerHTML = "<button type=\"button\" class=\"btn btn-primary\" onclick=\"clearCountrySelection(this)\"> Clear </button>";
+	}
+}
+
 function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 {
 	var query = _layer.createQuery();
@@ -212,11 +239,11 @@ function initialize(selection_id)
 			SimpleLineSymbol,
 			GraphicsLayer,
 			WhereClause,
-			intl,
+			intl,			
 			Point
 			) {
 			
-		// popup configuration
+		// popup configuration		
 		popupTemplate = {
 			title: "Country: {name}",
 			actions: [
@@ -227,6 +254,15 @@ function initialize(selection_id)
 			{
 				title: "SIR Plot",
 				id: "plotSIR"
+			},
+			{
+       
+				title: "Edit feature",
+
+				id: "edit-this",
+          
+				className: "esri-icon-edit"
+        
 			}
 			],
 			content: [
@@ -260,7 +296,11 @@ function initialize(selection_id)
 				{
 					fieldName: "population",
 					label: "Total Population"
-				}
+				},
+				{
+					fieldName: "weight",
+					label: "Weight"
+				},
 				]
 			}
 			]
@@ -356,6 +396,14 @@ function initialize(selection_id)
 			expanded: false
 		});
 
+		var editDiv = document.getElementById("editDiv");
+		var editExpand = new Expand({
+			expandIconClass: "esri-icon-edit",
+			expandTooltip: "Edit Attributes",
+			content: editDiv,
+			expanded: false
+		});
+
 		// accessing layer with temporal data from the webmap
 		let timeLayerView, currentTimeExtent;
 		const dateFormatIntlOptions = intl.convertDateFormatToIntlOptions("short-date");
@@ -404,6 +452,7 @@ function initialize(selection_id)
 				var attributes = popup.viewModel.selectedFeature.attributes;
 				var _layer = popup.viewModel.selectedFeature.layer;
 				selectedFeature = popup.viewModel.selectedFeature;
+
 				if (event.action.id === "removeFromPrediction")
 				{
 					// if not already exist, add the id to selected_ids list
@@ -431,21 +480,63 @@ function initialize(selection_id)
 				{
 					plotSIR(attributes, currentLayer, currentTimeExtent, plotExpand);
 				}
+				if (event.action.id === "edit-this")
+				{
+					if(!selected_ids.includes(attributes.id))
+					{
+						var _p = document.createElement("p");
+						_p.innerHTML = "<b>ID: </b>" + attributes.id + "<br><br>";
+						editDiv.appendChild(_p);
+
+						var _t = document.createElement("table");
+						_t.class = "table table-dark";
+						_t.id = "edit_attributes";
+
+						var row = _t.insertRow(-1);
+
+						var cell_name_label = row.insertCell(-1);
+						cell_name_label.id = attributes.id;
+						cell_name_label.innerHTML = "<b>Name: </b>";
+						
+						var cell_name = row.insertCell(-1);
+						cell_name.innerHTML = attributes.name;
+
+						var row2 = _t.insertRow(-1);
+
+						var cell_weight_label = row2.insertCell(-1);
+						cell_weight_label.innerHTML = "<b>Weight: </b>";
+						
+						var cell_weight = row2.insertCell(-1);
+						cell_weight.innerHTML = "<input type=\"text\" id=\"edit_weight_val\" size=\"3px;\" value=" + attributes.weight + "><br>"
+
+						var row3 = _t.insertRow(-1);
+
+						var cell_action_label = row3.insertCell(-1);
+						cell_action_label.innerHTML = "";
+
+						var cell_action = row3.insertCell(-1);
+						cell_action.innerHTML = "<button type=\"button\" class=\"btn btn-primary\" onclick=\"editFeatureUpdate(this)\"> Update </button>";
+
+						editDiv.appendChild(_t);
+						editExpand.expanded = true;
+					}
+				}
 			});
 		});
-
+		
 		view.ui.add(layersExpand, "top-left");
 		view.ui.add("titleDiv", "top-right");
 		view.ui.add(plotExpand, "top-left");
+		view.ui.add(editExpand, "top-left");
 		var button_reconstruct = document.getElementById("externalDiv");
 		view.ui.add(button_reconstruct, "top-right");
 
 		// test: to render edges (polylines) between nodes	
 		view.map.layers.add(new GraphicsLayer({ id: "connections", title: "Connections" }));
 		const draw = new Draw({
-		view: view
+			view: view
 		});
-
+		
 
 		view.whenLayerView(currentLayer).then(function(layerView) {	
 		// Listen to the click event on the map view.
@@ -455,18 +546,23 @@ function initialize(selection_id)
 				y: event.y
 			};
 			
-			view.hitTest(screenPoint).then(function(response) {
+			view.hitTest(screenPoint).then(function(response) {				
+
 				if (!response.results.length) {
 					var edgesDiv = document.getElementById("edgesDiv");
 					edgesDiv.innerHTML = "";
 					
 					plotExpand.expanded = false;
 
+					editDiv.innerHTML = "";
+					editExpand.expanded = false;
+
 					// remove previous selection
 					if(view.map.findLayerById("connections").graphics.length > 0)
 					{
 						view.map.findLayerById("connections").graphics.removeAll();
 					}
+
 					return;
 				}
 				for (p=0; p < response.results.length; p++)
@@ -476,6 +572,12 @@ function initialize(selection_id)
 					if(plotExpand.expanded)
 					{
 						plotSIR(res.graphic.attributes, currentLayer, currentTimeExtent, plotExpand);
+					}
+
+					if(editExpand.expanded)
+					{
+						editDiv.innerHTML = "";
+						editExpand.expanded = false;
 					}
 					
 					if (currentLayer.id === 'nodes')
@@ -553,9 +655,8 @@ function initialize(selection_id)
 
 		function getValues(response)
 		{
-		console.log("Results found: " + results.features.length);
-		console.log(results.features);
+			console.log("Results found: " + results.features.length);
+			console.log(results.features);
 		}
-
 	});
 }
