@@ -82,7 +82,10 @@ function getLayer(_url, layer_name, isInit=false)
 				{
 					if(data[i][0] == "-----") break;
 					if(data[i][7] == "0.0") continue;
-					var d = new Date(data[i][9]);					
+					var year = data[i][9].slice(6,10)
+					var day = data[i][9].slice(0,5);
+					//var d = new Date(data[i][9]);
+					var d = new Date(year+'-'+day);				
 					//console.log(d);
 					graphicsList.push({ 
 						geometry: {
