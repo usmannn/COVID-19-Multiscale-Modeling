@@ -152,9 +152,9 @@
 		_d.setDate(_d.getDate() + parseInt(days_to_predict));
 		var formattedTimeExtent = (_d.getMonth()+1) + "-" + _d.getDate() + "-" + _d.getFullYear();
 
-		url += "&to_date=" + formattedTimeExtent;
+		var _url_to_date = url + "&to_date=" + formattedTimeExtent;
 
-		reconstruct([restricted_countries, restricted_connections, _d, url]);
+		reconstruct([restricted_countries, restricted_connections, _d, _url_to_date]);
 	}
 
 	function overlayOff(selection_id) {
