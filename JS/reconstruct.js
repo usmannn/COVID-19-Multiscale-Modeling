@@ -80,18 +80,19 @@ function getLayer(_url, layer_name, isInit=false)
 				var i;
 				for(i=1; i < data.length; i++) 
 				{
-					if(data[i][0] == "-----") break;
-					if(data[i][7] == "0.0") continue;
-					var year = data[i][9].slice(6,10)
-					var day = data[i][9].slice(0,5);
-					//var d = new Date(data[i][9]);
+					if(data[i][0] == "=====") continue; // separator for simulated data
+					if(data[i][0] == "-----") break;  // separator for edges
+					if(data[i][9] == "0.0") continue; // Longitude					
+					var year = data[i][11].slice(6,10)
+					var day = data[i][11].slice(0,5);
+					//var d = new Date(data[i][11]);
 					var d = new Date(year+'-'+day);				
 					//console.log(d);
 					graphicsList.push({ 
 						geometry: {
 							type: "point",
-							longitude: parseFloat(data[i][7]),
-							latitude: parseFloat(data[i][8])
+							longitude: parseFloat(data[i][9]),
+							latitude: parseFloat(data[i][10])
 						},
 
 						attributes: {
@@ -103,8 +104,10 @@ function getLayer(_url, layer_name, isInit=false)
 							r: parseInt(data[i][4]),
 							d: parseInt(data[i][5]),
 							population: parseInt(data[i][6]),
-							long: parseFloat(data[i][7]),
-							lat: parseFloat(data[i][8]),
+							tested: parseInt(data[i][7]),
+							hospitalized: parseInt(data[i][8]),
+							long: parseFloat(data[i][9]),
+							lat: parseFloat(data[i][10]),
 							date: d.getTime(),
 							weight: 1.0
 						}
@@ -146,6 +149,12 @@ function getLayer(_url, layer_name, isInit=false)
 						type: "integer"
 					},{
 						name: "population",
+						type: "integer"
+					},{
+						name: "tested",
+						type: "integer"
+					},{
+						name: "hospitalized",
 						type: "integer"
 					},{
 						name: "long",
