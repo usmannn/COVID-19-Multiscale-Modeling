@@ -89,7 +89,10 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 		var s = [];
 		var i = [];
 		var r = [];
+		var dh = [];
 		var d = [];
+		var test = [];
+		var hosp = [];
 
 		for (j = 0; j < response.features.length; j++)
 		{
@@ -97,6 +100,9 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 			s.push(response.features[j].attributes.s);
 			i.push(response.features[j].attributes.i);
 			r.push(response.features[j].attributes.r);
+			dh.push(response.features[j].attributes.d);
+			test.push(response.features[j].attributes.tested);
+			hosp.push(response.features[j].attributes.hospitalized);
 			var date = new Date(response.features[j].attributes.date)
 			var month = '' + (date.getMonth() + 1), day = '' + date.getDate(), year = date.getFullYear();
 			if (month.length < 2) month = '0' + month;
@@ -108,8 +114,12 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 
 		var traces = [
 			//{x: d, y: s,name:'Susceptible', stackgroup: 'one', groupnorm:'percent'},
+			//{x: d, y: s,name:'Susceptible', stackgroup: 'one'},
 			{x: d, y: i,name:'Infected', stackgroup: 'one'},
-			{x: d, y: r,name:'Recovered', stackgroup: 'one'}
+			{x: d, y: r,name:'Recovered', stackgroup: 'one'},
+			{x: d, y: dh,name:'Deaths', stackgroup: 'one'},
+			{x: d, y: test,name:'Tested', stackgroup: 'one'},
+			{x: d, y: hosp,name:'Hospitalized', stackgroup: 'one'}
 		];
 
 		var layout;
@@ -144,7 +154,7 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
         else
         {
         	layout = {
-        		title: 'SIR Plot (Country: '+attributes.name+')',
+        		title: 'Scale: '+attributes.name+')',
         		xaxis: {
         			autorange: true,
             		//showgrid: false,
@@ -258,11 +268,8 @@ function initialize(selection_id)
 			{
        
 				title: "Edit feature",
-
-				id: "edit-this",
-          
-				className: "esri-icon-edit"
-        
+				id: "edit-this",          
+				className: "esri-icon-edit"        
 			}
 			],
 			content: [
@@ -298,9 +305,17 @@ function initialize(selection_id)
 					label: "Total Population"
 				},
 				{
+					fieldName: "tested",
+					label: "Total Tested"
+				},
+				{
+					fieldName: "hospitalized",
+					label: "Total Hospitalized"
+				},
+				{
 					fieldName: "weight",
 					label: "Weight"
-				},
+				}
 				]
 			}
 			]
@@ -323,7 +338,7 @@ function initialize(selection_id)
 			  duration: "5000"
 			});
 
-			url = "https://128.6.23.29:1919/?mode=get&node=CA";
+			url = "http://128.6.23.29:1919/?mode=get&node=CA";
 		}
 		else if(selection_id == "s_us")
 		{
@@ -339,11 +354,11 @@ function initialize(selection_id)
 			  duration: "5000"
 			});
 
-			url = "https://128.6.23.29:1919/?mode=get&node=US";
+			url = "http://128.6.23.29:1919/?mode=get&node=US";
 		}
 		else
 		{
-			url = "https://128.6.23.29:1919/?mode=init";
+			url = "http://128.6.23.29:1919/?mode=init";
 		}
 
 		/*
