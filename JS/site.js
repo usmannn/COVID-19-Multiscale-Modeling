@@ -107,7 +107,7 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 		var plotDiv = document.getElementById("plotDiv");
 
 		var traces = [
-			{x: d, y: s,name:'Susceptible', stackgroup: 'one', groupnorm:'percent'},
+			//{x: d, y: s,name:'Susceptible', stackgroup: 'one', groupnorm:'percent'},
 			{x: d, y: i,name:'Infected', stackgroup: 'one'},
 			{x: d, y: r,name:'Recovered', stackgroup: 'one'}
 		];
