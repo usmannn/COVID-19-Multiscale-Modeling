@@ -15,6 +15,7 @@
 		var edges = [];
 		var edgesString = "";
 		var url = "";
+		var lastToDate = "";
 		var endRealTimeExtent;
 		var currentLayer;
 	</script>
@@ -147,13 +148,32 @@
 		}
 		
 		var days_to_predict = document.getElementById("counter").value;
+
+		if(days_to_predict.length < 1 && restricted_connections.length < 1 && restricted_countries.length < 1)
+			return;
 		
 		var _d = new Date(timeSlider.timeExtent.start);
-		_d.setDate(_d.getDate() + parseInt(days_to_predict));
-		var formattedTimeExtent = (_d.getMonth()+1) + "-" + _d.getDate() + "-" + _d.getFullYear();
+		var formattedTimeExtent, _url_to_date;
 
-		var _url_to_date = url + "&to_date=" + formattedTimeExtent;
+		if(days_to_predict.length < 1 && lastToDate.length < 1)
+		{
+			_d.setDate(_d.getDate() + 1);
+			formattedTimeExtent = (_d.getMonth()+1) + "-" + _d.getDate() + "-" + _d.getFullYear();
+			_url_to_date = url + "&to_date=" + formattedTimeExtent;
+		}
+		else if(days_to_predict.length < 1)
+		{
+			_url_to_date = url + "&to_date=" + lastToDate;
+		}
+		else
+		{
+			_d.setDate(_d.getDate() + parseInt(days_to_predict));
+			formattedTimeExtent = (_d.getMonth()+1) + "-" + _d.getDate() + "-" + _d.getFullYear();
+			_url_to_date = url + "&to_date=" + formattedTimeExtent;
+			lastToDate = formattedTimeExtent;
+		}
 
+		console.log(_url_to_date);
 		reconstruct([restricted_countries, restricted_connections, _d, _url_to_date]);
 	}
 

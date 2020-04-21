@@ -455,7 +455,7 @@ function initialize(selection_id)
 				var plotDiv = document.getElementById("plotDiv");
 				if(plotDiv.data) // => current data
 				{
-					plotSIR(selectedFeature.attributes,currentLayer,currentTimeExtent,plotExpand);
+					plotSIR(selectedFeature.attributes,selectedFeature.layer,currentTimeExtent,plotExpand);
 				}
 			}
 		});
@@ -493,7 +493,7 @@ function initialize(selection_id)
 				}
 				if (event.action.id === "plotSIR") 
 				{
-					plotSIR(attributes, currentLayer, currentTimeExtent, plotExpand);
+					plotSIR(attributes, _layer, currentTimeExtent, plotExpand);
 				}
 				if (event.action.id === "edit-this")
 				{
@@ -554,118 +554,211 @@ function initialize(selection_id)
 		
 
 		view.whenLayerView(currentLayer).then(function(layerView) {	
-		// Listen to the click event on the map view.
-		view.on("click", function(event) {
-			var screenPoint = {
-				x: event.x,
-				y: event.y
-			};
-			
-			view.hitTest(screenPoint).then(function(response) {				
+			// Listen to the click event on the map view.
+			view.on("click", function(event) {
+				var screenPoint = {
+					x: event.x,
+					y: event.y
+				};
+				
+				view.hitTest(screenPoint).then(function(response) {				
 
-				if (!response.results.length) {
-					var edgesDiv = document.getElementById("edgesDiv");
-					edgesDiv.innerHTML = "";
-					
-					plotExpand.expanded = false;
+					if (!response.results.length) {
+						var edgesDiv = document.getElementById("edgesDiv");
+						edgesDiv.innerHTML = "";
+						
+						plotExpand.expanded = false;
 
-					editDiv.innerHTML = "";
-					editExpand.expanded = false;
-
-					// remove previous selection
-					if(view.map.findLayerById("connections").graphics.length > 0)
-					{
-						view.map.findLayerById("connections").graphics.removeAll();
-					}
-
-					return;
-				}
-				for (p=0; p < response.results.length; p++)
-				{
-					var res = response.results[p];
-					
-					if(plotExpand.expanded)
-					{
-						plotSIR(res.graphic.attributes, currentLayer, currentTimeExtent, plotExpand);
-					}
-
-					if(editExpand.expanded)
-					{
 						editDiv.innerHTML = "";
 						editExpand.expanded = false;
-					}
-					
-					if (currentLayer.id === 'nodes')
-					{
-						var query = currentLayer.createQuery();
-						var _dd = new Date(timeSlider.timeExtent.start);
-						query.where = "date = " + _dd.getTime() + " AND id IN (" + edges[res.graphic.attributes.id] + ")";
-						currentLayer.queryFeatures(query)
-						.then(function(response){							
-							// Create a symbol for drawing the line
-							var lineSymbol = {
-							  type: "simple-line", // autocasts as SimpleLineSymbol()
-							  color: [255,0,0,0.5],
-							  width: 0.75,
-							  cap : "round"
-							};
-							
-							var edgesDiv = document.getElementById("edgesDiv");
-							var _html = "<table id=\"edge_list_table\" class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th style=\"visibility:hidden;\">UID</th><th>From</th><th>To</th><th>Connection</th></tr>";		
-							var _tmpUIDs = [];
-							for(q=0; q < response.features.length; q++)
-							{
-								if(response.features[q].attributes.id != res.graphic.attributes.id &&
-									!_tmpUIDs.includes(response.features[q].attributes.id))
-								{
-									_html +=  "<tr><td id=\""+ res.graphic.attributes.id+"->"+response.features[q].attributes.id + "\" style=\"visibility:hidden;\"></td><td>" + res.graphic.attributes.name + "</td><td>" + response.features[q].attributes.name + "</td>";
-									_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
-									_tmpUIDs.push(res.graphic.attributes.id+"->"+response.features[q].attributes.id);
-									
-									var geographicLine = new Polyline();
-									geographicLine.addPath([
-										[res.graphic.attributes.long, res.graphic.attributes.lat],
-										[response.features[q].attributes.long, response.features[q].attributes.lat]
-										]);
-									// Create an object for storing attributes related to the line
-									var lineAtt = {
-										From_ID: res.graphic.attributes.id,
-										From: res.graphic.attributes.name,
-										To_ID: response.features[q].attributes.id,
-										To: response.features[q].attributes.name
-									};
 
-									var line = geometryEngine.geodesicDensify(geographicLine, 10000);
-									view.map.findLayerById("connections").add(new Graphic({
-										geometry: line,
-										symbol: lineSymbol,
-										attributes: lineAtt
-									   /*popupTemplate: {
-										title: "Connection Info",
-										actions: [
-											  {
-											title: "Remove from Predictions",
-											id: "removeFromPredictionEdge"
-											  }
-										],
-										content: "" +
-											"<p>From = " + result.graphic.attributes.From_Airport + "</p>" +
-											"<p>" + result.graphic.attributes.From_Name + ", " + result.graphic.attributes.From_Country + "</p>" +
-											"<p>To = " + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport + "</p>" +
-											"<p>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Name + ", " + canvasFlowmapLayer.graphics.items[k].attributes.To_Country + "</p>"
-										}*/
-									}));
-								}
-							}
-							_html += "</table>";
-							edgesDiv.innerHTML = _html;
-							view.ui.add(edgesDiv, "top-right");
-						});				
+						// remove previous selection
+						if(view.map.findLayerById("connections").graphics.length > 0)
+						{
+							view.map.findLayerById("connections").graphics.removeAll();
+						}
+
+						return;
 					}
-					break;
-				}		
+					for (p=0; p < response.results.length; p++)
+					{
+						var res = response.results[p];
+						
+						if(plotExpand.expanded)
+						{
+							plotSIR(res.graphic.attributes, res.graphic.layer, currentTimeExtent, plotExpand);
+						}
+
+						if(editExpand.expanded)
+						{
+							editDiv.innerHTML = "";
+							editExpand.expanded = false;
+						}
+						
+						if (currentLayer.id === 'nodes')
+						{
+							var query = currentLayer.createQuery();
+							var _dd = new Date(timeSlider.timeExtent.start);
+							query.where = "date = " + _dd.getTime() + " AND id IN (" + edges[res.graphic.attributes.id] + ")";
+							currentLayer.queryFeatures(query)
+							.then(function(response){							
+								// Create a symbol for drawing the line
+								var lineSymbol = {
+								  type: "simple-line", // autocasts as SimpleLineSymbol()
+								  color: [255,0,0,0.5],
+								  width: 0.75,
+								  cap : "round"
+								};
+								
+								var edgesDiv = document.getElementById("edgesDiv");
+								var _html = "<table id=\"edge_list_table\" class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th style=\"visibility:hidden;\">UID</th><th>From</th><th>To</th><th>Connection</th></tr>";		
+								var _tmpUIDs = [];
+								for(q=0; q < response.features.length; q++)
+								{
+									if(response.features[q].attributes.id != res.graphic.attributes.id &&
+										!_tmpUIDs.includes(response.features[q].attributes.id))
+									{
+										_html +=  "<tr><td id=\""+ res.graphic.attributes.id+"->"+response.features[q].attributes.id + "\" style=\"visibility:hidden;\"></td><td>" + res.graphic.attributes.name + "</td><td>" + response.features[q].attributes.name + "</td>";
+										_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
+										_tmpUIDs.push(res.graphic.attributes.id+"->"+response.features[q].attributes.id);
+										
+										var geographicLine = new Polyline();
+										geographicLine.addPath([
+											[res.graphic.attributes.long, res.graphic.attributes.lat],
+											[response.features[q].attributes.long, response.features[q].attributes.lat]
+											]);
+										// Create an object for storing attributes related to the line
+										var lineAtt = {
+											From_ID: res.graphic.attributes.id,
+											From: res.graphic.attributes.name,
+											To_ID: response.features[q].attributes.id,
+											To: response.features[q].attributes.name
+										};
+
+										var line = geometryEngine.geodesicDensify(geographicLine, 10000);
+										view.map.findLayerById("connections").add(new Graphic({
+											geometry: line,
+											symbol: lineSymbol,
+											attributes: lineAtt
+										   /*popupTemplate: {
+											title: "Connection Info",
+											actions: [
+												  {
+												title: "Remove from Predictions",
+												id: "removeFromPredictionEdge"
+												  }
+											],
+											content: "" +
+												"<p>From = " + result.graphic.attributes.From_Airport + "</p>" +
+												"<p>" + result.graphic.attributes.From_Name + ", " + result.graphic.attributes.From_Country + "</p>" +
+												"<p>To = " + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport + "</p>" +
+												"<p>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Name + ", " + canvasFlowmapLayer.graphics.items[k].attributes.To_Country + "</p>"
+											}*/
+										}));
+									}
+								}
+								_html += "</table>";
+								edgesDiv.innerHTML = _html;
+								view.ui.add(edgesDiv, "top-right");
+							});				
+						}
+						break;
+					}		
+				});
 			});
-		});
+
+			// Listen to the double-click event on the map view.
+			view.on("double-click", function(event) {
+
+				event.stopPropagation();
+
+				var screenPoint = {
+					x: event.x,
+					y: event.y
+				};
+				
+				view.hitTest(screenPoint).then(function(response) {				
+
+					if (!response.results.length) {
+						var edgesDiv = document.getElementById("edgesDiv");
+						edgesDiv.innerHTML = "";
+						
+						plotExpand.expanded = false;
+
+						editDiv.innerHTML = "";
+						editExpand.expanded = false;
+
+						// remove previous selection
+						if(view.map.findLayerById("connections").graphics.length > 0)
+						{
+							view.map.findLayerById("connections").graphics.removeAll();
+						}
+
+						return;
+					}
+					for (p=0; p < response.results.length; p++)
+					{
+						var res = response.results[p];
+						
+						if (currentLayer.id === 'nodes')
+						{
+							//alert(res.graphic.attributes.name);
+							layer.visible = false;
+							
+							if(queryLayer) 
+							{	
+								queryLayer.visible = false;
+							}
+
+							var pt = new Point({
+								latitude: res.graphic.attributes.lat,
+								longitude: res.graphic.attributes.long
+							});
+
+							view.goTo({
+								target: pt,
+								zoom: 7.5
+							}, {
+								duration: "3000"
+							});
+							
+							var urlZoomed = "http://128.6.23.29:1919/?mode=get&node=" + res.graphic.attributes.name;
+							if(lastToDate.length > 1)
+								urlZoomed += "&to_date=" + lastToDate							
+
+							queryLayer = getLayer(urlZoomed, "Query: " + res.graphic.attributes.name);
+							view.map.layers.add(queryLayer);
+							currentLayer = queryLayer;
+
+							let timeLayerView3;
+
+							view.whenLayerView(queryLayer).then(function(lv) {
+
+								timeLayerView3 = lv;
+
+								const fullTimeExtent = queryLayer.timeInfo.fullTimeExtent;
+								// set up time slider properties
+								timeSlider.fullTimeExtent = fullTimeExtent;
+								timeSlider.stops = {
+									interval: {
+										value: 1,
+										unit: "days"
+									}
+								};
+							});
+
+							timeSlider.watch("timeExtent", function(value){
+
+								timeLayerView3.filter = {
+									timeExtent: value
+								};
+							});
+							
+							return;
+						}
+					}
+				});
+			});
 		});
 
 		function getValues(response)
