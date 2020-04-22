@@ -30,7 +30,7 @@ function getLayer(_url, layer_name, isInit=false)
 	else alpha = 0.3;
 
 	require(["esri/layers/FeatureLayer"], function(FeatureLayer){
-
+	
 	$.ajax({
 			url: _url,
 			async: false,
@@ -78,7 +78,13 @@ function getLayer(_url, layer_name, isInit=false)
 				//step 1
 
 				var i;
-				for(i=1; i < data.length; i++) 
+				if(!isInit)
+				{
+					for(i=0;i < data.length; i++)if(data[i][0] == "=====") break; 
+				}
+				else {i = 0;}
+
+				for(i=i+1; i < data.length; i++) 
 				{
 					if(data[i][0] == "=====") continue; // separator for simulated data
 					if(data[i][0] == "-----") break;  // separator for edges
@@ -217,7 +223,7 @@ function reconstruct(restricted_list, callback)
 		
 		], function(WebMap, MapView, LayerList, TimeSlider, Expand, Collection,Graphic, Legend, FeatureLayer, Popup, Feature, FeatureFilter) {
 
-			layer.visible = false;
+			//layer.visible = false;
 			
 			//console.log(restricted_list[3]);
 			if(queryLayer) 
