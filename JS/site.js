@@ -78,11 +78,11 @@ function editFeatureUpdate(entry){
 }
 
 function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
-{
-	var query = _layer.createQuery();
+{	
 	var _dd = new Date(timeSlider.timeExtent.start);
+	var query = layer.createQuery();
 	query.where = "date <= " + _dd.getTime() + " AND id = '"+attributes.id+"'";
-	_layer.queryFeatures(query)
+	layer.queryFeatures(query)
 	.then(function(response){
 
 		var name = [];
@@ -93,7 +93,6 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 		var d = [];
 		var test = [];
 		var hosp = [];
-
 		for (j = 0; j < response.features.length; j++)
 		{
 			name.push(response.features[j].attributes.name);
@@ -110,19 +109,18 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 			d.push([year,month,day].join('-'));
 		}
 
+		
 		var plotDiv = document.getElementById("plotDiv");
 
 		var traces = [
 			//{x: d, y: s,name:'Susceptible', stackgroup: 'one', groupnorm:'percent'},
 			//{x: d, y: s,name:'Susceptible', stackgroup: 'one'},
-			{x: d, y: i,name:'Infected', stackgroup: 'one'},
-			{x: d, y: r,name:'Recovered', stackgroup: 'one'},
-			{x: d, y: dh,name:'Deaths', stackgroup: 'one'},
-			{x: d, y: test,name:'Tested', stackgroup: 'one'},
-			{x: d, y: hosp,name:'Hospitalized', stackgroup: 'one'}
+			{x: d, y: i,name:'Infected',mode: 'lines', line:{color: 'red'}},
+			{x: d, y: r,name:'Recovered',mode: 'lines',line:{color: 'green'}},
+			{x: d, y: dh,name:'Deaths',mode: 'lines',line:{color: 'black'}},
+			{x: d, y: test,name:'Tested',mode: 'lines',line:{color: 'yellow'}},
+			{x: d, y: hosp,name:'Hospitalized',mode: 'lines',line:{color: 'orange'}}
 		];
-
-		var layout;
 		if (_dd <= endRealTimeExtent)
 		{
 			layout = {
@@ -153,6 +151,7 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
         }
         else
         {
+		
         	layout = {
         		title: 'Scale: '+attributes.name+')',
         		xaxis: {
@@ -175,14 +174,16 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
             		//showticklabels: false,
             		fixedrange: true
             	},
+
             	shapes: [{
             		type: 'line',
             		x0: endRealTimeExtent,
             		y0: 0,
             		x1: endRealTimeExtent,
-            		y1: 100,
+            		y1: 1,
+			yref: "paper",
             		line: {
-            			color: 'red',
+            			color: 'pink',
             			width: 1.5,
             		}
             	}],
@@ -203,10 +204,71 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 	        'displaylogo': false,
 	        'modeBarButtonsToRemove': ['toggleSpikelines', 'pan2d', 'lasso2d', 'sendDataToCloud', 'editInChartStudio', 'select2d', 'zoomIn2d', 'zoom2d', 'zoomOut2d', 'autoScale2d', 'hoverClosestCartesian', 'hoverCompareCartesian']
 	    };
-		
-		Plotly.newPlot(plotDiv, traces, layout, config);
-		plotExpand.expanded = true;
+	Plotly.newPlot(plotDiv, traces, layout, config);
+	 
 	});
+	
+	if(_layer !== layer)
+	{
+		query = _layer.createQuery();
+		query.where = "date <= " + _dd.getTime() + " AND id = '"+attributes.id+"'";
+		_layer.queryFeatures(query)
+		.then(function(response){
+		var name = [];
+		var s = [];
+		var i = [];
+		var r = [];
+		var dh = [];
+		var d = [];
+		var test = [];
+		var hosp = [];
+
+		for (j = 0; j < response.features.length; j++)
+		{
+			name.push(response.features[j].attributes.name);
+			s.push(response.features[j].attributes.s);
+			i.push(response.features[j].attributes.i);
+			r.push(response.features[j].attributes.r);
+			dh.push(response.features[j].attributes.d);
+			test.push(response.features[j].attributes.tested);
+			hosp.push(response.features[j].attributes.hospitalized);
+			var date = new Date(response.features[j].attributes.date)
+			var month = '' + (date.getMonth() + 1), day = '' + date.getDate(), year = date.getFullYear();
+			if (month.length < 2) month = '0' + month;
+			if (day.length < 2) day = '0' + day;
+			d.push([year,month,day].join('-'));
+		}
+
+		var plotDiv = document.getElementById("plotDiv");
+
+		var traces = [
+			//{x: d, y: s,name:'Susceptible', stackgroup: 'one', groupnorm:'percent'},
+			//{x: d, y: s,name:'Susceptible', mode: 'lines',line: {dash: 'dot'}},
+			{x: d, y: i,name:'Infected (P)', mode: 'lines',line: {dash: 'dot', color: 'red'}, showlegend: false},
+			{x: d, y: r,name:'Recovered (P)', mode: 'lines',line: {dash: 'dot', color: 'green'}, showlegend: false},
+			{x: d, y: dh,name:'Deaths (P)', mode: 'lines',line: {dash: 'dot', color: 'black'}, showlegend: false},
+			{x: d, y: test,name:'Tested (P)', mode: 'lines',line: {dash: 'dot', color: 'yellow'}, showlegend: false},
+			{x: d, y: hosp,name:'Hospitalized (P)', mode: 'lines',line: {dash: 'dot', color: 'orange'}, showlegend: false}
+		];
+
+		Plotly.addTraces(plotDiv, traces);
+		
+	});
+	
+	
+	
+		
+		
+	    
+	
+	
+	
+
+	
+	
+}
+	plotExpand.expanded = true;
+	
 }
 
 function initialize(selection_id)
@@ -455,7 +517,7 @@ function initialize(selection_id)
 				var plotDiv = document.getElementById("plotDiv");
 				if(plotDiv.data) // => current data
 				{
-					plotSIR(selectedFeature.attributes,selectedFeature.layer,currentTimeExtent,plotExpand);
+					plotSIR(selectedFeature.attributes,currentLayer,currentTimeExtent,plotExpand);
 				}
 			}
 		});
