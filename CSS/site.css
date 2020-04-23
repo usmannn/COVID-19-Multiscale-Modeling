@@ -84,7 +84,7 @@ html, body {
 
 #s_overlay {
   position: fixed;
-  display: block;
+  display: none;
   width: 75%;
   height: 90%;
   top: 5%;

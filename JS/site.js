@@ -19,6 +19,8 @@ function load()
 			}
 		});
 
+		// changing default scale to US: s_us
+		overlayOff("s_us");
 	});
 }
 
@@ -214,61 +216,47 @@ function plotSIR(attributes, _layer, currentTimeExtent, plotExpand)
 		query.where = "date <= " + _dd.getTime() + " AND id = '"+attributes.id+"'";
 		_layer.queryFeatures(query)
 		.then(function(response){
-		var name = [];
-		var s = [];
-		var i = [];
-		var r = [];
-		var dh = [];
-		var d = [];
-		var test = [];
-		var hosp = [];
+			var name = [];
+			var s = [];
+			var i = [];
+			var r = [];
+			var dh = [];
+			var d = [];
+			var test = [];
+			var hosp = [];
 
-		for (j = 0; j < response.features.length; j++)
-		{
-			name.push(response.features[j].attributes.name);
-			s.push(response.features[j].attributes.s);
-			i.push(response.features[j].attributes.i);
-			r.push(response.features[j].attributes.r);
-			dh.push(response.features[j].attributes.d);
-			test.push(response.features[j].attributes.tested);
-			hosp.push(response.features[j].attributes.hospitalized);
-			var date = new Date(response.features[j].attributes.date)
-			var month = '' + (date.getMonth() + 1), day = '' + date.getDate(), year = date.getFullYear();
-			if (month.length < 2) month = '0' + month;
-			if (day.length < 2) day = '0' + day;
-			d.push([year,month,day].join('-'));
-		}
+			for (j = 0; j < response.features.length; j++)
+			{
+				name.push(response.features[j].attributes.name);
+				s.push(response.features[j].attributes.s);
+				i.push(response.features[j].attributes.i);
+				r.push(response.features[j].attributes.r);
+				dh.push(response.features[j].attributes.d);
+				test.push(response.features[j].attributes.tested);
+				hosp.push(response.features[j].attributes.hospitalized);
+				var date = new Date(response.features[j].attributes.date)
+				var month = '' + (date.getMonth() + 1), day = '' + date.getDate(), year = date.getFullYear();
+				if (month.length < 2) month = '0' + month;
+				if (day.length < 2) day = '0' + day;
+				d.push([year,month,day].join('-'));
+			}
 
-		var plotDiv = document.getElementById("plotDiv");
+			var plotDiv = document.getElementById("plotDiv");
 
-		var traces = [
-			//{x: d, y: s,name:'Susceptible', stackgroup: 'one', groupnorm:'percent'},
-			//{x: d, y: s,name:'Susceptible', mode: 'lines',line: {dash: 'dot'}},
-			{x: d, y: i,name:'Infected (P)', mode: 'lines',line: {dash: 'dot', color: 'red'}, showlegend: false},
-			{x: d, y: r,name:'Recovered (P)', mode: 'lines',line: {dash: 'dot', color: 'green'}, showlegend: false},
-			{x: d, y: dh,name:'Deaths (P)', mode: 'lines',line: {dash: 'dot', color: 'black'}, showlegend: false},
-			{x: d, y: test,name:'Tested (P)', mode: 'lines',line: {dash: 'dot', color: 'yellow'}, showlegend: false},
-			{x: d, y: hosp,name:'Hospitalized (P)', mode: 'lines',line: {dash: 'dot', color: 'orange'}, showlegend: false}
-		];
+			var traces = [
+				//{x: d, y: s,name:'Susceptible', stackgroup: 'one', groupnorm:'percent'},
+				//{x: d, y: s,name:'Susceptible', mode: 'lines',line: {dash: 'dot'}},
+				{x: d, y: i,name:'Infected (P)', mode: 'lines',line: {dash: 'dot', color: 'red'}, showlegend: false},
+				{x: d, y: r,name:'Recovered (P)', mode: 'lines',line: {dash: 'dot', color: 'green'}, showlegend: false},
+				{x: d, y: dh,name:'Deaths (P)', mode: 'lines',line: {dash: 'dot', color: 'black'}, showlegend: false},
+				{x: d, y: test,name:'Tested (P)', mode: 'lines',line: {dash: 'dot', color: 'yellow'}, showlegend: false},
+				{x: d, y: hosp,name:'Hospitalized (P)', mode: 'lines',line: {dash: 'dot', color: 'orange'}, showlegend: false}
+			];
 
-		Plotly.addTraces(plotDiv, traces);
-		
-	});
-	
-	
-	
-		
-		
-	    
-	
-	
-	
-
-	
-	
-}
-	plotExpand.expanded = true;
-	
+			Plotly.addTraces(plotDiv, traces);		
+		});
+	}
+	plotExpand.expanded = true;	
 }
 
 function initialize(selection_id)
@@ -405,12 +393,13 @@ function initialize(selection_id)
 		else if(selection_id == "s_us")
 		{
 			var pt = new Point({
-			  latitude: 34.22333378,
-			  longitude: -82.46170658
+			  latitude: 40,
+			  longitude: -100
 			});
 
 			view.goTo({
 				target: pt,
+				center: pt,
 				zoom: 5
 			}, {
 			  duration: "5000"
