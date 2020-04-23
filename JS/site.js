@@ -652,65 +652,81 @@ function initialize(selection_id)
 							var _dd = new Date(timeSlider.timeExtent.start);
 							query.where = "date = " + _dd.getTime() + " AND id IN (" + edges[res.graphic.attributes.id] + ")";
 							currentLayer.queryFeatures(query)
-							.then(function(response){							
-								// Create a symbol for drawing the line
-								var lineSymbol = {
-								  type: "simple-line", // autocasts as SimpleLineSymbol()
-								  color: [255,0,0,0.5],
-								  width: 0.75,
-								  cap : "round"
-								};
-								
-								var edgesDiv = document.getElementById("edgesDiv");
-								var _html = "<table id=\"edge_list_table\" class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th style=\"visibility:hidden;\">UID</th><th>From</th><th>To</th><th>Connection</th></tr>";		
-								var _tmpUIDs = [];
-								for(q=0; q < response.features.length; q++)
-								{
-									if(response.features[q].attributes.id != res.graphic.attributes.id &&
-										!_tmpUIDs.includes(response.features[q].attributes.id))
-									{
-										_html +=  "<tr><td id=\""+ res.graphic.attributes.id+"->"+response.features[q].attributes.id + "\" style=\"visibility:hidden;\"></td><td>" + res.graphic.attributes.name + "</td><td>" + response.features[q].attributes.name + "</td>";
-										_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
-										_tmpUIDs.push(res.graphic.attributes.id+"->"+response.features[q].attributes.id);
-										
-										var geographicLine = new Polyline();
-										geographicLine.addPath([
-											[res.graphic.attributes.long, res.graphic.attributes.lat],
-											[response.features[q].attributes.long, response.features[q].attributes.lat]
-											]);
-										// Create an object for storing attributes related to the line
-										var lineAtt = {
-											From_ID: res.graphic.attributes.id,
-											From: res.graphic.attributes.name,
-											To_ID: response.features[q].attributes.id,
-											To: response.features[q].attributes.name
-										};
+							.then(function(response){
 
-										var line = geometryEngine.geodesicDensify(geographicLine, 10000);
-										view.map.findLayerById("connections").add(new Graphic({
-											geometry: line,
-											symbol: lineSymbol,
-											attributes: lineAtt
-										   /*popupTemplate: {
-											title: "Connection Info",
-											actions: [
-												  {
-												title: "Remove from Predictions",
-												id: "removeFromPredictionEdge"
-												  }
-											],
-											content: "" +
-												"<p>From = " + result.graphic.attributes.From_Airport + "</p>" +
-												"<p>" + result.graphic.attributes.From_Name + ", " + result.graphic.attributes.From_Country + "</p>" +
-												"<p>To = " + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport + "</p>" +
-												"<p>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Name + ", " + canvasFlowmapLayer.graphics.items[k].attributes.To_Country + "</p>"
-											}*/
-										}));
-									}
+								if(response.features.length > 0)
+								{
+									var query2 = layer.createQuery();
+									query2.where = "date = " + _dd.getTime() + " AND id IN (" + edges[res.graphic.attributes.id] + ")";
+									layer.queryFeatures(query2)
+									.then(function(response2){
+
+										if(layer !== currentLayer)
+										{
+											for(z=0; z < response2.features.length; z++)
+												response.features.push(response2.features[z]);
+										}
+
+										// Create a symbol for drawing the line
+										var lineSymbol = {
+										  type: "simple-line", // autocasts as SimpleLineSymbol()
+										  color: [255,0,0,0.5],
+										  width: 0.75,
+										  cap : "round"
+										};
+										
+										var edgesDiv = document.getElementById("edgesDiv");
+										var _html = "<table id=\"edge_list_table\" class=\"table table-dark\" style=\"color:white;\" align=\"center\"><tr><th style=\"visibility:hidden;\">UID</th><th>From</th><th>To</th><th>Connection</th></tr>";		
+										var _tmpUIDs = [];
+										for(q=0; q < response.features.length; q++)
+										{
+											if(response.features[q].attributes.id != res.graphic.attributes.id &&
+												!_tmpUIDs.includes(response.features[q].attributes.id))
+											{
+												_html +=  "<tr><td id=\""+ res.graphic.attributes.id+"->"+response.features[q].attributes.id + "\" style=\"visibility:hidden;\"></td><td>" + res.graphic.attributes.name + "</td><td>" + response.features[q].attributes.name + "</td>";
+												_html += "<td><button type=\"button\" style=\"background-color:#6c757d; border-color:#6c757d;\" class=\"btn btn-dark\" onclick=\"removeEdge(this)\"> Remove </button></td></tr>";
+												_tmpUIDs.push(res.graphic.attributes.id+"->"+response.features[q].attributes.id);
+												
+												var geographicLine = new Polyline();
+												geographicLine.addPath([
+													[res.graphic.attributes.long, res.graphic.attributes.lat],
+													[response.features[q].attributes.long, response.features[q].attributes.lat]
+													]);
+												// Create an object for storing attributes related to the line
+												var lineAtt = {
+													From_ID: res.graphic.attributes.id,
+													From: res.graphic.attributes.name,
+													To_ID: response.features[q].attributes.id,
+													To: response.features[q].attributes.name
+												};
+
+												var line = geometryEngine.geodesicDensify(geographicLine, 10000);
+												view.map.findLayerById("connections").add(new Graphic({
+													geometry: line,
+													symbol: lineSymbol,
+													attributes: lineAtt
+												   /*popupTemplate: {
+													title: "Connection Info",
+													actions: [
+														  {
+														title: "Remove from Predictions",
+														id: "removeFromPredictionEdge"
+														  }
+													],
+													content: "" +
+														"<p>From = " + result.graphic.attributes.From_Airport + "</p>" +
+														"<p>" + result.graphic.attributes.From_Name + ", " + result.graphic.attributes.From_Country + "</p>" +
+														"<p>To = " + canvasFlowmapLayer.graphics.items[k].attributes.To_Airport + "</p>" +
+														"<p>" + canvasFlowmapLayer.graphics.items[k].attributes.To_Name + ", " + canvasFlowmapLayer.graphics.items[k].attributes.To_Country + "</p>"
+													}*/
+												}));
+											}
+										}
+										_html += "</table>";
+										edgesDiv.innerHTML = _html;
+										view.ui.add(edgesDiv, "top-right");
+									});
 								}
-								_html += "</table>";
-								edgesDiv.innerHTML = _html;
-								view.ui.add(edgesDiv, "top-right");
 							});				
 						}
 						break;
@@ -754,7 +770,7 @@ function initialize(selection_id)
 						if (currentLayer.id === 'nodes')
 						{
 							//alert(res.graphic.attributes.name);
-							layer.visible = false;
+							//layer.visible = false;
 							
 							if(queryLayer) 
 							{	
@@ -774,10 +790,13 @@ function initialize(selection_id)
 							});
 							
 							var urlZoomed = "http://128.6.23.29:1919/?mode=get&node=" + res.graphic.attributes.name;
+							var isInit = false;
 							if(lastToDate.length > 1)
-								urlZoomed += "&to_date=" + lastToDate							
+								urlZoomed += "&to_date=" + lastToDate;
+							else
+								isInit = true;
 
-							queryLayer = getLayer(urlZoomed, "Query: " + res.graphic.attributes.name);
+							queryLayer = getLayer(urlZoomed, "Query: " + res.graphic.attributes.name, isInit);
 							view.map.layers.add(queryLayer);
 							currentLayer = queryLayer;
 
