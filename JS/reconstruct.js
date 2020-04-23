@@ -231,6 +231,7 @@ function reconstruct(restricted_list, callback)
 				queryLayer.visible = false;
 			}
 			queryLayer = getLayer(restricted_list[3], "Query");
+			layers.push(queryLayer);
 			view.map.layers.add(queryLayer);
 			currentLayer = queryLayer;
 

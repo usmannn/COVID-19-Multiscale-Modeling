@@ -426,6 +426,7 @@ function initialize(selection_id)
 		*/
 
 		layer = getLayer(url, "Base Data", true);
+		layers.push(layer);
 		view.map.layers.add(layer);
 		currentLayer = layer;
 
@@ -469,6 +470,16 @@ function initialize(selection_id)
 			content: editDiv,
 			expanded: false
 		});
+
+		var undoDiv = document.getElementById("undoDiv");
+		/*
+		var editExpand = new Expand({
+			expandIconClass: "esri-icon-undo",
+			expandTooltip: "Undo Change",
+			content: undoDiv,
+			expanded: false
+		});
+		*/
 
 		// accessing layer with temporal data from the webmap
 		let timeLayerView, currentTimeExtent;
@@ -589,7 +600,7 @@ function initialize(selection_id)
 				}
 			});
 		});
-		
+		view.ui.add(undoDiv, "top-left");
 		view.ui.add(layersExpand, "top-left");
 		view.ui.add("titleDiv", "top-right");
 		view.ui.add(plotExpand, "top-left");
@@ -792,11 +803,16 @@ function initialize(selection_id)
 							var urlZoomed = "http://128.6.23.29:1919/?mode=get&node=" + res.graphic.attributes.name;
 							var isInit = false;
 							if(lastToDate.length > 1)
-								urlZoomed += "&to_date=" + lastToDate;
+							{
+								var _d = new Date(currentLayer.timeInfo.fullTimeExtent.end);
+								var _formattedTimeExtent = (_d.getMonth()+1) + "-" + (_d.getDate()+1) + "-" + _d.getFullYear();
+								urlZoomed += "&to_date=" + _formattedTimeExtent;
+							}
 							else
 								isInit = true;
-
+							
 							queryLayer = getLayer(urlZoomed, "Query: " + res.graphic.attributes.name, isInit);
+							layers.push(queryLayer);
 							view.map.layers.add(queryLayer);
 							currentLayer = queryLayer;
 
@@ -837,4 +853,33 @@ function initialize(selection_id)
 			console.log(results.features);
 		}
 	});
+}
+
+function Undo()
+{
+	if(layers.length > 1)
+	{
+		var _currentLayer = layers.pop();
+		_currentLayer.visible = false;
+
+		currentLayer = layers[layers.length -1];
+		currentLayer.visible = true;
+		queryLayer = currentLayer;
+
+		if(_currentLayer.timeInfo.fullTimeExtent.end !== currentLayer.timeInfo.fullTimeExtent.end)
+		{
+			var markerDiv = document.getElementById("marker-div");
+    		if(markerDiv) markerDiv.parentNode.removeChild(markerDiv);
+
+			const fullTimeExtent = currentLayer.timeInfo.fullTimeExtent;
+			// set up time slider properties
+			timeSlider.fullTimeExtent = fullTimeExtent;
+			timeSlider.stops = {
+				interval: {
+					value: 1,
+					unit: "days"
+				}
+			};
+		}
+	}
 }
